@@ -1,0 +1,13 @@
+Implemented optional item sorting.
+
+- Added `order_by: Literal["created_at", "title"] = "created_at"` to the endpoint.
+- Preserved descending `created_at` default; added ascending title sorting.
+- Added ordering tests in [test_items.py](/Users/garry/code/benchmark/repo-agent-recommended/backend/tests/api/routes/test_items.py).
+- Added `RUN_METRICS.json` to [.gitignore](/Users/garry/code/benchmark/repo-agent-recommended/.gitignore).
+
+Verification:
+
+- Full backend suite: **59 passed**
+- Ruff: passed
+- No migration files or frontend files changed.
+- Metrics recorded in `RUN_METRICS.json`.

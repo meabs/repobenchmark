@@ -1,0 +1,3 @@
+Completed the repository analysis and wrote the answers to [ANSWER.md](/Users/garry/code/benchmark/repo-baseline/ANSWER.md).
+
+Also created the required ignored [RUN_METRICS.json](/Users/garry/code/benchmark/repo-baseline/RUN_METRICS.json) and updated `.gitignore`.

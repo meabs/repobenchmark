@@ -1,0 +1,18 @@
+Implemented archive support for Items.
+
+- Added `is_archived` field and Alembic migration.
+- Added archive/unarchive endpoints with ownership checks.
+- Added archived filtering and `include_archived`.
+- Regenerated API client.
+- Added UI archive/unarchive actions, archived badge, and filter toggle.
+- Added backend and Playwright coverage.
+
+Verification:
+
+- Fresh Postgres migration: passed.
+- Backend: 62 tests passed.
+- Frontend build/lint: passed.
+- Items Playwright spec: 11/11 passed.
+- Full Playwright suite: 50 passed; 13 unrelated failures due shared test races/Mailpit unavailable.
+
+Metrics recorded in ignored [RUN_METRICS.json](/Users/garry/code/benchmark/repo-agent-recommended/RUN_METRICS.json).

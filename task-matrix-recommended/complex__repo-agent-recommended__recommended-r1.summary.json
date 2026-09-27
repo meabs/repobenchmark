@@ -1,0 +1,28 @@
+{
+  "cell": "complex__repo-agent-recommended__recommended-r1",
+  "repo": "repo-agent-recommended",
+  "task": "complex",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 546,
+  "run_metrics_present": true,
+  "verification": {
+    "migrate_exit_code": 0,
+    "test_exit_code": 0,
+    "test_summary_line": "61 passed, 1 warning in 2.84s"
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/26/rollout-2026-09-26T15-35-22-01a0de24-6717-70c0-be52-6ea2fb9dc6a1.jsonl",
+    "cwd": "/Users/garry/code/benchmark/repo-agent-recommended",
+    "api_turns": 55,
+    "tool_calls_total": 53,
+    "file_edits": 11,
+    "shell_execs": 42,
+    "reasoning_steps": 55,
+    "input_tokens": 3099627,
+    "cached_input_tokens": 2993408,
+    "output_tokens": 17329,
+    "reasoning_output_tokens": 4790,
+    "total_tokens": 3116956
+  }
+}

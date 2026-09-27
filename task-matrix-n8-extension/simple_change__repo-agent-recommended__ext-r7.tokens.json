@@ -1,0 +1,14 @@
+{
+  "session": "/Users/garry/.codex/sessions/2026/09/27/rollout-2026-09-27T00-41-16-01a0e018-2db6-7fd3-b32d-5b8c30b87a9d.jsonl",
+  "cwd": "/Users/garry/code/benchmark/repo-agent-recommended",
+  "api_turns": 20,
+  "tool_calls_total": 19,
+  "file_edits": 3,
+  "shell_execs": 16,
+  "reasoning_steps": 20,
+  "input_tokens": 643014,
+  "cached_input_tokens": 581632,
+  "output_tokens": 7492,
+  "reasoning_output_tokens": 3148,
+  "total_tokens": 650506
+}

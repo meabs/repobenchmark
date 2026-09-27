@@ -1,0 +1,17 @@
+Implemented archive/unarchive support for Items.
+
+- Added `is_archived` field and Alembic migration.
+- Added archive/unarchive endpoints with ownership checks.
+- Updated listing filtering and `include_archived`.
+- Regenerated API client via `scripts/generate-client.sh`.
+- Added archive controls, archived badge, and visibility toggle to the UI.
+- Added backend and Playwright coverage.
+- Added ignored `RUN_METRICS.json`.
+
+Verification:
+
+- `alembic upgrade head`: passed against local PostgreSQL from scratch.
+- Backend tests: 62 passed.
+- Items Playwright suite: 11 passed.
+- Frontend build/lint and backend Ruff: passed.
+- Schema confirmed `is_archived boolean NOT NULL DEFAULT false`.

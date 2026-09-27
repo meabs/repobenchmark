@@ -1,0 +1,28 @@
+{
+  "cell": "simple_change__repo-baseline__r4",
+  "repo": "repo-baseline",
+  "task": "simple_change",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 208,
+  "run_metrics_present": true,
+  "verification": {
+    "migrate_exit_code": 0,
+    "test_exit_code": 0,
+    "test_summary_line": "59 passed, 2 warnings in 2.79s"
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/25/rollout-2026-09-25T14-37-18-01a0d8c8-e0fb-7361-abfe-a1e5ff357399.jsonl",
+    "cwd": "/Users/garry/code/benchmark/repo-baseline",
+    "api_turns": 24,
+    "tool_calls_total": 23,
+    "file_edits": 3,
+    "shell_execs": 20,
+    "reasoning_steps": 26,
+    "input_tokens": 765306,
+    "cached_input_tokens": 674816,
+    "output_tokens": 7947,
+    "reasoning_output_tokens": 3684,
+    "total_tokens": 773253
+  }
+}

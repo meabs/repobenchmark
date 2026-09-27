@@ -1,0 +1,90 @@
+{
+  "repo": "repo-agent-optimised",
+  "start_time": "2026-09-25T13:49:08Z",
+  "end_time": "2026-09-25T14:06:37Z",
+  "duration_seconds": 1049,
+  "time_to_first_edit_seconds": 72,
+  "tool_calls": {
+    "read": 13,
+    "edit_or_write": 8,
+    "bash": 48,
+    "search_or_grep": 7,
+    "other": 16,
+    "total": 92
+  },
+  "files_read": [
+    "AGENTS.md",
+    "docs/ard/0001-sqlmodel-unified-models.md",
+    "docs/ard/0004-alembic-migrations.md",
+    "docs/ard/0005-generated-typescript-client.md",
+    "docs/api/openapi.json",
+    "okf/index.md",
+    "okf/routers/items.md",
+    "okf/tables/item.md",
+    "backend/app/models.py",
+    "backend/app/api/routes/items.py",
+    "backend/tests/api/routes/test_items.py",
+    "frontend/src/routes/_layout/items.tsx",
+    "frontend/src/components/Items/ItemActionsMenu.tsx",
+    "frontend/src/components/Items/columns.tsx",
+    "frontend/tests/items.spec.ts"
+  ],
+  "files_created_or_edited": [
+    ".gitignore",
+    "backend/app/api/routes/items.py",
+    "backend/app/models.py",
+    "backend/app/alembic/versions/e15c89f7b8fb_add_archive_status_to_items.py",
+    "backend/tests/api/routes/test_items.py",
+    "docs/api/openapi.json",
+    "frontend/src/client/index.ts",
+    "frontend/src/client/sdk.gen.ts",
+    "frontend/src/client/types.gen.ts",
+    "frontend/src/components/Items/ArchiveItem.tsx",
+    "frontend/src/components/Items/ItemActionsMenu.tsx",
+    "frontend/src/components/Items/columns.tsx",
+    "frontend/src/routes/_layout/items.tsx",
+    "frontend/tests/items.spec.ts",
+    "okf/routers/items.md",
+    "okf/tables/item.md",
+    "RUN_METRICS.json"
+  ],
+  "timeline": [
+    {"time": "2026-09-25T13:49:08Z", "event": "started metrics run"},
+    {"time": "2026-09-25T13:49:42Z", "event": "read AGENTS.md and relevant architecture/OKF/API/UI docs"},
+    {"time": "2026-09-25T13:50:20Z", "event": "first edit: added backend behavior tests"},
+    {"time": "2026-09-25T13:52:00Z", "event": "implemented Item field, archive endpoints, and filtered listing"},
+    {"time": "2026-09-25T13:53:00Z", "event": "generated and reviewed Alembic migration"},
+    {"time": "2026-09-25T13:54:00Z", "event": "ran Alembic downgrade base then upgrade head on local PostgreSQL"},
+    {"time": "2026-09-25T13:55:00Z", "event": "ran backend item tests: 14 passed"},
+    {"time": "2026-09-25T13:57:00Z", "event": "regenerated frontend client and API snapshot"},
+    {"time": "2026-09-25T14:00:00Z", "event": "updated Items archive controls, visual state, and Playwright spec"},
+    {"time": "2026-09-25T14:03:00Z", "event": "ran frontend lint/build and fixed accessibility lint"},
+    {"time": "2026-09-25T14:05:00Z", "event": "verified archive/unarchive UI in Playwright"},
+    {"time": "2026-09-25T14:06:00Z", "event": "ran full backend suite and UI detector"},
+    {"time": "2026-09-25T14:06:37Z", "event": "completed metrics run"}
+  ],
+  "definition_of_done": {
+    "migration_applies_from_scratch": true,
+    "archive_endpoint_authorization": true,
+    "unarchive_endpoint_authorization": true,
+    "listing_archive_filter": true,
+    "generated_client_and_ui": true,
+    "backend_tests_pass": true,
+    "e2e_ui_behavior_verified": true
+  },
+  "docs_consulted": [
+    "AGENTS.md for repository workflow and source-of-truth rules",
+    "docs/ard/0001-sqlmodel-unified-models.md for model/API variant conventions",
+    "docs/ard/0004-alembic-migrations.md for migration ownership and verification",
+    "docs/ard/0005-generated-typescript-client.md for client regeneration",
+    "docs/api/openapi.json for the existing API contract",
+    "okf/index.md for trust-tier handling",
+    "okf/routers/items.md and okf/tables/item.md for item behavior and ownership context"
+  ],
+  "blockers_hit": [
+    "Initial Playwright run used 127.0.0.1, which did not match configured localhost CORS; reran with localhost.",
+    "Initial Playwright auth needed the documented first-superuser seed on the freshly migrated database."
+  ],
+  "self_assessed_completion": "complete",
+  "notes": "Documentation established the migration, generated-client, ownership, and model boundaries; raw source was cross-checked before implementation."
+}

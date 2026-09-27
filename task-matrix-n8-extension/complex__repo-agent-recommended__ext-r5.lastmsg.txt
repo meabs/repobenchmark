@@ -1,0 +1,17 @@
+Implemented archive support for Items.
+
+- Added `is_archived` field and Alembic migration: [migration]( /Users/garry/code/benchmark/repo-agent-recommended/backend/app/alembic/versions/4e91c856c032_add_archive_status_to_items.py)
+- Added archive/unarchive endpoints with ownership checks.
+- Added default filtering and `include_archived`.
+- Regenerated the frontend client.
+- Added archive/unarchive UI, checkbox filter, archived badge/muted styling.
+- Added backend and Playwright coverage.
+- Added ignored metrics file: [RUN_METRICS.json](/Users/garry/code/benchmark/repo-agent-recommended/RUN_METRICS.json)
+
+Verification:
+
+- Migration applied against local PostgreSQL from empty Alembic state.
+- Backend: 62 tests passed.
+- Frontend build passed.
+- Targeted archive Playwright test: 2 passed.
+- Full Items spec: 10 passed, 1 pre-existing strict heading-locator failure.

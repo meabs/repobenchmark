@@ -1,0 +1,6 @@
+Completed:
+
+- [ANSWER.md](/Users/garry/code/benchmark/repo-baseline/ANSWER.md) with precise answers to all five questions.
+- `RUN_METRICS.json` created and ignored via `.gitignore`, as requested.
+
+No other source files were changed.

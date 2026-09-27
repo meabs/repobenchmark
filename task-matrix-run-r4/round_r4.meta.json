@@ -1,0 +1,20 @@
+{
+  "round": "r4",
+  "order_understanding": [
+    "repo-agent-skill",
+    "repo-baseline",
+    "repo-agent-optimised"
+  ],
+  "order_simple_change": [
+    "repo-agent-optimised",
+    "repo-agent-skill",
+    "repo-baseline"
+  ],
+  "order_complex": [
+    "repo-agent-skill",
+    "repo-agent-optimised",
+    "repo-baseline"
+  ],
+  "model": "gpt-5.6-luna",
+  "wall_seconds": 7246
+}

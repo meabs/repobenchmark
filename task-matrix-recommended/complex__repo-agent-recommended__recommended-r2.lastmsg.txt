@@ -1,0 +1,17 @@
+Implemented archive support for Items.
+
+- Added `is_archived` with migration `f7a3e4acf1c5`.
+- Added archive/unarchive endpoints with owner/superuser authorization.
+- Added archived filtering and `include_archived`.
+- Regenerated the frontend API client.
+- Added archive/unarchive UI, archived badge, muted styling, and toggle.
+- Added backend and Playwright coverage.
+
+Verification:
+
+- Fresh PostgreSQL migration: passed.
+- Backend tests: `62 passed`.
+- Frontend build: passed.
+- Items Playwright tests: `11 passed`.
+- Ruff and visual detector: passed.
+- `RUN_METRICS.json` created and ignored.

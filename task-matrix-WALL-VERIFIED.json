@@ -1,0 +1,209 @@
+{
+  "repo-baseline": {
+    "understanding": {
+      "mean": 242.25,
+      "n": 4,
+      "missing": 0,
+      "vals": [
+        189,
+        219,
+        222,
+        339
+      ]
+    },
+    "simple_change": {
+      "mean": 329.5,
+      "n": 4,
+      "missing": 0,
+      "vals": [
+        251,
+        680,
+        179,
+        208
+      ]
+    },
+    "complex": {
+      "mean": 1085.3333333333333,
+      "n": 3,
+      "missing": 1,
+      "vals": [
+        733,
+        684,
+        1839
+      ]
+    }
+  },
+  "repo-agent-optimised": {
+    "understanding": {
+      "mean": 280,
+      "n": 4,
+      "missing": 0,
+      "vals": [
+        202,
+        261,
+        214,
+        443
+      ]
+    },
+    "simple_change": {
+      "mean": 423,
+      "n": 4,
+      "missing": 0,
+      "vals": [
+        238,
+        895,
+        252,
+        307
+      ]
+    },
+    "complex": {
+      "mean": 828,
+      "n": 3,
+      "missing": 1,
+      "vals": [
+        850,
+        510,
+        1124
+      ]
+    }
+  },
+  "repo-agent-skill-v1": {
+    "understanding": {
+      "mean": 207.25,
+      "n": 4,
+      "missing": 0,
+      "vals": [
+        241,
+        203,
+        186,
+        199
+      ]
+    },
+    "simple_change": {
+      "mean": 927.25,
+      "n": 4,
+      "missing": 0,
+      "vals": [
+        231,
+        264,
+        958,
+        2256
+      ]
+    },
+    "complex": {
+      "mean": 929.3333333333334,
+      "n": 3,
+      "missing": 1,
+      "vals": [
+        679,
+        1628,
+        481
+      ]
+    }
+  },
+  "repo-agent-skill-v2": {
+    "understanding": {
+      "mean": 200.75,
+      "n": 4,
+      "missing": 0,
+      "vals": [
+        224,
+        184,
+        217,
+        178
+      ]
+    },
+    "simple_change": {
+      "mean": 202.5,
+      "n": 4,
+      "missing": 0,
+      "vals": [
+        247,
+        175,
+        203,
+        185
+      ]
+    },
+    "complex": {
+      "mean": 475.25,
+      "n": 4,
+      "missing": 0,
+      "vals": [
+        280,
+        548,
+        479,
+        594
+      ]
+    }
+  },
+  "repo-agent-skill-v3": {
+    "understanding": {
+      "mean": 206.75,
+      "n": 4,
+      "missing": 0,
+      "vals": [
+        169,
+        190,
+        229,
+        239
+      ]
+    },
+    "simple_change": {
+      "mean": 194,
+      "n": 4,
+      "missing": 0,
+      "vals": [
+        216,
+        204,
+        181,
+        175
+      ]
+    },
+    "complex": {
+      "mean": 626,
+      "n": 4,
+      "missing": 0,
+      "vals": [
+        627,
+        588,
+        540,
+        749
+      ]
+    }
+  },
+  "repo-agent-recommended": {
+    "understanding": {
+      "mean": 201.5,
+      "n": 4,
+      "missing": 0,
+      "vals": [
+        216,
+        226,
+        190,
+        174
+      ]
+    },
+    "simple_change": {
+      "mean": 181.75,
+      "n": 4,
+      "missing": 0,
+      "vals": [
+        188,
+        177,
+        198,
+        164
+      ]
+    },
+    "complex": {
+      "mean": 504,
+      "n": 4,
+      "missing": 0,
+      "vals": [
+        546,
+        461,
+        517,
+        492
+      ]
+    }
+  }
+}

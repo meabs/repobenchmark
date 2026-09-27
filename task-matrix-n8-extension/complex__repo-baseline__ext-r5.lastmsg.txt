@@ -1,0 +1,14 @@
+Implemented archive support across backend and frontend.
+
+- Added `is_archived` model field and Alembic migration.
+- Added archive/unarchive endpoints with ownership checks.
+- Updated listing filtering and `include_archived`.
+- Regenerated OpenAPI client.
+- Added archive/unarchive UI, archived badge, and “Show archived” toggle.
+- Added backend tests and Playwright spec.
+- Migration verified on fresh PostgreSQL database.
+- Backend tests: 62 passed; item tests: 16 passed.
+- Frontend lint, build, and TypeScript checks passed.
+- Playwright UI flow was added but not confirmed due existing local SPA/auth harness issues; documented in `RUN_METRICS.json`.
+
+Metrics are recorded in ignored [RUN_METRICS.json](/Users/garry/code/benchmark/repo-baseline/RUN_METRICS.json).

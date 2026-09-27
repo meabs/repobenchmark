@@ -1,0 +1,28 @@
+{
+  "cell": "complex__repo-agent-skill__skillv2-r1",
+  "repo": "repo-agent-skill",
+  "task": "complex",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 280,
+  "run_metrics_present": true,
+  "verification": {
+    "migrate_exit_code": 0,
+    "test_exit_code": 0,
+    "test_summary_line": "61 passed, 1 warning in 2.83s"
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/25/rollout-2026-09-25T19-57-08-01a0d9ed-b0c8-7d30-b0f1-86d0392ceb46.jsonl",
+    "cwd": "/Users/garry/code/benchmark/repo-agent-skill",
+    "api_turns": 64,
+    "tool_calls_total": 63,
+    "file_edits": 8,
+    "shell_execs": 55,
+    "reasoning_steps": 69,
+    "input_tokens": 5016022,
+    "cached_input_tokens": 4871168,
+    "output_tokens": 23027,
+    "reasoning_output_tokens": 8265,
+    "total_tokens": 5039049
+  }
+}

@@ -1,0 +1,17 @@
+Implemented archive support for Items.
+
+- Added `is_archived` with migration [`d2384b25ad27_add_archived_flag_to_items.py`](/Users/garry/code/benchmark/repo-agent-skill/backend/app/alembic/versions/d2384b25ad27_add_archived_flag_to_items.py).
+- Added archive/unarchive endpoints with ownership checks.
+- Added archived filtering and `include_archived`.
+- Regenerated OpenAPI client and schema.
+- Added archive/unarchive UI, archived badge, and filter checkbox.
+- Added backend and Playwright coverage.
+
+Verification:
+
+- Fresh Postgres migration: passed.
+- Backend tests: 61 passed.
+- Frontend build: passed.
+- Items Playwright specs: 11 passed, including archive/unarchive behavior.
+- Full Playwright suite: 60 passed; 3 unrelated password-reset tests failed because Mailpit was unavailable.
+- Metrics written to ignored [`RUN_METRICS.json`](/Users/garry/code/benchmark/repo-agent-skill/RUN_METRICS.json).

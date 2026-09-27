@@ -1,0 +1,14 @@
+{
+  "session": "/Users/garry/.codex/sessions/2026/09/26/rollout-2026-09-26T22-56-40-01a0dfb8-6d04-7e60-8ab3-308960514a3e.jsonl",
+  "cwd": "/Users/garry/code/benchmark/repo-baseline",
+  "api_turns": 29,
+  "tool_calls_total": 28,
+  "file_edits": 4,
+  "shell_execs": 24,
+  "reasoning_steps": 31,
+  "input_tokens": 936868,
+  "cached_input_tokens": 864000,
+  "output_tokens": 8233,
+  "reasoning_output_tokens": 3393,
+  "total_tokens": 945101
+}

@@ -1,0 +1,27 @@
+{
+  "cell": "understanding__repo-agent-optimised",
+  "repo": "repo-agent-optimised",
+  "task": "understanding",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 261,
+  "run_metrics_present": true,
+  "verification": {
+    "answer_present": true,
+    "unexpected_file_changes": 0
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/25/rollout-2026-09-25T09-45-56-01a0d7be-1e4b-7870-8862-893423aceff7.jsonl",
+    "cwd": "/Users/garry/code/benchmark/repo-agent-optimised",
+    "api_turns": 28,
+    "tool_calls_total": 27,
+    "file_edits": 5,
+    "shell_execs": 22,
+    "reasoning_steps": 28,
+    "input_tokens": 1430015,
+    "cached_input_tokens": 1328128,
+    "output_tokens": 10106,
+    "reasoning_output_tokens": 4182,
+    "total_tokens": 1440121
+  }
+}

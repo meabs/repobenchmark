@@ -1,0 +1,28 @@
+{
+  "cell": "simple_change__repo-agent-optimised",
+  "repo": "repo-agent-optimised",
+  "task": "simple_change",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 895,
+  "run_metrics_present": true,
+  "verification": {
+    "migrate_exit_code": 0,
+    "test_exit_code": 0,
+    "test_summary_line": "59 passed, 2 warnings in 2.97s"
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/25/rollout-2026-09-25T10-05-41-01a0d7d0-327f-7e22-947d-96622aceba2d.jsonl",
+    "cwd": "/Users/garry/code/benchmark/repo-agent-optimised",
+    "api_turns": 35,
+    "tool_calls_total": 34,
+    "file_edits": 4,
+    "shell_execs": 30,
+    "reasoning_steps": 35,
+    "input_tokens": 1445122,
+    "cached_input_tokens": 1338624,
+    "output_tokens": 9898,
+    "reasoning_output_tokens": 3818,
+    "total_tokens": 1455020
+  }
+}

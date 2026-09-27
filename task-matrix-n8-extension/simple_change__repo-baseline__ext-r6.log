@@ -1,0 +1,4584 @@
+OpenAI Codex v0.157.0
+--------
+workdir: /Users/garry/code/benchmark/repo-baseline
+model: gpt-5.6-luna
+provider: openai
+approval: never
+sandbox: danger-full-access
+reasoning effort: medium
+reasoning summaries: none
+session id: 01a0dfcb-552b-73b1-9331-a99d121a4866
+--------
+user
+You're working in this repo: a FastAPI + SQLModel + PostgreSQL backend with a
+React/TypeScript frontend (TanStack Router, generated API client).
+
+Task: add optional sorting to the item listing endpoint.
+
+Requirements:
+1. Add an `order_by: Literal["created_at", "title"] = "created_at"` query parameter
+   to `read_items` in `backend/app/api/routes/items.py`.
+2. When `order_by="title"`, order results by `Item.title` ascending. When omitted or
+   `"created_at"`, keep the existing behavior unchanged (ordered by `created_at`
+   descending).
+3. No migration needed — no schema change. No frontend change needed; do not
+   regenerate the frontend client for this task, it's out of scope.
+4. Add a backend test verifying both orderings return items in the correct order.
+
+Definition of done:
+- Existing backend tests still pass; the new test passes.
+- No migration file created. No frontend files touched.
+
+Work through this yourself — explore the codebase as needed and match its existing
+conventions.
+
+---
+METRICS PROTOCOL (do this regardless of the task above — it does not count as part of
+the deliverable and should not be committed):
+
+1. Immediately, before doing anything else, run `date -u +%FT%TZ` and record it as
+   `start_time`.
+2. As you work, keep a running timeline with timestamps (`date -u +%FT%TZ`) for each
+   distinct phase (explored repo, first edit, wrote test, ran tests, done). If any
+   gap between two consecutive events exceeds 5 minutes, record what you were doing.
+3. Keep a running tally of tool calls by type as you go — don't reconstruct this
+   from memory at the end.
+4. Note the timestamp of your first file edit/write (distinct from read/explore).
+5. When done, run `date -u +%FT%TZ` for `end_time`, then write a single JSON file to
+   `RUN_METRICS.json` at the repo root with this shape:
+
+{
+  "repo": "repo-baseline",
+  "task": "simple_change",
+  "start_time": "...",
+  "end_time": "...",
+  "duration_seconds": <int>,
+  "time_to_first_edit_seconds": <int>,
+  "tool_calls": {"read": <int>, "edit_or_write": <int>, "bash": <int>, "search_or_grep": <int>, "other": <int>, "total": <int>},
+  "files_read": [...],
+  "files_created_or_edited": [...],
+  "timeline": [{"time": "...", "event": "..."}, ...],
+  "definition_of_done": {"order_by_param_added": true/false, "title_ordering_correct": true/false, "default_ordering_unchanged": true/false, "new_test_added_and_passes": true/false, "no_migration_created": true/false, "no_frontend_touched": true/false},
+  "docs_consulted": [],
+  "blockers_hit": ["one line per blocker, or any >5min gap and why"],
+  "self_assessed_completion": "complete | partial | blocked",
+  "notes": "anything relevant to how easy or hard orientation was for a small, scoped change in this repo"
+}
+
+6. Add `RUN_METRICS.json` to `.gitignore` (create the entry if it's not already there).
+exec
+/bin/zsh -lc 'date -u +%FT%TZ' in /Users/garry/code/benchmark/repo-baseline
+ succeeded in 0ms:
+2026-09-26T22:17:26Z
+
+codex
+I’m using the repository workflow skills for disciplined task execution and test-first changes. I’ll first inspect the guidance and existing conventions, then add the endpoint parameter and backend coverage, run the focused and full backend tests, and verify that migrations/frontend files remain untouched.
+exec
+/bin/zsh -lc "sed -n '1,240p' /Users/garry/.agents/skills/using-superpowers/SKILL.md && printf '\\n--- TDD ---\\n' && sed -n '1,260p' /Users/garry/.agents/skills/tdd/SKILL.md" in /Users/garry/code/benchmark/repo-baseline
+ succeeded in 0ms:
+---
+name: using-superpowers
+description: Use when starting any conversation - establishes how to find and use skills, requiring skill invocation before ANY response including clarifying questions
+---
+
+<SUBAGENT-STOP>
+If you were dispatched as a subagent to execute a specific task, ignore this skill.
+</SUBAGENT-STOP>
+
+<EXTREMELY-IMPORTANT>
+If you think there is even a 1% chance a skill might apply to what you are doing, you ABSOLUTELY MUST invoke the skill.
+
+IF A SKILL APPLIES TO YOUR TASK, YOU DO NOT HAVE A CHOICE. YOU MUST USE IT.
+
+This is not negotiable. You cannot rationalize your way out of this.
+</EXTREMELY-IMPORTANT>
+
+## The Rule
+
+**Invoke relevant or requested skills BEFORE any response or action** — including clarifying questions, exploring the codebase, or checking files. If it turns out wrong for the situation, you don't have to use it.
+
+**Before entering plan mode:** if you haven't already brainstormed, invoke the brainstorming skill first.
+
+Then announce "Using [skill] to [purpose]" and follow the skill exactly. If it has a checklist, create a todo per item.
+
+## Skill Priority
+
+When multiple skills apply, process skills come first — they set the approach, then implementation skills (frontend-design, etc.) carry it out. Brainstorming and systematic-debugging are Superpowers' most common process skills, but the rule holds for any of them.
+
+- "Let's build X" → superpowers:brainstorming first, then implementation skills.
+- "Fix this bug" → superpowers:systematic-debugging first, then domain skills.
+
+## Red Flags
+
+These thoughts mean STOP—you're rationalizing:
+
+| Thought | Reality |
+|---------|---------|
+| "This is just a simple question" | Questions are tasks. Check for skills. |
+| "I need more context first" | Skill check comes BEFORE clarifying questions. |
+| "Let me explore the codebase first" | Skills tell you HOW to explore. Check first. |
+| "I can check git/files quickly" | Files lack conversation context. Check for skills. |
+| "Let me gather information first" | Skills tell you HOW to gather information. |
+| "This doesn't need a formal skill" | If a skill exists, use it. |
+| "I remember this skill" | Skills evolve. Read current version. |
+| "This doesn't count as a task" | Action = task. Check for skills. |
+| "The skill is overkill" | Simple things become complex. Use it. |
+| "I'll just do this one thing first" | Check BEFORE doing anything. |
+| "This feels productive" | Undisciplined action wastes time. Skills prevent this. |
+| "I know what that means" | Knowing the concept ≠ using the skill. Invoke it. |
+
+## Platform Adaptation
+
+If your harness appears here, read its reference file for special instructions:
+
+- Codex: `references/codex-tools.md`
+- Pi: `references/pi-tools.md`
+- Antigravity: `references/antigravity-tools.md`
+- Hermes Agent: `references/hermes-tools.md`
+
+## User Instructions
+
+User instructions (CLAUDE.md, AGENTS.md, GEMINI.md, etc, direct requests) take precedence over skills, which in turn override default behavior. Only skip skill workflows or instructions when your human partner has explicitly told you to.
+
+--- TDD ---
+---
+name: tdd
+description: Test-driven development. Use when the user wants to build features or fix bugs test-first, mentions "red-green-refactor", or wants integration tests.
+---
+
+# Test-Driven Development
+
+TDD is the red → green loop. This skill is the reference that makes that loop produce tests worth keeping: what a good test is, where tests go, the anti-patterns, and the rules of the loop. Every section applies on every cycle: consult them before and during the loop, not after.
+
+When exploring the codebase, read `CONTEXT.md` (if it exists) so test names and interface vocabulary match the project's domain language, and respect ADRs in the area you're touching.
+
+## What a good test is
+
+Tests verify behavior through public interfaces, not implementation details. Code can change entirely; tests shouldn't. A good test reads like a specification: "user can checkout with valid cart" tells you exactly what capability exists, and it survives refactors because it doesn't care about internal structure.
+
+See [tests.md](tests.md) for examples and [mocking.md](mocking.md) for mocking guidelines.
+
+## Seams: where tests go
+
+A **seam** is the public boundary you test at: the interface where you observe behavior without reaching inside. Tests live at seams, never against internals.
+
+**Test only at pre-agreed seams.** Before writing any test, write down the seams under test and confirm them with the user. No test is written at an unconfirmed seam. You can't test everything, so agreeing the seams up front is how testing effort lands on the critical paths and complex logic instead of every edge case.
+
+Ask: "What's the public interface, and which seams should we test?"
+
+When the shape of that interface is itself in question (how deep the module is, where the seam belongs, what the interface should expose), call the Skill tool with "codebase-design" for the vocabulary. It is the shared source of the module, interface, depth, seam, adapter, leverage and locality terms, and it is a reference to consult, not a session to run.
+
+## Anti-patterns
+
+- **Implementation-coupled**: mocks internal collaborators, tests private methods, or verifies through a side channel (querying the database instead of using the interface). The tell: the test breaks when you refactor but behavior hasn't changed.
+- **Tautological**: the assertion recomputes the expected value the way the code does (`expect(add(a, b)).toBe(a + b)`, a snapshot derived by hand the same way, a constant asserted equal to itself), so it passes by construction and can never disagree with the code. Expected values must come from an independent source of truth: a known-good literal, a worked example, the spec.
+- **Horizontal slicing**: writing all tests first, then all implementation. Bulk tests verify _imagined_ behavior: you test the _shape_ of things rather than user-facing behavior, the tests go insensitive to real changes, and you commit to test structure before understanding the implementation. Work in **vertical slices** instead: one test → one implementation → repeat, each test a **tracer bullet** that responds to what the last cycle taught you.
+
+## Rules of the loop
+
+- **Red before green.** Write the failing test first, then only enough code to pass it. Don't anticipate future tests or add speculative features.
+- **One slice at a time.** One seam, one test, one minimal implementation per cycle.
+- **Refactoring is not part of the loop.** It belongs to the review stage (see the `code-review` skill), not the red → green implementation cycle.
+
+exec
+/bin/zsh -lc "sed -n '1,220p' /Users/garry/.agents/skills/using-superpowers/references/codex-tools.md && printf '\\n--- TDD tests ---\\n' && sed -n '1,260p' /Users/garry/.agents/skills/tdd/tests.md && printf '\\n--- TDD mocking ---\\n' && sed -n '1,220p' /Users/garry/.agents/skills/tdd/mocking.md" in /Users/garry/code/benchmark/repo-baseline
+ succeeded in 0ms:
+## Subagent dispatch requires multi-agent support
+
+Add to your Codex config (`~/.codex/config.toml`):
+
+```toml
+[features]
+multi_agent = true
+```
+
+This enables the multi-agent tools that skills like
+`dispatching-parallel-agents` and `subagent-driven-development` use.
+Which tools you get depends on the multi-agent version your model
+preset selects (current presets run V2; older ones run V1). Trust your
+actual tool list over any table — including this one — when they
+disagree.
+
+- **Spawning:** give children a clean context with
+  `spawn_agent {fork_turns: "none"}`; the default `"all"` copies your
+  entire transcript into the child. On Codex 0.145+, role files under
+  `~/.codex/agents/` attach to isolated forks via `agent_type`.
+  Full-history forks accept `model` and `reasoning_effort` overrides
+  (only `agent_type` is refused there) — isolated forks are the SDD
+  default for context hygiene, not because overrides require them.
+- **Fix rounds:** resume the implementer with `followup_task` — it
+  delivers your message, triggers a turn, and transparently reloads a
+  child the harness evicted. Never dispatch a fresh implementer on the
+  theory that a spawned agent cannot be messaged again; on V2 it
+  always can.
+- **Lifecycle:** V2 has no `close_agent`. Finished children are
+  evicted automatically when slots are needed; leaving them unclosed
+  costs nothing. Only V1 sessions have `close_agent` — there, close
+  reviewers when their review returns, and close each implementer
+  after its task's review passes.
+- **Model names:** never copy a model name from a skill, table, or old
+  session into `spawn_agent` without checking it against your current
+  spawn allowlist — V2 accepts only V2-capable presets and hard-errors
+  on the rest.
+
+## Waiting on children
+
+`wait_agent` is an event subscription, not a poll: a long wait wakes
+the moment a child produces mailbox activity, with the same latency as
+a short one. Short-timeout polling buys nothing and costs a tool call —
+and a context rebill — per poll. In measured sessions, roughly
+two-thirds of all wait calls were short polls that timed out.
+
+- While you still have local work, do not wait at all. A completed
+  child's final answer is pushed into your mailbox and arrives with
+  your next turn.
+- When you are genuinely idle with children outstanding, wait in
+  bounded stretches: `wait_agent` with `timeout_ms` 300000-600000
+  (5-10 minutes). After each stretch — wake or timeout — post one
+  status line, run `list_agents`, and chase any child that finished
+  without reporting. Never stack polls shorter than five minutes; the
+  event subscription wakes a bounded stretch just as fast as a short
+  one.
+- Completion mail cannot wake an idle controller (it is delivered
+  without triggering a turn); covering that idle window is
+  `wait_agent`'s only job. A stretch that times out with no activity
+  is your cue to reconcile, not to shorten the next stretch.
+
+## Model routing on spawns
+
+Every `spawn_agent` you issue — including when you are yourself a
+spawned child running a fan-out — sets `model` AND `reasoning_effort`
+explicitly, per the Model Selection rules of the skill you are
+executing. Setting `model` alone is a trap: the child's effort
+silently resets to that model's default, not to yours.
+
+Ask your human partner to add a machine-level backstop to
+`~/.codex/config.toml` so any spawn that slips through still routes to
+a deliberate tier instead of silently inheriting the session's most
+expensive model:
+
+```toml
+[agents]
+default_subagent_model = "<a mid-tier model from your spawn allowlist>"
+default_subagent_reasoning_effort = "medium"
+```
+
+## Environment Detection
+
+Skills that create worktrees or finish branches should detect their
+environment with read-only git commands before proceeding:
+
+```bash
+GIT_DIR=$(cd "$(git rev-parse --git-dir)" 2>/dev/null && pwd -P)
+GIT_COMMON=$(cd "$(git rev-parse --git-common-dir)" 2>/dev/null && pwd -P)
+BRANCH=$(git branch --show-current)
+```
+
+- `GIT_DIR != GIT_COMMON` → already in a linked worktree (skip creation)
+- `BRANCH` empty → detached HEAD (cannot branch/push/PR from sandbox)
+
+See `using-git-worktrees` Step 0 and `finishing-a-development-branch`
+Step 1 for how each skill uses these signals.
+
+## Codex App Finishing
+
+When the sandbox blocks branch/push operations (detached HEAD in an
+externally managed worktree), the agent commits all work and informs
+the user to use the App's native controls:
+
+- **"Create branch"** — names the branch, then commit/push/PR via App UI
+- **"Hand off to local"** — transfers work to the user's local checkout
+
+The agent can still run tests, stage files, and output suggested branch
+names, commit messages, and PR descriptions for the user to copy.
+
+--- TDD tests ---
+# Good and Bad Tests
+
+## Good Tests
+
+**Integration-style**: Test through real interfaces, not mocks of internal parts.
+
+```typescript
+// GOOD: Tests observable behavior
+test("user can checkout with valid cart", async () => {
+  const cart = createCart();
+  cart.add(product);
+  const result = await checkout(cart, paymentMethod);
+  expect(result.status).toBe("confirmed");
+});
+```
+
+Characteristics:
+
+- Tests behavior users/callers care about
+- Uses public API only
+- Survives internal refactors
+- Describes WHAT, not HOW
+- One logical assertion per test
+
+## Bad Tests
+
+**Implementation-detail tests**: Coupled to internal structure.
+
+```typescript
+// BAD: Tests implementation details
+test("checkout calls paymentService.process", async () => {
+  const mockPayment = jest.mock(paymentService);
+  await checkout(cart, payment);
+  expect(mockPayment.process).toHaveBeenCalledWith(cart.total);
+});
+```
+
+Red flags:
+
+- Mocking internal collaborators
+- Testing private methods
+- Asserting on call counts/order
+- Test breaks when refactoring without behavior change
+- Test name describes HOW not WHAT
+- Verifying through external means instead of interface
+
+```typescript
+// BAD: Bypasses interface to verify
+test("createUser saves to database", async () => {
+  await createUser({ name: "Alice" });
+  const row = await db.query("SELECT * FROM users WHERE name = ?", ["Alice"]);
+  expect(row).toBeDefined();
+});
+
+// GOOD: Verifies through interface
+test("createUser makes user retrievable", async () => {
+  const user = await createUser({ name: "Alice" });
+  const retrieved = await getUser(user.id);
+  expect(retrieved.name).toBe("Alice");
+});
+```
+
+**Tautological tests**: Expected value restates the implementation, so the test passes by construction.
+
+```typescript
+// BAD: Expected value is recomputed the way the code computes it
+test("calculateTotal sums line items", () => {
+  const items = [{ price: 10 }, { price: 5 }];
+  const expected = items.reduce((sum, i) => sum + i.price, 0);
+  expect(calculateTotal(items)).toBe(expected);
+});
+
+// GOOD: Expected value is an independent, known literal
+test("calculateTotal sums line items", () => {
+  expect(calculateTotal([{ price: 10 }, { price: 5 }])).toBe(15);
+});
+```
+
+--- TDD mocking ---
+# When to Mock
+
+Mock at **system boundaries** only:
+
+- External APIs (payment, email, etc.)
+- Databases (sometimes - prefer test DB)
+- Time/randomness
+- File system (sometimes)
+
+Don't mock:
+
+- Your own classes/modules
+- Internal collaborators
+- Anything you control
+
+## Designing for Mockability
+
+At system boundaries, design interfaces that are easy to mock:
+
+**1. Use dependency injection**
+
+Pass external dependencies in rather than creating them internally:
+
+```typescript
+// Easy to mock
+function processPayment(order, paymentClient) {
+  return paymentClient.charge(order.total);
+}
+
+// Hard to mock
+function processPayment(order) {
+  const client = new StripeClient(process.env.STRIPE_KEY);
+  return client.charge(order.total);
+}
+```
+
+**2. Prefer SDK-style interfaces over generic fetchers**
+
+Create specific functions for each external operation instead of one generic function with conditional logic:
+
+```typescript
+// GOOD: Each function is independently mockable
+const api = {
+  getUser: (id) => fetch(`/users/${id}`),
+  getOrders: (userId) => fetch(`/users/${userId}/orders`),
+  createOrder: (data) => fetch('/orders', { method: 'POST', body: data }),
+};
+
+// BAD: Mocking requires conditional logic inside the mock
+const api = {
+  fetch: (endpoint, options) => fetch(endpoint, options),
+};
+```
+
+The SDK approach means:
+- Each mock returns one specific shape
+- No conditional logic in test setup
+- Easier to see which endpoints a test exercises
+- Type safety per endpoint
+
+exec
+/bin/zsh -lc "date -u +%FT%TZ && printf '%s\\n' '--- top-level ---' && rg --files -g '"'!node_modules'"' -g '"'!frontend/**/generated/**'"' | sed -n '1,120p' && printf '%s\\n' '--- git status ---' && git status --short && printf '%s\\n' '--- context files ---' && find .. -name CONTEXT.md -o -name AGENTS.md -o -name CLAUDE.md" in /Users/garry/code/benchmark/repo-baseline
+ succeeded in 1754ms:
+../repo-agent-optimised/AGENTS.md
+../repo-agent-recommended/AGENTS.md
+../repo-agent-skill/AGENTS.md
+
+codex
+Repository orientation is complete: the relevant seam is the HTTP item-list route, with existing route tests in `backend/tests/api/routes/test_items.py`; the worktree is clean and there is no repo-local context/ADR file to apply. I’m now checking the route, model, fixtures, and test commands before writing the first failing test.
+exec
+/bin/zsh -lc "printf '%s\\n' '--- items route ---' && sed -n '1,260p' backend/app/api/routes/items.py && printf '%s\\n' '--- item tests ---' && sed -n '1,360p' backend/tests/api/routes/test_items.py && printf '%s\\n' '--- models ---' && rg -n -C 4 'class Item|created_at|def read_items' backend/app backend/tests | sed -n '1,280p' && printf '%s\\n' '--- backend test config/scripts ---' && sed -n '1,220p' backend/pyproject.toml && sed -n '1,180p' backend/scripts/test.sh && printf '%s\\n' '--- gitignore ---' && sed -n '1,220p' .gitignore 2>/dev/null || true && printf '%s\\n' '--- backend gitignore ---' && sed -n '1,160p' backend/.gitignore 2>/dev/null || true" in /Users/garry/code/benchmark/repo-baseline
+ succeeded in 0ms:
+--- items route ---
+import uuid
+from typing import Any
+
+from fastapi import APIRouter, HTTPException
+from sqlmodel import col, func, select
+
+from app.api.deps import CurrentUser, SessionDep
+from app.models import Item, ItemCreate, ItemPublic, ItemsPublic, ItemUpdate, Message
+
+router = APIRouter(prefix="/items", tags=["items"])
+
+
+@router.get("/", response_model=ItemsPublic)
+def read_items(
+    session: SessionDep, current_user: CurrentUser, skip: int = 0, limit: int = 100
+) -> Any:
+    """
+    Retrieve items.
+    """
+
+    if current_user.is_superuser:
+        count_statement = select(func.count()).select_from(Item)
+        count = session.exec(count_statement).one()
+        statement = (
+            select(Item).order_by(col(Item.created_at).desc()).offset(skip).limit(limit)
+        )
+        items = session.exec(statement).all()
+    else:
+        count_statement = (
+            select(func.count())
+            .select_from(Item)
+            .where(Item.owner_id == current_user.id)
+        )
+        count = session.exec(count_statement).one()
+        statement = (
+            select(Item)
+            .where(Item.owner_id == current_user.id)
+            .order_by(col(Item.created_at).desc())
+            .offset(skip)
+            .limit(limit)
+        )
+        items = session.exec(statement).all()
+
+    items_public = [ItemPublic.model_validate(item) for item in items]
+    return ItemsPublic(data=items_public, count=count)
+
+
+@router.get("/{id}", response_model=ItemPublic)
+def read_item(session: SessionDep, current_user: CurrentUser, id: uuid.UUID) -> Any:
+    """
+    Get item by ID.
+    """
+    item = session.get(Item, id)
+    if not item:
+        raise HTTPException(status_code=404, detail="Item not found")
+    if not current_user.is_superuser and (item.owner_id != current_user.id):
+        raise HTTPException(status_code=403, detail="Not enough permissions")
+    return item
+
+
+@router.post("/", response_model=ItemPublic)
+def create_item(
+    *, session: SessionDep, current_user: CurrentUser, item_in: ItemCreate
+) -> Any:
+    """
+    Create new item.
+    """
+    item = Item.model_validate(item_in, update={"owner_id": current_user.id})
+    session.add(item)
+    session.commit()
+    session.refresh(item)
+    return item
+
+
+@router.put("/{id}", response_model=ItemPublic)
+def update_item(
+    *,
+    session: SessionDep,
+    current_user: CurrentUser,
+    id: uuid.UUID,
+    item_in: ItemUpdate,
+) -> Any:
+    """
+    Update an item.
+    """
+    item = session.get(Item, id)
+    if not item:
+        raise HTTPException(status_code=404, detail="Item not found")
+    if not current_user.is_superuser and (item.owner_id != current_user.id):
+        raise HTTPException(status_code=403, detail="Not enough permissions")
+    update_dict = item_in.model_dump(exclude_unset=True)
+    item.sqlmodel_update(update_dict)
+    session.add(item)
+    session.commit()
+    session.refresh(item)
+    return item
+
+
+@router.delete("/{id}")
+def delete_item(
+    session: SessionDep, current_user: CurrentUser, id: uuid.UUID
+) -> Message:
+    """
+    Delete an item.
+    """
+    item = session.get(Item, id)
+    if not item:
+        raise HTTPException(status_code=404, detail="Item not found")
+    if not current_user.is_superuser and (item.owner_id != current_user.id):
+        raise HTTPException(status_code=403, detail="Not enough permissions")
+    session.delete(item)
+    session.commit()
+    return Message(message="Item deleted successfully")
+--- item tests ---
+import uuid
+
+from fastapi.testclient import TestClient
+from sqlmodel import Session
+
+from app.core.config import settings
+from tests.utils.item import create_random_item
+
+
+def test_create_item(
+    client: TestClient, superuser_token_headers: dict[str, str]
+) -> None:
+    data = {"title": "Foo", "description": "Fighters"}
+    response = client.post(
+        f"{settings.API_V1_STR}/items/",
+        headers=superuser_token_headers,
+        json=data,
+    )
+    assert response.status_code == 200
+    content = response.json()
+    assert content["title"] == data["title"]
+    assert content["description"] == data["description"]
+    assert "id" in content
+    assert "owner_id" in content
+
+
+def test_read_item(
+    client: TestClient, superuser_token_headers: dict[str, str], db: Session
+) -> None:
+    item = create_random_item(db)
+    response = client.get(
+        f"{settings.API_V1_STR}/items/{item.id}",
+        headers=superuser_token_headers,
+    )
+    assert response.status_code == 200
+    content = response.json()
+    assert content["title"] == item.title
+    assert content["description"] == item.description
+    assert content["id"] == str(item.id)
+    assert content["owner_id"] == str(item.owner_id)
+
+
+def test_read_item_not_found(
+    client: TestClient, superuser_token_headers: dict[str, str]
+) -> None:
+    response = client.get(
+        f"{settings.API_V1_STR}/items/{uuid.uuid4()}",
+        headers=superuser_token_headers,
+    )
+    assert response.status_code == 404
+    content = response.json()
+    assert content["detail"] == "Item not found"
+
+
+def test_read_item_not_enough_permissions(
+    client: TestClient, normal_user_token_headers: dict[str, str], db: Session
+) -> None:
+    item = create_random_item(db)
+    response = client.get(
+        f"{settings.API_V1_STR}/items/{item.id}",
+        headers=normal_user_token_headers,
+    )
+    assert response.status_code == 403
+    content = response.json()
+    assert content["detail"] == "Not enough permissions"
+
+
+def test_read_items(
+    client: TestClient, superuser_token_headers: dict[str, str], db: Session
+) -> None:
+    create_random_item(db)
+    create_random_item(db)
+    response = client.get(
+        f"{settings.API_V1_STR}/items/",
+        headers=superuser_token_headers,
+    )
+    assert response.status_code == 200
+    content = response.json()
+    assert len(content["data"]) >= 2
+
+
+def test_update_item(
+    client: TestClient, superuser_token_headers: dict[str, str], db: Session
+) -> None:
+    item = create_random_item(db)
+    data = {"title": "Updated title", "description": "Updated description"}
+    response = client.put(
+        f"{settings.API_V1_STR}/items/{item.id}",
+        headers=superuser_token_headers,
+        json=data,
+    )
+    assert response.status_code == 200
+    content = response.json()
+    assert content["title"] == data["title"]
+    assert content["description"] == data["description"]
+    assert content["id"] == str(item.id)
+    assert content["owner_id"] == str(item.owner_id)
+
+
+def test_update_item_not_found(
+    client: TestClient, superuser_token_headers: dict[str, str]
+) -> None:
+    data = {"title": "Updated title", "description": "Updated description"}
+    response = client.put(
+        f"{settings.API_V1_STR}/items/{uuid.uuid4()}",
+        headers=superuser_token_headers,
+        json=data,
+    )
+    assert response.status_code == 404
+    content = response.json()
+    assert content["detail"] == "Item not found"
+
+
+def test_update_item_not_enough_permissions(
+    client: TestClient, normal_user_token_headers: dict[str, str], db: Session
+) -> None:
+    item = create_random_item(db)
+    data = {"title": "Updated title", "description": "Updated description"}
+    response = client.put(
+        f"{settings.API_V1_STR}/items/{item.id}",
+        headers=normal_user_token_headers,
+        json=data,
+    )
+    assert response.status_code == 403
+    content = response.json()
+    assert content["detail"] == "Not enough permissions"
+
+
+def test_delete_item(
+    client: TestClient, superuser_token_headers: dict[str, str], db: Session
+) -> None:
+    item = create_random_item(db)
+    response = client.delete(
+        f"{settings.API_V1_STR}/items/{item.id}",
+        headers=superuser_token_headers,
+    )
+    assert response.status_code == 200
+    content = response.json()
+    assert content["message"] == "Item deleted successfully"
+
+
+def test_delete_item_not_found(
+    client: TestClient, superuser_token_headers: dict[str, str]
+) -> None:
+    response = client.delete(
+        f"{settings.API_V1_STR}/items/{uuid.uuid4()}",
+        headers=superuser_token_headers,
+    )
+    assert response.status_code == 404
+    content = response.json()
+    assert content["detail"] == "Item not found"
+
+
+def test_delete_item_not_enough_permissions(
+    client: TestClient, normal_user_token_headers: dict[str, str], db: Session
+) -> None:
+    item = create_random_item(db)
+    response = client.delete(
+        f"{settings.API_V1_STR}/items/{item.id}",
+        headers=normal_user_token_headers,
+    )
+    assert response.status_code == 403
+    content = response.json()
+    assert content["detail"] == "Not enough permissions"
+--- models ---
+backend/app/alembic/versions/fe56fa70289e_add_created_at_to_user_and_item.py:1:"""Add created_at to User and Item
+backend/app/alembic/versions/fe56fa70289e_add_created_at_to_user_and_item.py-2-
+backend/app/alembic/versions/fe56fa70289e_add_created_at_to_user_and_item.py-3-Revision ID: fe56fa70289e
+backend/app/alembic/versions/fe56fa70289e_add_created_at_to_user_and_item.py-4-Revises: 1a31ce608336
+backend/app/alembic/versions/fe56fa70289e_add_created_at_to_user_and_item.py-5-Create Date: 2026-01-23 15:50:37.171462
+--
+backend/app/alembic/versions/fe56fa70289e_add_created_at_to_user_and_item.py-18-
+backend/app/alembic/versions/fe56fa70289e_add_created_at_to_user_and_item.py-19-
+backend/app/alembic/versions/fe56fa70289e_add_created_at_to_user_and_item.py-20-def upgrade():
+backend/app/alembic/versions/fe56fa70289e_add_created_at_to_user_and_item.py-21-    # ### commands auto generated by Alembic - please adjust! ###
+backend/app/alembic/versions/fe56fa70289e_add_created_at_to_user_and_item.py:22:    op.add_column('item', sa.Column('created_at', sa.DateTime(timezone=True), nullable=True))
+backend/app/alembic/versions/fe56fa70289e_add_created_at_to_user_and_item.py:23:    op.add_column('user', sa.Column('created_at', sa.DateTime(timezone=True), nullable=True))
+backend/app/alembic/versions/fe56fa70289e_add_created_at_to_user_and_item.py-24-    # ### end Alembic commands ###
+backend/app/alembic/versions/fe56fa70289e_add_created_at_to_user_and_item.py-25-
+backend/app/alembic/versions/fe56fa70289e_add_created_at_to_user_and_item.py-26-
+backend/app/alembic/versions/fe56fa70289e_add_created_at_to_user_and_item.py-27-def downgrade():
+backend/app/alembic/versions/fe56fa70289e_add_created_at_to_user_and_item.py-28-    # ### commands auto generated by Alembic - please adjust! ###
+backend/app/alembic/versions/fe56fa70289e_add_created_at_to_user_and_item.py:29:    op.drop_column('user', 'created_at')
+backend/app/alembic/versions/fe56fa70289e_add_created_at_to_user_and_item.py:30:    op.drop_column('item', 'created_at')
+backend/app/alembic/versions/fe56fa70289e_add_created_at_to_user_and_item.py-31-    # ### end Alembic commands ###
+--
+backend/app/api/routes/items.py-10-router = APIRouter(prefix="/items", tags=["items"])
+backend/app/api/routes/items.py-11-
+backend/app/api/routes/items.py-12-
+backend/app/api/routes/items.py-13-@router.get("/", response_model=ItemsPublic)
+backend/app/api/routes/items.py:14:def read_items(
+backend/app/api/routes/items.py-15-    session: SessionDep, current_user: CurrentUser, skip: int = 0, limit: int = 100
+backend/app/api/routes/items.py-16-) -> Any:
+backend/app/api/routes/items.py-17-    """
+backend/app/api/routes/items.py-18-    Retrieve items.
+--
+backend/app/api/routes/items.py-21-    if current_user.is_superuser:
+backend/app/api/routes/items.py-22-        count_statement = select(func.count()).select_from(Item)
+backend/app/api/routes/items.py-23-        count = session.exec(count_statement).one()
+backend/app/api/routes/items.py-24-        statement = (
+backend/app/api/routes/items.py:25:            select(Item).order_by(col(Item.created_at).desc()).offset(skip).limit(limit)
+backend/app/api/routes/items.py-26-        )
+backend/app/api/routes/items.py-27-        items = session.exec(statement).all()
+backend/app/api/routes/items.py-28-    else:
+backend/app/api/routes/items.py-29-        count_statement = (
+--
+backend/app/api/routes/items.py-34-        count = session.exec(count_statement).one()
+backend/app/api/routes/items.py-35-        statement = (
+backend/app/api/routes/items.py-36-            select(Item)
+backend/app/api/routes/items.py-37-            .where(Item.owner_id == current_user.id)
+backend/app/api/routes/items.py:38:            .order_by(col(Item.created_at).desc())
+backend/app/api/routes/items.py-39-            .offset(skip)
+backend/app/api/routes/items.py-40-            .limit(limit)
+backend/app/api/routes/items.py-41-        )
+backend/app/api/routes/items.py-42-        items = session.exec(statement).all()
+--
+backend/app/api/routes/users.py-42-    count_statement = select(func.count()).select_from(User)
+backend/app/api/routes/users.py-43-    count = session.exec(count_statement).one()
+backend/app/api/routes/users.py-44-
+backend/app/api/routes/users.py-45-    statement = (
+backend/app/api/routes/users.py:46:        select(User).order_by(col(User.created_at).desc()).offset(skip).limit(limit)
+backend/app/api/routes/users.py-47-    )
+backend/app/api/routes/users.py-48-    users = session.exec(statement).all()
+backend/app/api/routes/users.py-49-
+backend/app/api/routes/users.py-50-    users_public = [UserPublic.model_validate(user) for user in users]
+--
+backend/app/models.py-51-# Database model, database table inferred from class name
+backend/app/models.py-52-class User(UserBase, table=True):
+backend/app/models.py-53-    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+backend/app/models.py-54-    hashed_password: str
+backend/app/models.py:55:    created_at: datetime | None = Field(
+backend/app/models.py-56-        default_factory=get_datetime_utc,
+backend/app/models.py-57-        sa_type=DateTime(timezone=True),  # type: ignore
+backend/app/models.py-58-    )
+backend/app/models.py-59-    items: list[Item] = Relationship(back_populates="owner", cascade_delete=True)
+--
+backend/app/models.py-61-
+backend/app/models.py-62-# Properties to return via API, id is always required
+backend/app/models.py-63-class UserPublic(UserBase):
+backend/app/models.py-64-    id: uuid.UUID
+backend/app/models.py:65:    created_at: datetime | None = None
+backend/app/models.py-66-
+backend/app/models.py-67-
+backend/app/models.py-68-class UsersPublic(SQLModel):
+backend/app/models.py-69-    data: list[UserPublic]
+backend/app/models.py-70-    count: int
+backend/app/models.py-71-
+backend/app/models.py-72-
+backend/app/models.py-73-# Shared properties
+backend/app/models.py:74:class ItemBase(SQLModel):
+backend/app/models.py-75-    title: str = Field(min_length=1, max_length=255)
+backend/app/models.py-76-    description: str | None = Field(default=None, max_length=255)
+backend/app/models.py-77-
+backend/app/models.py-78-
+backend/app/models.py-79-# Properties to receive on item creation
+backend/app/models.py:80:class ItemCreate(ItemBase):
+backend/app/models.py-81-    pass
+backend/app/models.py-82-
+backend/app/models.py-83-
+backend/app/models.py-84-# Properties to receive on item update
+backend/app/models.py:85:class ItemUpdate(SQLModel):
+backend/app/models.py-86-    title: str | None = Field(default=None, min_length=1, max_length=255)
+backend/app/models.py-87-    description: str | None = Field(default=None, max_length=255)
+backend/app/models.py-88-
+backend/app/models.py-89-
+backend/app/models.py-90-# Database model, database table inferred from class name
+backend/app/models.py:91:class Item(ItemBase, table=True):
+backend/app/models.py-92-    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+backend/app/models.py:93:    created_at: datetime | None = Field(
+backend/app/models.py-94-        default_factory=get_datetime_utc,
+backend/app/models.py-95-        sa_type=DateTime(timezone=True),  # type: ignore
+backend/app/models.py-96-    )
+backend/app/models.py-97-    owner_id: uuid.UUID = Field(
+--
+backend/app/models.py-100-    owner: User | None = Relationship(back_populates="items")
+backend/app/models.py-101-
+backend/app/models.py-102-
+backend/app/models.py-103-# Properties to return via API, id is always required
+backend/app/models.py:104:class ItemPublic(ItemBase):
+backend/app/models.py-105-    id: uuid.UUID
+backend/app/models.py-106-    owner_id: uuid.UUID
+backend/app/models.py:107:    created_at: datetime | None = None
+backend/app/models.py-108-
+backend/app/models.py-109-
+backend/app/models.py:110:class ItemsPublic(SQLModel):
+backend/app/models.py-111-    data: list[ItemPublic]
+backend/app/models.py-112-    count: int
+backend/app/models.py-113-
+backend/app/models.py-114-
+--- backend test config/scripts ---
+[project]
+name = "app"
+version = "0.1.0"
+description = ""
+requires-python = ">=3.14,<4.0"
+dependencies = [
+    "fastapi[standard]>=0.141.1,<1.0.0",
+    "python-multipart<1.0.0,>=0.0.27",
+    "email-validator<3.0.0.0,>=2.1.0.post1",
+    "pydantic>2.0",
+    "emails>=1.1.2,<2.0",
+    "jinja2<4.0.0,>=3.1.4",
+    "alembic>=1.19.1,<2.0.0",
+    "httpx<1.0.0,>=0.25.1",
+    "psycopg[binary]>=3.3.4,<4.0.0",
+    "sqlmodel>=0.0.39,<1.0.0",
+    "pydantic-settings<3.0.0,>=2.2.1",
+    "sentry-sdk[fastapi]>=2.68.1,<3.0.0",
+    "pyjwt<3.0.0,>=2.13.0",
+    "pwdlib[argon2,bcrypt]>=0.3.1",
+]
+
+[dependency-groups]
+dev = [
+    "pytest<10.0.0,>=7.4.3",
+    "mypy<3.0.0,>=1.8.0",
+    "ty>=0.0.25",
+    "ruff<1.0.0,>=0.2.2",
+    "coverage<8.0.0,>=7.4.3",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.mypy]
+strict = true
+exclude = ["venv", ".venv", "alembic"]
+
+[tool.ruff]
+target-version = "py314"
+exclude = ["alembic"]
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "B",  # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "UP",  # pyupgrade
+    "ARG001", # unused arguments in functions
+    "T201",   # print statements are not allowed
+]
+ignore = [
+    "E501",  # line too long, handled by black
+    "B008",  # do not perform function calls in argument defaults
+    "W191",  # indentation contains tabs
+    "B904",  # Allow raising exceptions without from e, for HTTPException
+]
+
+[tool.ruff.lint.pyupgrade]
+# Preserve types, even if a file imports `from __future__ import annotations`.
+keep-runtime-typing = true
+
+[tool.coverage.run]
+source = ["app"]
+dynamic_context = "test_function"
+
+[tool.coverage.report]
+show_missing = true
+sort = "-Cover"
+
+[tool.coverage.html]
+show_contexts = true
+
+[tool.ty.terminal]
+error-on-warning = true
+
+[tool.fastapi]
+entrypoint = "app.main:app"
+#!/usr/bin/env bash
+
+set -e
+set -x
+
+FASTAPI_ENV=development coverage run -m pytest tests/
+coverage report
+coverage html --title "${@-coverage}"
+--- gitignore ---
+.vscode/*
+!.vscode/extensions.json
+node_modules/
+backend/app/frontend/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+--- backend gitignore ---
+__pycache__
+app.egg-info
+*.pyc
+.mypy_cache
+.coverage
+htmlcov
+.cache
+.venv
+
+exec
+/bin/zsh -lc "sed -n '1,220p' backend/tests/utils/item.py && sed -n '1,280p' backend/tests/conftest.py && printf '%s\\n' '--- project commands ---' && sed -n '1,220p' README.md | rg -n -C 3 'backend|test|uv run|pytest' && rg -n 'pytest|backend/scripts/test|FASTAPI_ENV' CONTRIBUTING.md development.md scripts backend/README.md pyproject.toml" in /Users/garry/code/benchmark/repo-baseline
+ succeeded in 0ms:
+from sqlmodel import Session
+
+from app import crud
+from app.models import Item, ItemCreate
+from tests.utils.user import create_random_user
+from tests.utils.utils import random_lower_string
+
+
+def create_random_item(db: Session) -> Item:
+    user = create_random_user(db)
+    owner_id = user.id
+    assert owner_id is not None
+    title = random_lower_string()
+    description = random_lower_string()
+    item_in = ItemCreate(title=title, description=description)
+    return crud.create_item(session=db, item_in=item_in, owner_id=owner_id)
+from collections.abc import Generator
+
+import pytest
+from fastapi.testclient import TestClient
+from sqlmodel import Session, delete
+
+from app.core.config import settings
+from app.core.db import engine, init_db
+from app.main import app
+from app.models import Item, User
+from tests.utils.user import authentication_token_from_email
+from tests.utils.utils import get_superuser_token_headers
+
+
+@pytest.fixture(scope="session", autouse=True)
+def db() -> Generator[Session]:
+    with Session(engine) as session:
+        init_db(session)
+        yield session
+        statement = delete(Item)
+        session.execute(statement)
+        statement = delete(User)
+        session.execute(statement)
+        session.commit()
+
+
+@pytest.fixture(scope="module")
+def client() -> Generator[TestClient]:
+    with TestClient(app) as c:
+        yield c
+
+
+@pytest.fixture(scope="module")
+def superuser_token_headers(client: TestClient) -> dict[str, str]:
+    return get_superuser_token_headers(client)
+
+
+@pytest.fixture(scope="module")
+def normal_user_token_headers(client: TestClient, db: Session) -> dict[str, str]:
+    return authentication_token_from_email(
+        client=client, email=settings.EMAIL_TEST_USER, db=db
+    )
+--- project commands ---
+1-# Full Stack FastAPI Template
+2-
+3:[![Test Docker Compose](../../actions/workflows/test-docker-compose.yml/badge.svg)](../../actions/workflows/test-docker-compose.yml)
+4:[![Test Backend](../../actions/workflows/test-backend.yml/badge.svg)](../../actions/workflows/test-backend.yml)
+5-
+6-## Technology Stack and Features
+7-
+8:- ⚡ [**FastAPI**](https://fastapi.tiangolo.com) for the Python backend API.
+9-  - 🧰 [SQLModel](https://sqlmodel.tiangolo.com) for the Python SQL database interactions (ORM).
+10-  - 🔍 [Pydantic](https://docs.pydantic.dev), used by FastAPI, for the data validation and settings management.
+11-  - 💾 [PostgreSQL](https://www.postgresql.org) as the SQL database.
+12-- 🚀 [React](https://react.dev) for the frontend.
+13:  - 🧩 Built into the backend application and served by FastAPI on the same domain as the API.
+14-  - 💃 Using TypeScript, hooks, [Vite](https://vitejs.dev), and other parts of a modern frontend stack.
+15-  - 🎨 [Tailwind CSS](https://tailwindcss.com) and [shadcn/ui](https://ui.shadcn.com) for the frontend components.
+16-  - 🤖 An automatically generated frontend client.
+17:  - 🧪 [Playwright](https://playwright.dev) for end-to-end testing.
+18-  - 🦇 Dark mode support.
+19-- ☁️ [FastAPI Cloud](https://fastapicloud.com) for deployment.
+20-- 🐋 [Docker Compose](https://www.docker.com) for local services and self-hosted deployment.
+--
+23-- 🔑 JWT (JSON Web Token) authentication.
+24-- 📫 Email-based password recovery.
+25-- ✉️ [React Email](https://react.email) for email templates.
+26:- 📬 [Mailpit](https://mailpit.axllent.org) for local email testing during development.
+27:- ✅ Tests with [Pytest](https://pytest.org).
+28-- 🏭 CI (continuous integration) and CD (continuous deployment) based on GitHub Actions.
+29-
+30-### Dashboard Login
+--
+61-
+62-## Backend Development
+63-
+64:Backend docs: [backend/README.md](./backend/README.md).
+65-
+66-## Frontend Development
+67-
+backend/README.md:81:The `/app/backend/scripts/tests-start.sh` script calls `pytest`. If you need to pass extra arguments to `pytest`, you can pass them to that command and they will be forwarded.
+scripts/generate-client.sh:7:FASTAPI_ENV=development uv run python -c "import app.main; import json; print(json.dumps(app.main.app.openapi()))" > ../openapi.json
+
+codex
+The test will exercise the public HTTP seam with a normal user and two uniquely titled items: it will assert `order_by=title` yields ascending title order and the omitted parameter preserves newest-first creation order. This avoids coupling to SQL construction and keeps unrelated existing items from invalidating the assertions.
+exec
+/bin/zsh -lc 'date -u +%FT%TZ' in /Users/garry/code/benchmark/repo-baseline
+ succeeded in 0ms:
+2026-09-26T22:18:13Z
+
+apply patch
+patch: completed
+/Users/garry/code/benchmark/repo-baseline/backend/tests/api/routes/test_items.py
+diff --git a/backend/tests/api/routes/test_items.py b/backend/tests/api/routes/test_items.py
+index 3e82cd0134757608c8f95e6084d7c967f52230d6..07513dd346d9d2906481b74aba47bb5f19b61cda
+--- a/backend/tests/api/routes/test_items.py
++++ b/backend/tests/api/routes/test_items.py
+@@ -79,6 +79,46 @@
+     assert len(content["data"]) >= 2
+ 
+ 
++def test_read_items_ordering(
++    client: TestClient, normal_user_token_headers: dict[str, str]
++) -> None:
++    older_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item A"},
++    )
++    newer_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item Z"},
++    )
++    assert older_item.status_code == 200
++    assert newer_item.status_code == 200
++
++    title_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        params={"order_by": "title"},
++    )
++    default_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++    )
++
++    assert title_response.status_code == 200
++    assert default_response.status_code == 200
++    title_items = title_response.json()["data"]
++    default_items = default_response.json()["data"]
++    title_ids = [item["id"] for item in title_items]
++    default_ids = [item["id"] for item in default_items]
++    assert title_ids.index(older_item.json()["id"]) < title_ids.index(
++        newer_item.json()["id"]
++    )
++    assert default_ids.index(newer_item.json()["id"]) < default_ids.index(
++        older_item.json()["id"]
++    )
++
++
+ def test_update_item(
+     client: TestClient, superuser_token_headers: dict[str, str], db: Session
+ ) -> None:
+
+diff --git a/backend/tests/api/routes/test_items.py b/backend/tests/api/routes/test_items.py
+index 3e82cd0134757608c8f95e6084d7c967f52230d6..07513dd346d9d2906481b74aba47bb5f19b61cda
+--- a/backend/tests/api/routes/test_items.py
++++ b/backend/tests/api/routes/test_items.py
+@@ -79,6 +79,46 @@
+     assert len(content["data"]) >= 2
+ 
+ 
++def test_read_items_ordering(
++    client: TestClient, normal_user_token_headers: dict[str, str]
++) -> None:
++    older_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item A"},
++    )
++    newer_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item Z"},
++    )
++    assert older_item.status_code == 200
++    assert newer_item.status_code == 200
++
++    title_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        params={"order_by": "title"},
++    )
++    default_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++    )
++
++    assert title_response.status_code == 200
++    assert default_response.status_code == 200
++    title_items = title_response.json()["data"]
++    default_items = default_response.json()["data"]
++    title_ids = [item["id"] for item in title_items]
++    default_ids = [item["id"] for item in default_items]
++    assert title_ids.index(older_item.json()["id"]) < title_ids.index(
++        newer_item.json()["id"]
++    )
++    assert default_ids.index(newer_item.json()["id"]) < default_ids.index(
++        older_item.json()["id"]
++    )
++
++
+ def test_update_item(
+     client: TestClient, superuser_token_headers: dict[str, str], db: Session
+ ) -> None:
+
+exec
+/bin/zsh -lc 'date -u +%FT%TZ && FASTAPI_ENV=development uv run --directory backend pytest tests/api/routes/test_items.py::test_read_items_ordering -q' in /Users/garry/code/benchmark/repo-baseline
+diff --git a/backend/tests/api/routes/test_items.py b/backend/tests/api/routes/test_items.py
+index 3e82cd0134757608c8f95e6084d7c967f52230d6..07513dd346d9d2906481b74aba47bb5f19b61cda
+--- a/backend/tests/api/routes/test_items.py
++++ b/backend/tests/api/routes/test_items.py
+@@ -79,6 +79,46 @@
+     assert len(content["data"]) >= 2
+ 
+ 
++def test_read_items_ordering(
++    client: TestClient, normal_user_token_headers: dict[str, str]
++) -> None:
++    older_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item A"},
++    )
++    newer_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item Z"},
++    )
++    assert older_item.status_code == 200
++    assert newer_item.status_code == 200
++
++    title_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        params={"order_by": "title"},
++    )
++    default_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++    )
++
++    assert title_response.status_code == 200
++    assert default_response.status_code == 200
++    title_items = title_response.json()["data"]
++    default_items = default_response.json()["data"]
++    title_ids = [item["id"] for item in title_items]
++    default_ids = [item["id"] for item in default_items]
++    assert title_ids.index(older_item.json()["id"]) < title_ids.index(
++        newer_item.json()["id"]
++    )
++    assert default_ids.index(newer_item.json()["id"]) < default_ids.index(
++        older_item.json()["id"]
++    )
++
++
+ def test_update_item(
+     client: TestClient, superuser_token_headers: dict[str, str], db: Session
+ ) -> None:
+
+diff --git a/backend/tests/api/routes/test_items.py b/backend/tests/api/routes/test_items.py
+index 3e82cd0134757608c8f95e6084d7c967f52230d6..07513dd346d9d2906481b74aba47bb5f19b61cda
+--- a/backend/tests/api/routes/test_items.py
++++ b/backend/tests/api/routes/test_items.py
+@@ -79,6 +79,46 @@
+     assert len(content["data"]) >= 2
+ 
+ 
++def test_read_items_ordering(
++    client: TestClient, normal_user_token_headers: dict[str, str]
++) -> None:
++    older_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item A"},
++    )
++    newer_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item Z"},
++    )
++    assert older_item.status_code == 200
++    assert newer_item.status_code == 200
++
++    title_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        params={"order_by": "title"},
++    )
++    default_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++    )
++
++    assert title_response.status_code == 200
++    assert default_response.status_code == 200
++    title_items = title_response.json()["data"]
++    default_items = default_response.json()["data"]
++    title_ids = [item["id"] for item in title_items]
++    default_ids = [item["id"] for item in default_items]
++    assert title_ids.index(older_item.json()["id"]) < title_ids.index(
++        newer_item.json()["id"]
++    )
++    assert default_ids.index(newer_item.json()["id"]) < default_ids.index(
++        older_item.json()["id"]
++    )
++
++
+ def test_update_item(
+     client: TestClient, superuser_token_headers: dict[str, str], db: Session
+ ) -> None:
+
+ exited 1 in 10411ms:
+Using CPython 3.14.0rc3 interpreter at: /Users/garry/.local/bin/python3.14
+Creating virtual environment at: /Users/garry/code/benchmark/repo-baseline/.venv
+Installed 76 packages in 99ms
+E                                                                        [100%]
+==================================== ERRORS ====================================
+__________________ ERROR at setup of test_read_items_ordering __________________
+
+self = <sqlalchemy.engine.base.Connection object at 0x10b785be0>
+dialect = <sqlalchemy.dialects.postgresql.psycopg.PGDialect_psycopg object at 0x10a9f1a90>
+context = <sqlalchemy.dialects.postgresql.psycopg.PGExecutionContext_psycopg object at 0x10b73bce0>
+statement = <sqlalchemy.dialects.postgresql.psycopg.PGCompiler_psycopg object at 0x10b786510>
+parameters = [{'email_1': 'admin@example.com'}]
+
+    def _exec_single_context(
+        self,
+        dialect: Dialect,
+        context: ExecutionContext,
+        statement: Union[str, Compiled],
+        parameters: Optional[_AnyMultiExecuteParams],
+    ) -> CursorResult[Any]:
+        """continue the _execute_context() method for a single DBAPI
+        cursor.execute() or cursor.executemany() call.
+    
+        """
+        if dialect.bind_typing is BindTyping.SETINPUTSIZES:
+            generic_setinputsizes = context._prepare_set_input_sizes()
+    
+            if generic_setinputsizes:
+                try:
+                    dialect.do_set_input_sizes(
+                        context.cursor, generic_setinputsizes, context
+                    )
+                except BaseException as e:
+                    self._handle_dbapi_exception(
+                        e, str(statement), parameters, None, context
+                    )
+    
+        cursor, str_statement, parameters = (
+            context.cursor,
+            context.statement,
+            context.parameters,
+        )
+    
+        effective_parameters: Optional[_AnyExecuteParams]
+    
+        if not context.executemany:
+            effective_parameters = parameters[0]
+        else:
+            effective_parameters = parameters
+    
+        if self._has_events or self.engine._has_events:
+            for fn in self.dispatch.before_cursor_execute:
+                str_statement, effective_parameters = fn(
+                    self,
+                    cursor,
+                    str_statement,
+                    effective_parameters,
+                    context,
+                    context.executemany,
+                )
+    
+        if self._echo:
+            self._log_info(str_statement)
+    
+            stats = context._get_cache_stats()
+    
+            if not self.engine.hide_parameters:
+                self._log_info(
+                    "[%s] %r",
+                    stats,
+                    sql_util._repr_params(
+                        effective_parameters,
+                        batches=10,
+                        ismulti=context.executemany,
+                    ),
+                )
+            else:
+                self._log_info(
+                    "[%s] [SQL parameters hidden due to hide_parameters=True]",
+                    stats,
+                )
+    
+        evt_handled: bool = False
+        try:
+            if context.execute_style is ExecuteStyle.EXECUTEMANY:
+                effective_parameters = cast(
+                    "_CoreMultiExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_executemany:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_executemany(
+                        cursor,
+                        str_statement,
+                        effective_parameters,
+                        context,
+                    )
+            elif not effective_parameters and context.no_parameters:
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute_no_params:
+                        if fn(cursor, str_statement, context):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_execute_no_params(
+                        cursor, str_statement, context
+                    )
+            else:
+                effective_parameters = cast(
+                    "_CoreSingleExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+>                   self.dialect.do_execute(
+                        cursor, str_statement, effective_parameters, context
+                    )
+
+../.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py:1969: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../.venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <psycopg.Cursor [closed] [IDLE] (host=localhost user=postgres database=app_baseline) at 0x10b723dd0>
+query = 'SELECT "user".email, "user".is_active, "user".is_superuser, "user".full_name, "user".id, "user".hashed_password, "user".created_at \nFROM "user" \nWHERE "user".email = %(email_1)s::VARCHAR'
+params = {'email_1': 'admin@example.com'}, prepare = None, binary = None
+
+    def execute(
+        self,
+        query: Query,
+        params: Params | None = None,
+        *,
+        prepare: bool | None = None,
+        binary: bool | None = None,
+    ) -> Self:
+        """
+        Execute a query or command to the database.
+        """
+        try:
+            with self._conn.lock:
+                self._conn.wait(
+                    self._execute_gen(query, params, prepare=prepare, binary=binary)
+                )
+        except e._NO_TRACEBACK as ex:
+>           raise ex.with_traceback(None)
+E           psycopg.errors.UndefinedTable: relation "user" does not exist
+E           LINE 2: FROM "user" 
+E                        ^
+
+../.venv/lib/python3.14/site-packages/psycopg/cursor.py:117: UndefinedTable
+
+The above exception was the direct cause of the following exception:
+
+    @pytest.fixture(scope="session", autouse=True)
+    def db() -> Generator[Session]:
+        with Session(engine) as session:
+>           init_db(session)
+
+tests/conftest.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+app/core/db.py:24: in init_db
+    user = session.exec(
+../.venv/lib/python3.14/site-packages/sqlmodel/orm/session.py:75: in exec
+    results = super().execute(
+../.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py:2373: in execute
+    return self._execute_internal(
+../.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py:2271: in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+../.venv/lib/python3.14/site-packages/sqlalchemy/orm/context.py:306: in orm_execute_statement
+    result = conn.execute(
+../.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+../.venv/lib/python3.14/site-packages/sqlalchemy/sql/elements.py:526: in _execute_on_connection
+    return connection._execute_clauseelement(
+../.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py:1643: in _execute_clauseelement
+    ret = self._execute_context(
+../.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+../.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+../.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+../.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+../.venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <psycopg.Cursor [closed] [IDLE] (host=localhost user=postgres database=app_baseline) at 0x10b723dd0>
+query = 'SELECT "user".email, "user".is_active, "user".is_superuser, "user".full_name, "user".id, "user".hashed_password, "user".created_at \nFROM "user" \nWHERE "user".email = %(email_1)s::VARCHAR'
+params = {'email_1': 'admin@example.com'}, prepare = None, binary = None
+
+    def execute(
+        self,
+        query: Query,
+        params: Params | None = None,
+        *,
+        prepare: bool | None = None,
+        binary: bool | None = None,
+    ) -> Self:
+        """
+        Execute a query or command to the database.
+        """
+        try:
+            with self._conn.lock:
+                self._conn.wait(
+                    self._execute_gen(query, params, prepare=prepare, binary=binary)
+                )
+        except e._NO_TRACEBACK as ex:
+>           raise ex.with_traceback(None)
+E           sqlalchemy.exc.ProgrammingError: (psycopg.errors.UndefinedTable) relation "user" does not exist
+E           LINE 2: FROM "user" 
+E                        ^
+E           [SQL: SELECT "user".email, "user".is_active, "user".is_superuser, "user".full_name, "user".id, "user".hashed_password, "user".created_at 
+E           FROM "user" 
+E           WHERE "user".email = %(email_1)s::VARCHAR]
+E           [parameters: {'email_1': 'admin@example.com'}]
+E           (Background on this error at: https://sqlalche.me/e/20/f405)
+
+../.venv/lib/python3.14/site-packages/psycopg/cursor.py:117: ProgrammingError
+=============================== warnings summary ===============================
+../.venv/lib/python3.14/site-packages/fastapi/testclient.py:1
+  /Users/garry/code/benchmark/repo-baseline/.venv/lib/python3.14/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+app/core/config.py:75
+  /Users/garry/code/benchmark/repo-baseline/backend/app/core/config.py:75: UserWarning: The value of SECRET_KEY is "changethis", for security, please change it, at least for deployments.
+    warnings.warn(message, stacklevel=1)
+
+app/core/config.py:75
+  /Users/garry/code/benchmark/repo-baseline/backend/app/core/config.py:75: UserWarning: The value of DATABASE_URL password is "changethis", for security, please change it, at least for deployments.
+    warnings.warn(message, stacklevel=1)
+
+app/core/config.py:75
+  /Users/garry/code/benchmark/repo-baseline/backend/app/core/config.py:75: UserWarning: The value of FIRST_SUPERUSER_PASSWORD is "changethis", for security, please change it, at least for deployments.
+    warnings.warn(message, stacklevel=1)
+
+app/main.py:36
+  /Users/garry/code/benchmark/repo-baseline/backend/app/main.py:36: UserWarning: Frontend directory '/Users/garry/code/benchmark/repo-baseline/backend/app/frontend' does not exist. Resolved absolute path: '/Users/garry/code/benchmark/repo-baseline/backend/app/frontend'
+    app.frontend("/", directory=FRONTEND_DIR)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+ERROR tests/api/routes/test_items.py::test_read_items_ordering - sqlalchemy.e...
+5 warnings, 1 error in 0.16s
+
+diff --git a/backend/tests/api/routes/test_items.py b/backend/tests/api/routes/test_items.py
+index 3e82cd0134757608c8f95e6084d7c967f52230d6..07513dd346d9d2906481b74aba47bb5f19b61cda
+--- a/backend/tests/api/routes/test_items.py
++++ b/backend/tests/api/routes/test_items.py
+@@ -79,6 +79,46 @@
+     assert len(content["data"]) >= 2
+ 
+ 
++def test_read_items_ordering(
++    client: TestClient, normal_user_token_headers: dict[str, str]
++) -> None:
++    older_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item A"},
++    )
++    newer_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item Z"},
++    )
++    assert older_item.status_code == 200
++    assert newer_item.status_code == 200
++
++    title_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        params={"order_by": "title"},
++    )
++    default_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++    )
++
++    assert title_response.status_code == 200
++    assert default_response.status_code == 200
++    title_items = title_response.json()["data"]
++    default_items = default_response.json()["data"]
++    title_ids = [item["id"] for item in title_items]
++    default_ids = [item["id"] for item in default_items]
++    assert title_ids.index(older_item.json()["id"]) < title_ids.index(
++        newer_item.json()["id"]
++    )
++    assert default_ids.index(newer_item.json()["id"]) < default_ids.index(
++        older_item.json()["id"]
++    )
++
++
+ def test_update_item(
+     client: TestClient, superuser_token_headers: dict[str, str], db: Session
+ ) -> None:
+
+codex
+The focused test is currently blocked before reaching the new behavior because the configured PostgreSQL database has no `user` table (`UndefinedTable` during fixture setup); this is an environment/setup blocker, not a test failure. I’m proceeding with the minimal route implementation, then I’ll retry after checking the repository’s database setup path.
+exec
+/bin/zsh -lc 'date -u +%FT%TZ' in /Users/garry/code/benchmark/repo-baseline
+ succeeded in 0ms:
+2026-09-26T22:18:44Z
+
+diff --git a/backend/tests/api/routes/test_items.py b/backend/tests/api/routes/test_items.py
+index 3e82cd0134757608c8f95e6084d7c967f52230d6..07513dd346d9d2906481b74aba47bb5f19b61cda
+--- a/backend/tests/api/routes/test_items.py
++++ b/backend/tests/api/routes/test_items.py
+@@ -79,6 +79,46 @@
+     assert len(content["data"]) >= 2
+ 
+ 
++def test_read_items_ordering(
++    client: TestClient, normal_user_token_headers: dict[str, str]
++) -> None:
++    older_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item A"},
++    )
++    newer_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item Z"},
++    )
++    assert older_item.status_code == 200
++    assert newer_item.status_code == 200
++
++    title_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        params={"order_by": "title"},
++    )
++    default_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++    )
++
++    assert title_response.status_code == 200
++    assert default_response.status_code == 200
++    title_items = title_response.json()["data"]
++    default_items = default_response.json()["data"]
++    title_ids = [item["id"] for item in title_items]
++    default_ids = [item["id"] for item in default_items]
++    assert title_ids.index(older_item.json()["id"]) < title_ids.index(
++        newer_item.json()["id"]
++    )
++    assert default_ids.index(newer_item.json()["id"]) < default_ids.index(
++        older_item.json()["id"]
++    )
++
++
+ def test_update_item(
+     client: TestClient, superuser_token_headers: dict[str, str], db: Session
+ ) -> None:
+
+apply patch
+patch: completed
+/Users/garry/code/benchmark/repo-baseline/backend/app/api/routes/items.py
+diff --git a/backend/app/api/routes/items.py b/backend/app/api/routes/items.py
+index f0eb30e4cee50ac09904df0e3e30e5949b1edb04..0d27c66c2e333e7f4e7fab2773ae261f9c4dda0b
+--- a/backend/app/api/routes/items.py
++++ b/backend/app/api/routes/items.py
+@@ -1,5 +1,5 @@
+ import uuid
+-from typing import Any
++from typing import Any, Literal
+ 
+ from fastapi import APIRouter, HTTPException
+ from sqlmodel import col, func, select
+@@ -12,17 +12,25 @@
+ 
+ @router.get("/", response_model=ItemsPublic)
+ def read_items(
+-    session: SessionDep, current_user: CurrentUser, skip: int = 0, limit: int = 100
++    session: SessionDep,
++    current_user: CurrentUser,
++    skip: int = 0,
++    limit: int = 100,
++    order_by: Literal["created_at", "title"] = "created_at",
+ ) -> Any:
+     """
+     Retrieve items.
+     """
+ 
++    order_clause = (
++        col(Item.title) if order_by == "title" else col(Item.created_at).desc()
++    )
++
+     if current_user.is_superuser:
+         count_statement = select(func.count()).select_from(Item)
+         count = session.exec(count_statement).one()
+         statement = (
+-            select(Item).order_by(col(Item.created_at).desc()).offset(skip).limit(limit)
++            select(Item).order_by(order_clause).offset(skip).limit(limit)
+         )
+         items = session.exec(statement).all()
+     else:
+@@ -35,7 +43,7 @@
+         statement = (
+             select(Item)
+             .where(Item.owner_id == current_user.id)
+-            .order_by(col(Item.created_at).desc())
++            .order_by(order_clause)
+             .offset(skip)
+             .limit(limit)
+         )
+diff --git a/backend/tests/api/routes/test_items.py b/backend/tests/api/routes/test_items.py
+index 3e82cd0134757608c8f95e6084d7c967f52230d6..07513dd346d9d2906481b74aba47bb5f19b61cda
+--- a/backend/tests/api/routes/test_items.py
++++ b/backend/tests/api/routes/test_items.py
+@@ -79,6 +79,46 @@
+     assert len(content["data"]) >= 2
+ 
+ 
++def test_read_items_ordering(
++    client: TestClient, normal_user_token_headers: dict[str, str]
++) -> None:
++    older_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item A"},
++    )
++    newer_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item Z"},
++    )
++    assert older_item.status_code == 200
++    assert newer_item.status_code == 200
++
++    title_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        params={"order_by": "title"},
++    )
++    default_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++    )
++
++    assert title_response.status_code == 200
++    assert default_response.status_code == 200
++    title_items = title_response.json()["data"]
++    default_items = default_response.json()["data"]
++    title_ids = [item["id"] for item in title_items]
++    default_ids = [item["id"] for item in default_items]
++    assert title_ids.index(older_item.json()["id"]) < title_ids.index(
++        newer_item.json()["id"]
++    )
++    assert default_ids.index(newer_item.json()["id"]) < default_ids.index(
++        older_item.json()["id"]
++    )
++
++
+ def test_update_item(
+     client: TestClient, superuser_token_headers: dict[str, str], db: Session
+ ) -> None:
+
+diff --git a/backend/app/api/routes/items.py b/backend/app/api/routes/items.py
+index f0eb30e4cee50ac09904df0e3e30e5949b1edb04..0d27c66c2e333e7f4e7fab2773ae261f9c4dda0b
+--- a/backend/app/api/routes/items.py
++++ b/backend/app/api/routes/items.py
+@@ -1,5 +1,5 @@
+ import uuid
+-from typing import Any
++from typing import Any, Literal
+ 
+ from fastapi import APIRouter, HTTPException
+ from sqlmodel import col, func, select
+@@ -12,17 +12,25 @@
+ 
+ @router.get("/", response_model=ItemsPublic)
+ def read_items(
+-    session: SessionDep, current_user: CurrentUser, skip: int = 0, limit: int = 100
++    session: SessionDep,
++    current_user: CurrentUser,
++    skip: int = 0,
++    limit: int = 100,
++    order_by: Literal["created_at", "title"] = "created_at",
+ ) -> Any:
+     """
+     Retrieve items.
+     """
+ 
++    order_clause = (
++        col(Item.title) if order_by == "title" else col(Item.created_at).desc()
++    )
++
+     if current_user.is_superuser:
+         count_statement = select(func.count()).select_from(Item)
+         count = session.exec(count_statement).one()
+         statement = (
+-            select(Item).order_by(col(Item.created_at).desc()).offset(skip).limit(limit)
++            select(Item).order_by(order_clause).offset(skip).limit(limit)
+         )
+         items = session.exec(statement).all()
+     else:
+@@ -35,7 +43,7 @@
+         statement = (
+             select(Item)
+             .where(Item.owner_id == current_user.id)
+-            .order_by(col(Item.created_at).desc())
++            .order_by(order_clause)
+             .offset(skip)
+             .limit(limit)
+         )
+diff --git a/backend/tests/api/routes/test_items.py b/backend/tests/api/routes/test_items.py
+index 3e82cd0134757608c8f95e6084d7c967f52230d6..07513dd346d9d2906481b74aba47bb5f19b61cda
+--- a/backend/tests/api/routes/test_items.py
++++ b/backend/tests/api/routes/test_items.py
+@@ -79,6 +79,46 @@
+     assert len(content["data"]) >= 2
+ 
+ 
++def test_read_items_ordering(
++    client: TestClient, normal_user_token_headers: dict[str, str]
++) -> None:
++    older_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item A"},
++    )
++    newer_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item Z"},
++    )
++    assert older_item.status_code == 200
++    assert newer_item.status_code == 200
++
++    title_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        params={"order_by": "title"},
++    )
++    default_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++    )
++
++    assert title_response.status_code == 200
++    assert default_response.status_code == 200
++    title_items = title_response.json()["data"]
++    default_items = default_response.json()["data"]
++    title_ids = [item["id"] for item in title_items]
++    default_ids = [item["id"] for item in default_items]
++    assert title_ids.index(older_item.json()["id"]) < title_ids.index(
++        newer_item.json()["id"]
++    )
++    assert default_ids.index(newer_item.json()["id"]) < default_ids.index(
++        older_item.json()["id"]
++    )
++
++
+ def test_update_item(
+     client: TestClient, superuser_token_headers: dict[str, str], db: Session
+ ) -> None:
+
+exec
+/bin/zsh -lc "printf '%s\\n' '--- test setup ---' && sed -n '1,240p' backend/scripts/tests-start.sh && sed -n '1,240p' scripts/test-local.sh && sed -n '1,260p' compose.yml && printf '%s\\n' '--- db/config ---' && sed -n '1,180p' backend/app/core/db.py && sed -n '1,140p' backend/app/core/config.py && printf '%s\\n' '--- migration status ---' && git status --short" in /Users/garry/code/benchmark/repo-baseline
+ succeeded in 0ms:
+--- test setup ---
+#! /usr/bin/env bash
+set -e
+set -x
+
+bash scripts/test.sh "$@"
+#! /usr/bin/env bash
+
+# Exit in case of error
+set -e
+
+docker-compose down -v --remove-orphans # Remove possibly previous broken stacks left hanging after an error
+
+if [ $(uname -s) = "Linux" ]; then
+    echo "Remove __pycache__ files"
+    sudo find . -type d -name __pycache__ -exec rm -r {} \+
+fi
+
+docker-compose build
+docker-compose run --rm backend bash scripts/prestart.sh
+docker-compose up -d
+docker-compose exec -T backend bash scripts/tests-start.sh "$@"
+services:
+
+  proxy:
+    image: traefik:v3.7
+    volumes:
+      # Add Docker as a mounted volume, so that Traefik can read the labels of other services
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    command:
+      # Enable Docker in Traefik, so that it reads labels from Docker services
+      - --providers.docker
+      # Do not expose all Docker services, only the ones explicitly exposed
+      - --providers.docker.exposedbydefault=false
+      # Create an entrypoint "http" listening on port 80
+      - --entrypoints.http.address=:80
+      # Enable the access log, with HTTP requests
+      - --accesslog
+      # Enable the Traefik log, for configurations and errors
+      - --log
+
+  db:
+    image: postgres:18
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d app"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+    volumes:
+      - app-db-data:/var/lib/postgresql
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:?Variable not set}
+      - POSTGRES_DB=app
+
+  adminer:
+    image: adminer
+    depends_on:
+      - db
+    environment:
+      - ADMINER_DESIGN=pepa-linha-dark
+    labels:
+      # Enable Traefik for this service
+      - traefik.enable=true
+      # Route HTTP traffic for the Adminer subdomain
+      - traefik.http.routers.adminer-http.rule=Host(`adminer.${DOMAIN:-localhost}`)
+      - traefik.http.routers.adminer-http.entrypoints=http
+      # Define the port inside of the Docker service to use
+      - traefik.http.services.adminer.loadbalancer.server.port=8080
+
+  backend:
+    image: backend:latest
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+    environment:
+      PROJECT_NAME: ${PROJECT_NAME:?Variable not set}
+      SECRET_KEY: ${SECRET_KEY:?Variable not set}
+      FIRST_SUPERUSER: ${FIRST_SUPERUSER:?Variable not set}
+      FIRST_SUPERUSER_PASSWORD: ${FIRST_SUPERUSER_PASSWORD:?Variable not set}
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      EMAILS_FROM_EMAIL: ${EMAILS_FROM_EMAIL}
+      DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD:?Variable not set}@db:5432/app
+      SENTRY_DSN: ${SENTRY_DSN:-}
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/utils/health-check/"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    labels:
+      # Enable Traefik for this service
+      - traefik.enable=true
+
+      # Define the port inside of the Docker service to use
+      - traefik.http.services.backend.loadbalancer.server.port=8000
+
+      # Route HTTP traffic for this domain
+      - traefik.http.routers.backend-http.rule=Host(`${DOMAIN:-localhost}`)
+      - traefik.http.routers.backend-http.entrypoints=http
+
+volumes:
+  app-db-data:
+--- db/config ---
+from sqlmodel import Session, create_engine, select
+
+from app import crud
+from app.core.config import settings
+from app.models import User, UserCreate
+
+engine = create_engine(str(settings.DATABASE_URL), pool_pre_ping=True)
+
+
+# make sure all SQLModel models are imported (app.models) before initializing DB
+# otherwise, SQLModel might fail to initialize relationships properly
+# for more details: https://github.com/fastapi/full-stack-fastapi-template/issues/28
+
+
+def init_db(session: Session) -> None:
+    # Tables should be created with Alembic migrations
+    # But if you don't want to use migrations, create
+    # the tables un-commenting the next lines
+    # from sqlmodel import SQLModel
+
+    # This works because the models are already imported and registered from app.models
+    # SQLModel.metadata.create_all(engine)
+
+    user = session.exec(
+        select(User).where(User.email == settings.FIRST_SUPERUSER)
+    ).first()
+    if not user:
+        user_in = UserCreate(
+            email=settings.FIRST_SUPERUSER,
+            password=settings.FIRST_SUPERUSER_PASSWORD,
+            is_superuser=True,
+        )
+        user = crud.create_user(session=session, user_create=user_in)
+import warnings
+from typing import Literal, Self
+
+from pydantic import (
+    EmailStr,
+    HttpUrl,
+    PostgresDsn,
+    computed_field,
+    field_validator,
+    model_validator,
+)
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+class Settings(BaseSettings):
+    model_config = SettingsConfigDict(
+        # Use top level .env file (one level above ./backend/)
+        env_file="../.env",
+        env_ignore_empty=True,
+        extra="ignore",
+    )
+    API_V1_STR: str = "/api/v1"
+    SECRET_KEY: str
+    # 60 minutes * 24 hours * 8 days = 8 days
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 8
+    FRONTEND_HOST: str = "http://localhost:5173"
+    FASTAPI_ENV: Literal["development"] | None = None
+
+    PROJECT_NAME: str
+    SENTRY_DSN: HttpUrl | None = None
+    DATABASE_URL: PostgresDsn
+
+    @field_validator("DATABASE_URL", mode="before")
+    @classmethod
+    def _use_psycopg_driver(cls, value: str | PostgresDsn) -> str:
+        database_url = str(value)
+        for scheme in ("postgres://", "postgresql://"):
+            if database_url.startswith(scheme):
+                return database_url.replace(scheme, "postgresql+psycopg://", 1)
+        return database_url
+
+    SMTP_TLS: bool = True
+    SMTP_SSL: bool = False
+    SMTP_PORT: int = 587
+    SMTP_HOST: str | None = None
+    SMTP_USER: str | None = None
+    SMTP_PASSWORD: str | None = None
+    EMAILS_FROM_EMAIL: EmailStr | None = None
+    EMAILS_FROM_NAME: str | None = None
+
+    @model_validator(mode="after")
+    def _set_default_emails_from(self) -> Self:
+        if not self.EMAILS_FROM_NAME:
+            self.EMAILS_FROM_NAME = self.PROJECT_NAME
+        return self
+
+    EMAIL_RESET_TOKEN_EXPIRE_HOURS: int = 48
+
+    @computed_field  # type: ignore[prop-decorator]
+    @property
+    def emails_enabled(self) -> bool:
+        return bool(self.SMTP_HOST and self.EMAILS_FROM_EMAIL)
+
+    EMAIL_TEST_USER: EmailStr = "test@example.com"
+    FIRST_SUPERUSER: EmailStr
+    FIRST_SUPERUSER_PASSWORD: str
+
+    def _check_default_secret(self, var_name: str, value: str | None) -> None:
+        if value == "changethis":
+            message = (
+                f'The value of {var_name} is "changethis", '
+                "for security, please change it, at least for deployments."
+            )
+            if self.FASTAPI_ENV == "development":
+                warnings.warn(message, stacklevel=1)
+            else:
+                raise ValueError(message)
+
+    @model_validator(mode="after")
+    def _enforce_non_default_secrets(self) -> Self:
+        self._check_default_secret("SECRET_KEY", self.SECRET_KEY)
+        for host in self.DATABASE_URL.hosts():
+            self._check_default_secret("DATABASE_URL password", host["password"])
+        self._check_default_secret(
+            "FIRST_SUPERUSER_PASSWORD", self.FIRST_SUPERUSER_PASSWORD
+        )
+
+        return self
+
+
+settings = Settings()  # type: ignore # ty: ignore[unused-ignore-comment]
+--- migration status ---
+ M backend/app/api/routes/items.py
+ M backend/tests/api/routes/test_items.py
+
+diff --git a/backend/app/api/routes/items.py b/backend/app/api/routes/items.py
+index f0eb30e4cee50ac09904df0e3e30e5949b1edb04..0d27c66c2e333e7f4e7fab2773ae261f9c4dda0b
+--- a/backend/app/api/routes/items.py
++++ b/backend/app/api/routes/items.py
+@@ -1,5 +1,5 @@
+ import uuid
+-from typing import Any
++from typing import Any, Literal
+ 
+ from fastapi import APIRouter, HTTPException
+ from sqlmodel import col, func, select
+@@ -12,17 +12,25 @@
+ 
+ @router.get("/", response_model=ItemsPublic)
+ def read_items(
+-    session: SessionDep, current_user: CurrentUser, skip: int = 0, limit: int = 100
++    session: SessionDep,
++    current_user: CurrentUser,
++    skip: int = 0,
++    limit: int = 100,
++    order_by: Literal["created_at", "title"] = "created_at",
+ ) -> Any:
+     """
+     Retrieve items.
+     """
+ 
++    order_clause = (
++        col(Item.title) if order_by == "title" else col(Item.created_at).desc()
++    )
++
+     if current_user.is_superuser:
+         count_statement = select(func.count()).select_from(Item)
+         count = session.exec(count_statement).one()
+         statement = (
+-            select(Item).order_by(col(Item.created_at).desc()).offset(skip).limit(limit)
++            select(Item).order_by(order_clause).offset(skip).limit(limit)
+         )
+         items = session.exec(statement).all()
+     else:
+@@ -35,7 +43,7 @@
+         statement = (
+             select(Item)
+             .where(Item.owner_id == current_user.id)
+-            .order_by(col(Item.created_at).desc())
++            .order_by(order_clause)
+             .offset(skip)
+             .limit(limit)
+         )
+diff --git a/backend/tests/api/routes/test_items.py b/backend/tests/api/routes/test_items.py
+index 3e82cd0134757608c8f95e6084d7c967f52230d6..07513dd346d9d2906481b74aba47bb5f19b61cda
+--- a/backend/tests/api/routes/test_items.py
++++ b/backend/tests/api/routes/test_items.py
+@@ -79,6 +79,46 @@
+     assert len(content["data"]) >= 2
+ 
+ 
++def test_read_items_ordering(
++    client: TestClient, normal_user_token_headers: dict[str, str]
++) -> None:
++    older_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item A"},
++    )
++    newer_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item Z"},
++    )
++    assert older_item.status_code == 200
++    assert newer_item.status_code == 200
++
++    title_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        params={"order_by": "title"},
++    )
++    default_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++    )
++
++    assert title_response.status_code == 200
++    assert default_response.status_code == 200
++    title_items = title_response.json()["data"]
++    default_items = default_response.json()["data"]
++    title_ids = [item["id"] for item in title_items]
++    default_ids = [item["id"] for item in default_items]
++    assert title_ids.index(older_item.json()["id"]) < title_ids.index(
++        newer_item.json()["id"]
++    )
++    assert default_ids.index(newer_item.json()["id"]) < default_ids.index(
++        older_item.json()["id"]
++    )
++
++
+ def test_update_item(
+     client: TestClient, superuser_token_headers: dict[str, str], db: Session
+ ) -> None:
+
+exec
+/bin/zsh -lc "printf '%s\\n' '--- env presence ---' && ls -la .env 2>/dev/null || true && printf '%s\\n' '--- containers ---' && docker compose ps 2>&1 || true && printf '%s\\n' '--- env values (names only) ---' && if [ -f .env ]; then rg -n '"'^(POSTGRES_PASSWORD|DATABASE_URL|FIRST_SUPERUSER|PROJECT_NAME|SECRET_KEY)='"' .env | sed -E 's/=.*"'$/=<set>/'"' ; fi && printf '%s\\n' '--- migrations ---' && ls backend/app/alembic/versions" in /Users/garry/code/benchmark/repo-baseline
+ succeeded in 0ms:
+--- env presence ---
+-rw-r--r--  1 garry  staff  714 Sep 25 00:42 .env
+--- containers ---
+zsh:1: command not found: docker
+--- env values (names only) ---
+4:PROJECT_NAME=<set>
+6:SECRET_KEY=<set>
+7:FIRST_SUPERUSER=<set>
+17:POSTGRES_PASSWORD=<set>
+22:DATABASE_URL=<set>
+--- migrations ---
+1a31ce608336_add_cascade_delete_relationships.py
+9c0a54914c78_add_max_length_for_string_varchar_.py
+d98dd8ec85a3_edit_replace_id_integers_in_all_models_.py
+e2412789c190_initialize_models.py
+fe56fa70289e_add_created_at_to_user_and_item.py
+
+diff --git a/backend/app/api/routes/items.py b/backend/app/api/routes/items.py
+index f0eb30e4cee50ac09904df0e3e30e5949b1edb04..0d27c66c2e333e7f4e7fab2773ae261f9c4dda0b
+--- a/backend/app/api/routes/items.py
++++ b/backend/app/api/routes/items.py
+@@ -1,5 +1,5 @@
+ import uuid
+-from typing import Any
++from typing import Any, Literal
+ 
+ from fastapi import APIRouter, HTTPException
+ from sqlmodel import col, func, select
+@@ -12,17 +12,25 @@
+ 
+ @router.get("/", response_model=ItemsPublic)
+ def read_items(
+-    session: SessionDep, current_user: CurrentUser, skip: int = 0, limit: int = 100
++    session: SessionDep,
++    current_user: CurrentUser,
++    skip: int = 0,
++    limit: int = 100,
++    order_by: Literal["created_at", "title"] = "created_at",
+ ) -> Any:
+     """
+     Retrieve items.
+     """
+ 
++    order_clause = (
++        col(Item.title) if order_by == "title" else col(Item.created_at).desc()
++    )
++
+     if current_user.is_superuser:
+         count_statement = select(func.count()).select_from(Item)
+         count = session.exec(count_statement).one()
+         statement = (
+-            select(Item).order_by(col(Item.created_at).desc()).offset(skip).limit(limit)
++            select(Item).order_by(order_clause).offset(skip).limit(limit)
+         )
+         items = session.exec(statement).all()
+     else:
+@@ -35,7 +43,7 @@
+         statement = (
+             select(Item)
+             .where(Item.owner_id == current_user.id)
+-            .order_by(col(Item.created_at).desc())
++            .order_by(order_clause)
+             .offset(skip)
+             .limit(limit)
+         )
+diff --git a/backend/tests/api/routes/test_items.py b/backend/tests/api/routes/test_items.py
+index 3e82cd0134757608c8f95e6084d7c967f52230d6..07513dd346d9d2906481b74aba47bb5f19b61cda
+--- a/backend/tests/api/routes/test_items.py
++++ b/backend/tests/api/routes/test_items.py
+@@ -79,6 +79,46 @@
+     assert len(content["data"]) >= 2
+ 
+ 
++def test_read_items_ordering(
++    client: TestClient, normal_user_token_headers: dict[str, str]
++) -> None:
++    older_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item A"},
++    )
++    newer_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item Z"},
++    )
++    assert older_item.status_code == 200
++    assert newer_item.status_code == 200
++
++    title_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        params={"order_by": "title"},
++    )
++    default_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++    )
++
++    assert title_response.status_code == 200
++    assert default_response.status_code == 200
++    title_items = title_response.json()["data"]
++    default_items = default_response.json()["data"]
++    title_ids = [item["id"] for item in title_items]
++    default_ids = [item["id"] for item in default_items]
++    assert title_ids.index(older_item.json()["id"]) < title_ids.index(
++        newer_item.json()["id"]
++    )
++    assert default_ids.index(newer_item.json()["id"]) < default_ids.index(
++        older_item.json()["id"]
++    )
++
++
+ def test_update_item(
+     client: TestClient, superuser_token_headers: dict[str, str], db: Session
+ ) -> None:
+
+codex
+The repository’s documented test flow expects migrations to have been applied by Docker, but Docker is unavailable here. The local PostgreSQL server is reachable and the target database exists without schema, so I’m checking Alembic state and will apply the existing migrations only if needed; no migration file will be created or modified.
+exec
+/bin/zsh -lc 'FASTAPI_ENV=development uv run --directory backend alembic current && FASTAPI_ENV=development uv run --directory backend alembic heads' in /Users/garry/code/benchmark/repo-baseline
+ succeeded in 3788ms:
+/Users/garry/code/benchmark/repo-baseline/backend/app/core/config.py:75: UserWarning: The value of SECRET_KEY is "changethis", for security, please change it, at least for deployments.
+  warnings.warn(message, stacklevel=1)
+/Users/garry/code/benchmark/repo-baseline/backend/app/core/config.py:75: UserWarning: The value of DATABASE_URL password is "changethis", for security, please change it, at least for deployments.
+  warnings.warn(message, stacklevel=1)
+/Users/garry/code/benchmark/repo-baseline/backend/app/core/config.py:75: UserWarning: The value of FIRST_SUPERUSER_PASSWORD is "changethis", for security, please change it, at least for deployments.
+  warnings.warn(message, stacklevel=1)
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+fe56fa70289e (head)
+
+diff --git a/backend/app/api/routes/items.py b/backend/app/api/routes/items.py
+index f0eb30e4cee50ac09904df0e3e30e5949b1edb04..0d27c66c2e333e7f4e7fab2773ae261f9c4dda0b
+--- a/backend/app/api/routes/items.py
++++ b/backend/app/api/routes/items.py
+@@ -1,5 +1,5 @@
+ import uuid
+-from typing import Any
++from typing import Any, Literal
+ 
+ from fastapi import APIRouter, HTTPException
+ from sqlmodel import col, func, select
+@@ -12,17 +12,25 @@
+ 
+ @router.get("/", response_model=ItemsPublic)
+ def read_items(
+-    session: SessionDep, current_user: CurrentUser, skip: int = 0, limit: int = 100
++    session: SessionDep,
++    current_user: CurrentUser,
++    skip: int = 0,
++    limit: int = 100,
++    order_by: Literal["created_at", "title"] = "created_at",
+ ) -> Any:
+     """
+     Retrieve items.
+     """
+ 
++    order_clause = (
++        col(Item.title) if order_by == "title" else col(Item.created_at).desc()
++    )
++
+     if current_user.is_superuser:
+         count_statement = select(func.count()).select_from(Item)
+         count = session.exec(count_statement).one()
+         statement = (
+-            select(Item).order_by(col(Item.created_at).desc()).offset(skip).limit(limit)
++            select(Item).order_by(order_clause).offset(skip).limit(limit)
+         )
+         items = session.exec(statement).all()
+     else:
+@@ -35,7 +43,7 @@
+         statement = (
+             select(Item)
+             .where(Item.owner_id == current_user.id)
+-            .order_by(col(Item.created_at).desc())
++            .order_by(order_clause)
+             .offset(skip)
+             .limit(limit)
+         )
+diff --git a/backend/tests/api/routes/test_items.py b/backend/tests/api/routes/test_items.py
+index 3e82cd0134757608c8f95e6084d7c967f52230d6..07513dd346d9d2906481b74aba47bb5f19b61cda
+--- a/backend/tests/api/routes/test_items.py
++++ b/backend/tests/api/routes/test_items.py
+@@ -79,6 +79,46 @@
+     assert len(content["data"]) >= 2
+ 
+ 
++def test_read_items_ordering(
++    client: TestClient, normal_user_token_headers: dict[str, str]
++) -> None:
++    older_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item A"},
++    )
++    newer_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item Z"},
++    )
++    assert older_item.status_code == 200
++    assert newer_item.status_code == 200
++
++    title_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        params={"order_by": "title"},
++    )
++    default_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++    )
++
++    assert title_response.status_code == 200
++    assert default_response.status_code == 200
++    title_items = title_response.json()["data"]
++    default_items = default_response.json()["data"]
++    title_ids = [item["id"] for item in title_items]
++    default_ids = [item["id"] for item in default_items]
++    assert title_ids.index(older_item.json()["id"]) < title_ids.index(
++        newer_item.json()["id"]
++    )
++    assert default_ids.index(newer_item.json()["id"]) < default_ids.index(
++        older_item.json()["id"]
++    )
++
++
+ def test_update_item(
+     client: TestClient, superuser_token_headers: dict[str, str], db: Session
+ ) -> None:
+
+exec
+/bin/zsh -lc 'FASTAPI_ENV=development uv run --directory backend alembic upgrade head' in /Users/garry/code/benchmark/repo-baseline
+ succeeded in 405ms:
+/Users/garry/code/benchmark/repo-baseline/backend/app/core/config.py:75: UserWarning: The value of SECRET_KEY is "changethis", for security, please change it, at least for deployments.
+  warnings.warn(message, stacklevel=1)
+/Users/garry/code/benchmark/repo-baseline/backend/app/core/config.py:75: UserWarning: The value of DATABASE_URL password is "changethis", for security, please change it, at least for deployments.
+  warnings.warn(message, stacklevel=1)
+/Users/garry/code/benchmark/repo-baseline/backend/app/core/config.py:75: UserWarning: The value of FIRST_SUPERUSER_PASSWORD is "changethis", for security, please change it, at least for deployments.
+  warnings.warn(message, stacklevel=1)
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> e2412789c190, Initialize models
+INFO  [alembic.runtime.migration] Running upgrade e2412789c190 -> 9c0a54914c78, Add max length for string(varchar) fields in User and Items models
+INFO  [alembic.runtime.migration] Running upgrade 9c0a54914c78 -> d98dd8ec85a3, Edit replace id integers in all models to use UUID instead
+INFO  [alembic.runtime.migration] Running upgrade d98dd8ec85a3 -> 1a31ce608336, Add cascade delete relationships
+INFO  [alembic.runtime.migration] Running upgrade 1a31ce608336 -> fe56fa70289e, Add created_at to User and Item
+
+diff --git a/backend/app/api/routes/items.py b/backend/app/api/routes/items.py
+index f0eb30e4cee50ac09904df0e3e30e5949b1edb04..0d27c66c2e333e7f4e7fab2773ae261f9c4dda0b
+--- a/backend/app/api/routes/items.py
++++ b/backend/app/api/routes/items.py
+@@ -1,5 +1,5 @@
+ import uuid
+-from typing import Any
++from typing import Any, Literal
+ 
+ from fastapi import APIRouter, HTTPException
+ from sqlmodel import col, func, select
+@@ -12,17 +12,25 @@
+ 
+ @router.get("/", response_model=ItemsPublic)
+ def read_items(
+-    session: SessionDep, current_user: CurrentUser, skip: int = 0, limit: int = 100
++    session: SessionDep,
++    current_user: CurrentUser,
++    skip: int = 0,
++    limit: int = 100,
++    order_by: Literal["created_at", "title"] = "created_at",
+ ) -> Any:
+     """
+     Retrieve items.
+     """
+ 
++    order_clause = (
++        col(Item.title) if order_by == "title" else col(Item.created_at).desc()
++    )
++
+     if current_user.is_superuser:
+         count_statement = select(func.count()).select_from(Item)
+         count = session.exec(count_statement).one()
+         statement = (
+-            select(Item).order_by(col(Item.created_at).desc()).offset(skip).limit(limit)
++            select(Item).order_by(order_clause).offset(skip).limit(limit)
+         )
+         items = session.exec(statement).all()
+     else:
+@@ -35,7 +43,7 @@
+         statement = (
+             select(Item)
+             .where(Item.owner_id == current_user.id)
+-            .order_by(col(Item.created_at).desc())
++            .order_by(order_clause)
+             .offset(skip)
+             .limit(limit)
+         )
+diff --git a/backend/tests/api/routes/test_items.py b/backend/tests/api/routes/test_items.py
+index 3e82cd0134757608c8f95e6084d7c967f52230d6..07513dd346d9d2906481b74aba47bb5f19b61cda
+--- a/backend/tests/api/routes/test_items.py
++++ b/backend/tests/api/routes/test_items.py
+@@ -79,6 +79,46 @@
+     assert len(content["data"]) >= 2
+ 
+ 
++def test_read_items_ordering(
++    client: TestClient, normal_user_token_headers: dict[str, str]
++) -> None:
++    older_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item A"},
++    )
++    newer_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item Z"},
++    )
++    assert older_item.status_code == 200
++    assert newer_item.status_code == 200
++
++    title_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        params={"order_by": "title"},
++    )
++    default_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++    )
++
++    assert title_response.status_code == 200
++    assert default_response.status_code == 200
++    title_items = title_response.json()["data"]
++    default_items = default_response.json()["data"]
++    title_ids = [item["id"] for item in title_items]
++    default_ids = [item["id"] for item in default_items]
++    assert title_ids.index(older_item.json()["id"]) < title_ids.index(
++        newer_item.json()["id"]
++    )
++    assert default_ids.index(newer_item.json()["id"]) < default_ids.index(
++        older_item.json()["id"]
++    )
++
++
+ def test_update_item(
+     client: TestClient, superuser_token_headers: dict[str, str], db: Session
+ ) -> None:
+
+exec
+/bin/zsh -lc 'date -u +%FT%TZ && FASTAPI_ENV=development uv run --directory backend pytest tests/api/routes/test_items.py::test_read_items_ordering -q' in /Users/garry/code/benchmark/repo-baseline
+diff --git a/backend/app/api/routes/items.py b/backend/app/api/routes/items.py
+index f0eb30e4cee50ac09904df0e3e30e5949b1edb04..0d27c66c2e333e7f4e7fab2773ae261f9c4dda0b
+--- a/backend/app/api/routes/items.py
++++ b/backend/app/api/routes/items.py
+@@ -1,5 +1,5 @@
+ import uuid
+-from typing import Any
++from typing import Any, Literal
+ 
+ from fastapi import APIRouter, HTTPException
+ from sqlmodel import col, func, select
+@@ -12,17 +12,25 @@
+ 
+ @router.get("/", response_model=ItemsPublic)
+ def read_items(
+-    session: SessionDep, current_user: CurrentUser, skip: int = 0, limit: int = 100
++    session: SessionDep,
++    current_user: CurrentUser,
++    skip: int = 0,
++    limit: int = 100,
++    order_by: Literal["created_at", "title"] = "created_at",
+ ) -> Any:
+     """
+     Retrieve items.
+     """
+ 
++    order_clause = (
++        col(Item.title) if order_by == "title" else col(Item.created_at).desc()
++    )
++
+     if current_user.is_superuser:
+         count_statement = select(func.count()).select_from(Item)
+         count = session.exec(count_statement).one()
+         statement = (
+-            select(Item).order_by(col(Item.created_at).desc()).offset(skip).limit(limit)
++            select(Item).order_by(order_clause).offset(skip).limit(limit)
+         )
+         items = session.exec(statement).all()
+     else:
+@@ -35,7 +43,7 @@
+         statement = (
+             select(Item)
+             .where(Item.owner_id == current_user.id)
+-            .order_by(col(Item.created_at).desc())
++            .order_by(order_clause)
+             .offset(skip)
+             .limit(limit)
+         )
+diff --git a/backend/tests/api/routes/test_items.py b/backend/tests/api/routes/test_items.py
+index 3e82cd0134757608c8f95e6084d7c967f52230d6..07513dd346d9d2906481b74aba47bb5f19b61cda
+--- a/backend/tests/api/routes/test_items.py
++++ b/backend/tests/api/routes/test_items.py
+@@ -79,6 +79,46 @@
+     assert len(content["data"]) >= 2
+ 
+ 
++def test_read_items_ordering(
++    client: TestClient, normal_user_token_headers: dict[str, str]
++) -> None:
++    older_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item A"},
++    )
++    newer_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item Z"},
++    )
++    assert older_item.status_code == 200
++    assert newer_item.status_code == 200
++
++    title_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        params={"order_by": "title"},
++    )
++    default_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++    )
++
++    assert title_response.status_code == 200
++    assert default_response.status_code == 200
++    title_items = title_response.json()["data"]
++    default_items = default_response.json()["data"]
++    title_ids = [item["id"] for item in title_items]
++    default_ids = [item["id"] for item in default_items]
++    assert title_ids.index(older_item.json()["id"]) < title_ids.index(
++        newer_item.json()["id"]
++    )
++    assert default_ids.index(newer_item.json()["id"]) < default_ids.index(
++        older_item.json()["id"]
++    )
++
++
+ def test_update_item(
+     client: TestClient, superuser_token_headers: dict[str, str], db: Session
+ ) -> None:
+
+ succeeded in 3286ms:
+.                                                                        [100%]
+=============================== warnings summary ===============================
+../.venv/lib/python3.14/site-packages/fastapi/testclient.py:1
+  /Users/garry/code/benchmark/repo-baseline/.venv/lib/python3.14/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+app/core/config.py:75
+  /Users/garry/code/benchmark/repo-baseline/backend/app/core/config.py:75: UserWarning: The value of SECRET_KEY is "changethis", for security, please change it, at least for deployments.
+    warnings.warn(message, stacklevel=1)
+
+app/core/config.py:75
+  /Users/garry/code/benchmark/repo-baseline/backend/app/core/config.py:75: UserWarning: The value of DATABASE_URL password is "changethis", for security, please change it, at least for deployments.
+    warnings.warn(message, stacklevel=1)
+
+app/core/config.py:75
+  /Users/garry/code/benchmark/repo-baseline/backend/app/core/config.py:75: UserWarning: The value of FIRST_SUPERUSER_PASSWORD is "changethis", for security, please change it, at least for deployments.
+    warnings.warn(message, stacklevel=1)
+
+app/main.py:36
+  /Users/garry/code/benchmark/repo-baseline/backend/app/main.py:36: UserWarning: Frontend directory '/Users/garry/code/benchmark/repo-baseline/backend/app/frontend' does not exist. Resolved absolute path: '/Users/garry/code/benchmark/repo-baseline/backend/app/frontend'
+    app.frontend("/", directory=FRONTEND_DIR)
+
+tests/api/routes/test_items.py::test_read_items_ordering
+  /Users/garry/code/benchmark/repo-baseline/.venv/lib/python3.14/site-packages/jwt/api_jwt.py:147: InsecureKeyLengthWarning: The HMAC key is 10 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.
+    return self._jws.encode(
+
+tests/api/routes/test_items.py::test_read_items_ordering
+  /Users/garry/code/benchmark/repo-baseline/.venv/lib/python3.14/site-packages/jwt/api_jwt.py:368: InsecureKeyLengthWarning: The HMAC key is 10 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.
+    decoded = self.decode_complete(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+1 passed, 7 warnings in 0.26s
+
+diff --git a/backend/app/api/routes/items.py b/backend/app/api/routes/items.py
+index f0eb30e4cee50ac09904df0e3e30e5949b1edb04..0d27c66c2e333e7f4e7fab2773ae261f9c4dda0b
+--- a/backend/app/api/routes/items.py
++++ b/backend/app/api/routes/items.py
+@@ -1,5 +1,5 @@
+ import uuid
+-from typing import Any
++from typing import Any, Literal
+ 
+ from fastapi import APIRouter, HTTPException
+ from sqlmodel import col, func, select
+@@ -12,17 +12,25 @@
+ 
+ @router.get("/", response_model=ItemsPublic)
+ def read_items(
+-    session: SessionDep, current_user: CurrentUser, skip: int = 0, limit: int = 100
++    session: SessionDep,
++    current_user: CurrentUser,
++    skip: int = 0,
++    limit: int = 100,
++    order_by: Literal["created_at", "title"] = "created_at",
+ ) -> Any:
+     """
+     Retrieve items.
+     """
+ 
++    order_clause = (
++        col(Item.title) if order_by == "title" else col(Item.created_at).desc()
++    )
++
+     if current_user.is_superuser:
+         count_statement = select(func.count()).select_from(Item)
+         count = session.exec(count_statement).one()
+         statement = (
+-            select(Item).order_by(col(Item.created_at).desc()).offset(skip).limit(limit)
++            select(Item).order_by(order_clause).offset(skip).limit(limit)
+         )
+         items = session.exec(statement).all()
+     else:
+@@ -35,7 +43,7 @@
+         statement = (
+             select(Item)
+             .where(Item.owner_id == current_user.id)
+-            .order_by(col(Item.created_at).desc())
++            .order_by(order_clause)
+             .offset(skip)
+             .limit(limit)
+         )
+diff --git a/backend/tests/api/routes/test_items.py b/backend/tests/api/routes/test_items.py
+index 3e82cd0134757608c8f95e6084d7c967f52230d6..07513dd346d9d2906481b74aba47bb5f19b61cda
+--- a/backend/tests/api/routes/test_items.py
++++ b/backend/tests/api/routes/test_items.py
+@@ -79,6 +79,46 @@
+     assert len(content["data"]) >= 2
+ 
+ 
++def test_read_items_ordering(
++    client: TestClient, normal_user_token_headers: dict[str, str]
++) -> None:
++    older_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item A"},
++    )
++    newer_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item Z"},
++    )
++    assert older_item.status_code == 200
++    assert newer_item.status_code == 200
++
++    title_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        params={"order_by": "title"},
++    )
++    default_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++    )
++
++    assert title_response.status_code == 200
++    assert default_response.status_code == 200
++    title_items = title_response.json()["data"]
++    default_items = default_response.json()["data"]
++    title_ids = [item["id"] for item in title_items]
++    default_ids = [item["id"] for item in default_items]
++    assert title_ids.index(older_item.json()["id"]) < title_ids.index(
++        newer_item.json()["id"]
++    )
++    assert default_ids.index(newer_item.json()["id"]) < default_ids.index(
++        older_item.json()["id"]
++    )
++
++
+ def test_update_item(
+     client: TestClient, superuser_token_headers: dict[str, str], db: Session
+ ) -> None:
+
+codex
+The database was initialized with the existing Alembic head (no new migration), and the focused ordering test now passes. I’m moving to full backend verification, then I’ll run lint/type checks relevant to the changed Python files and inspect the final diff/status for frontend and migration invariants.
+exec
+/bin/zsh -lc 'date -u +%FT%TZ && FASTAPI_ENV=development uv run --directory backend pytest tests/ -q' in /Users/garry/code/benchmark/repo-baseline
+diff --git a/backend/app/api/routes/items.py b/backend/app/api/routes/items.py
+index f0eb30e4cee50ac09904df0e3e30e5949b1edb04..0d27c66c2e333e7f4e7fab2773ae261f9c4dda0b
+--- a/backend/app/api/routes/items.py
++++ b/backend/app/api/routes/items.py
+@@ -1,5 +1,5 @@
+ import uuid
+-from typing import Any
++from typing import Any, Literal
+ 
+ from fastapi import APIRouter, HTTPException
+ from sqlmodel import col, func, select
+@@ -12,17 +12,25 @@
+ 
+ @router.get("/", response_model=ItemsPublic)
+ def read_items(
+-    session: SessionDep, current_user: CurrentUser, skip: int = 0, limit: int = 100
++    session: SessionDep,
++    current_user: CurrentUser,
++    skip: int = 0,
++    limit: int = 100,
++    order_by: Literal["created_at", "title"] = "created_at",
+ ) -> Any:
+     """
+     Retrieve items.
+     """
+ 
++    order_clause = (
++        col(Item.title) if order_by == "title" else col(Item.created_at).desc()
++    )
++
+     if current_user.is_superuser:
+         count_statement = select(func.count()).select_from(Item)
+         count = session.exec(count_statement).one()
+         statement = (
+-            select(Item).order_by(col(Item.created_at).desc()).offset(skip).limit(limit)
++            select(Item).order_by(order_clause).offset(skip).limit(limit)
+         )
+         items = session.exec(statement).all()
+     else:
+@@ -35,7 +43,7 @@
+         statement = (
+             select(Item)
+             .where(Item.owner_id == current_user.id)
+-            .order_by(col(Item.created_at).desc())
++            .order_by(order_clause)
+             .offset(skip)
+             .limit(limit)
+         )
+diff --git a/backend/tests/api/routes/test_items.py b/backend/tests/api/routes/test_items.py
+index 3e82cd0134757608c8f95e6084d7c967f52230d6..07513dd346d9d2906481b74aba47bb5f19b61cda
+--- a/backend/tests/api/routes/test_items.py
++++ b/backend/tests/api/routes/test_items.py
+@@ -79,6 +79,46 @@
+     assert len(content["data"]) >= 2
+ 
+ 
++def test_read_items_ordering(
++    client: TestClient, normal_user_token_headers: dict[str, str]
++) -> None:
++    older_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item A"},
++    )
++    newer_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item Z"},
++    )
++    assert older_item.status_code == 200
++    assert newer_item.status_code == 200
++
++    title_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        params={"order_by": "title"},
++    )
++    default_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++    )
++
++    assert title_response.status_code == 200
++    assert default_response.status_code == 200
++    title_items = title_response.json()["data"]
++    default_items = default_response.json()["data"]
++    title_ids = [item["id"] for item in title_items]
++    default_ids = [item["id"] for item in default_items]
++    assert title_ids.index(older_item.json()["id"]) < title_ids.index(
++        newer_item.json()["id"]
++    )
++    assert default_ids.index(newer_item.json()["id"]) < default_ids.index(
++        older_item.json()["id"]
++    )
++
++
+ def test_update_item(
+     client: TestClient, superuser_token_headers: dict[str, str], db: Session
+ ) -> None:
+
+ succeeded in 3357ms:
+...........................................................              [100%]
+=============================== warnings summary ===============================
+../.venv/lib/python3.14/site-packages/fastapi/testclient.py:1
+  /Users/garry/code/benchmark/repo-baseline/.venv/lib/python3.14/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+app/core/config.py:75
+  /Users/garry/code/benchmark/repo-baseline/backend/app/core/config.py:75: UserWarning: The value of SECRET_KEY is "changethis", for security, please change it, at least for deployments.
+    warnings.warn(message, stacklevel=1)
+
+app/core/config.py:75
+  /Users/garry/code/benchmark/repo-baseline/backend/app/core/config.py:75: UserWarning: The value of DATABASE_URL password is "changethis", for security, please change it, at least for deployments.
+    warnings.warn(message, stacklevel=1)
+
+app/core/config.py:75
+  /Users/garry/code/benchmark/repo-baseline/backend/app/core/config.py:75: UserWarning: The value of FIRST_SUPERUSER_PASSWORD is "changethis", for security, please change it, at least for deployments.
+    warnings.warn(message, stacklevel=1)
+
+app/main.py:36
+  /Users/garry/code/benchmark/repo-baseline/backend/app/main.py:36: UserWarning: Frontend directory '/Users/garry/code/benchmark/repo-baseline/backend/app/frontend' does not exist. Resolved absolute path: '/Users/garry/code/benchmark/repo-baseline/backend/app/frontend'
+    app.frontend("/", directory=FRONTEND_DIR)
+
+tests/api/routes/test_items.py: 2 warnings
+tests/api/routes/test_login.py: 6 warnings
+tests/api/routes/test_users.py: 4 warnings
+  /Users/garry/code/benchmark/repo-baseline/.venv/lib/python3.14/site-packages/jwt/api_jwt.py:147: InsecureKeyLengthWarning: The HMAC key is 10 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.
+    return self._jws.encode(
+
+tests/api/routes/test_items.py: 12 warnings
+tests/api/routes/test_login.py: 2 warnings
+tests/api/routes/test_users.py: 25 warnings
+  /Users/garry/code/benchmark/repo-baseline/.venv/lib/python3.14/site-packages/jwt/api_jwt.py:368: InsecureKeyLengthWarning: The HMAC key is 10 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.
+    decoded = self.decode_complete(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+59 passed, 56 warnings in 2.74s
+
+diff --git a/backend/app/api/routes/items.py b/backend/app/api/routes/items.py
+index f0eb30e4cee50ac09904df0e3e30e5949b1edb04..0d27c66c2e333e7f4e7fab2773ae261f9c4dda0b
+--- a/backend/app/api/routes/items.py
++++ b/backend/app/api/routes/items.py
+@@ -1,5 +1,5 @@
+ import uuid
+-from typing import Any
++from typing import Any, Literal
+ 
+ from fastapi import APIRouter, HTTPException
+ from sqlmodel import col, func, select
+@@ -12,17 +12,25 @@
+ 
+ @router.get("/", response_model=ItemsPublic)
+ def read_items(
+-    session: SessionDep, current_user: CurrentUser, skip: int = 0, limit: int = 100
++    session: SessionDep,
++    current_user: CurrentUser,
++    skip: int = 0,
++    limit: int = 100,
++    order_by: Literal["created_at", "title"] = "created_at",
+ ) -> Any:
+     """
+     Retrieve items.
+     """
+ 
++    order_clause = (
++        col(Item.title) if order_by == "title" else col(Item.created_at).desc()
++    )
++
+     if current_user.is_superuser:
+         count_statement = select(func.count()).select_from(Item)
+         count = session.exec(count_statement).one()
+         statement = (
+-            select(Item).order_by(col(Item.created_at).desc()).offset(skip).limit(limit)
++            select(Item).order_by(order_clause).offset(skip).limit(limit)
+         )
+         items = session.exec(statement).all()
+     else:
+@@ -35,7 +43,7 @@
+         statement = (
+             select(Item)
+             .where(Item.owner_id == current_user.id)
+-            .order_by(col(Item.created_at).desc())
++            .order_by(order_clause)
+             .offset(skip)
+             .limit(limit)
+         )
+diff --git a/backend/tests/api/routes/test_items.py b/backend/tests/api/routes/test_items.py
+index 3e82cd0134757608c8f95e6084d7c967f52230d6..07513dd346d9d2906481b74aba47bb5f19b61cda
+--- a/backend/tests/api/routes/test_items.py
++++ b/backend/tests/api/routes/test_items.py
+@@ -79,6 +79,46 @@
+     assert len(content["data"]) >= 2
+ 
+ 
++def test_read_items_ordering(
++    client: TestClient, normal_user_token_headers: dict[str, str]
++) -> None:
++    older_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item A"},
++    )
++    newer_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item Z"},
++    )
++    assert older_item.status_code == 200
++    assert newer_item.status_code == 200
++
++    title_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        params={"order_by": "title"},
++    )
++    default_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++    )
++
++    assert title_response.status_code == 200
++    assert default_response.status_code == 200
++    title_items = title_response.json()["data"]
++    default_items = default_response.json()["data"]
++    title_ids = [item["id"] for item in title_items]
++    default_ids = [item["id"] for item in default_items]
++    assert title_ids.index(older_item.json()["id"]) < title_ids.index(
++        newer_item.json()["id"]
++    )
++    assert default_ids.index(newer_item.json()["id"]) < default_ids.index(
++        older_item.json()["id"]
++    )
++
++
+ def test_update_item(
+     client: TestClient, superuser_token_headers: dict[str, str], db: Session
+ ) -> None:
+
+exec
+/bin/zsh -lc "sed -n '1,200p' backend/scripts/lint.sh && sed -n '1,200p' backend/scripts/format.sh && FASTAPI_ENV=development uv run --directory backend ruff check app/api/routes/items.py tests/api/routes/test_items.py" in /Users/garry/code/benchmark/repo-baseline
+ succeeded in 272ms:
+All checks passed!
+
+diff --git a/backend/app/api/routes/items.py b/backend/app/api/routes/items.py
+index f0eb30e4cee50ac09904df0e3e30e5949b1edb04..0d27c66c2e333e7f4e7fab2773ae261f9c4dda0b
+--- a/backend/app/api/routes/items.py
++++ b/backend/app/api/routes/items.py
+@@ -1,5 +1,5 @@
+ import uuid
+-from typing import Any
++from typing import Any, Literal
+ 
+ from fastapi import APIRouter, HTTPException
+ from sqlmodel import col, func, select
+@@ -12,17 +12,25 @@
+ 
+ @router.get("/", response_model=ItemsPublic)
+ def read_items(
+-    session: SessionDep, current_user: CurrentUser, skip: int = 0, limit: int = 100
++    session: SessionDep,
++    current_user: CurrentUser,
++    skip: int = 0,
++    limit: int = 100,
++    order_by: Literal["created_at", "title"] = "created_at",
+ ) -> Any:
+     """
+     Retrieve items.
+     """
+ 
++    order_clause = (
++        col(Item.title) if order_by == "title" else col(Item.created_at).desc()
++    )
++
+     if current_user.is_superuser:
+         count_statement = select(func.count()).select_from(Item)
+         count = session.exec(count_statement).one()
+         statement = (
+-            select(Item).order_by(col(Item.created_at).desc()).offset(skip).limit(limit)
++            select(Item).order_by(order_clause).offset(skip).limit(limit)
+         )
+         items = session.exec(statement).all()
+     else:
+@@ -35,7 +43,7 @@
+         statement = (
+             select(Item)
+             .where(Item.owner_id == current_user.id)
+-            .order_by(col(Item.created_at).desc())
++            .order_by(order_clause)
+             .offset(skip)
+             .limit(limit)
+         )
+diff --git a/backend/tests/api/routes/test_items.py b/backend/tests/api/routes/test_items.py
+index 3e82cd0134757608c8f95e6084d7c967f52230d6..07513dd346d9d2906481b74aba47bb5f19b61cda
+--- a/backend/tests/api/routes/test_items.py
++++ b/backend/tests/api/routes/test_items.py
+@@ -79,6 +79,46 @@
+     assert len(content["data"]) >= 2
+ 
+ 
++def test_read_items_ordering(
++    client: TestClient, normal_user_token_headers: dict[str, str]
++) -> None:
++    older_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item A"},
++    )
++    newer_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item Z"},
++    )
++    assert older_item.status_code == 200
++    assert newer_item.status_code == 200
++
++    title_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        params={"order_by": "title"},
++    )
++    default_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++    )
++
++    assert title_response.status_code == 200
++    assert default_response.status_code == 200
++    title_items = title_response.json()["data"]
++    default_items = default_response.json()["data"]
++    title_ids = [item["id"] for item in title_items]
++    default_ids = [item["id"] for item in default_items]
++    assert title_ids.index(older_item.json()["id"]) < title_ids.index(
++        newer_item.json()["id"]
++    )
++    assert default_ids.index(newer_item.json()["id"]) < default_ids.index(
++        older_item.json()["id"]
++    )
++
++
+ def test_update_item(
+     client: TestClient, superuser_token_headers: dict[str, str], db: Session
+ ) -> None:
+
+exec
+/bin/zsh -lc "printf '%s\\n' '--- diff ---' && git diff -- backend/app/api/routes/items.py backend/tests/api/routes/test_items.py .gitignore && printf '%s\\n' '--- status ---' && git status --short && printf '%s\\n' '--- migration changes ---' && git status --short backend/app/alembic/versions && printf '%s\\n' '--- frontend changes ---' && git status --short frontend" in /Users/garry/code/benchmark/repo-baseline
+ succeeded in 0ms:
+--- diff ---
+diff --git a/backend/app/api/routes/items.py b/backend/app/api/routes/items.py
+index f0eb30e..0d27c66 100644
+--- a/backend/app/api/routes/items.py
++++ b/backend/app/api/routes/items.py
+@@ -1,5 +1,5 @@
+ import uuid
+-from typing import Any
++from typing import Any, Literal
+ 
+ from fastapi import APIRouter, HTTPException
+ from sqlmodel import col, func, select
+@@ -12,17 +12,25 @@ router = APIRouter(prefix="/items", tags=["items"])
+ 
+ @router.get("/", response_model=ItemsPublic)
+ def read_items(
+-    session: SessionDep, current_user: CurrentUser, skip: int = 0, limit: int = 100
++    session: SessionDep,
++    current_user: CurrentUser,
++    skip: int = 0,
++    limit: int = 100,
++    order_by: Literal["created_at", "title"] = "created_at",
+ ) -> Any:
+     """
+     Retrieve items.
+     """
+ 
++    order_clause = (
++        col(Item.title) if order_by == "title" else col(Item.created_at).desc()
++    )
++
+     if current_user.is_superuser:
+         count_statement = select(func.count()).select_from(Item)
+         count = session.exec(count_statement).one()
+         statement = (
+-            select(Item).order_by(col(Item.created_at).desc()).offset(skip).limit(limit)
++            select(Item).order_by(order_clause).offset(skip).limit(limit)
+         )
+         items = session.exec(statement).all()
+     else:
+@@ -35,7 +43,7 @@ def read_items(
+         statement = (
+             select(Item)
+             .where(Item.owner_id == current_user.id)
+-            .order_by(col(Item.created_at).desc())
++            .order_by(order_clause)
+             .offset(skip)
+             .limit(limit)
+         )
+diff --git a/backend/tests/api/routes/test_items.py b/backend/tests/api/routes/test_items.py
+index 3e82cd0..07513dd 100644
+--- a/backend/tests/api/routes/test_items.py
++++ b/backend/tests/api/routes/test_items.py
+@@ -79,6 +79,46 @@ def test_read_items(
+     assert len(content["data"]) >= 2
+ 
+ 
++def test_read_items_ordering(
++    client: TestClient, normal_user_token_headers: dict[str, str]
++) -> None:
++    older_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item A"},
++    )
++    newer_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item Z"},
++    )
++    assert older_item.status_code == 200
++    assert newer_item.status_code == 200
++
++    title_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        params={"order_by": "title"},
++    )
++    default_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++    )
++
++    assert title_response.status_code == 200
++    assert default_response.status_code == 200
++    title_items = title_response.json()["data"]
++    default_items = default_response.json()["data"]
++    title_ids = [item["id"] for item in title_items]
++    default_ids = [item["id"] for item in default_items]
++    assert title_ids.index(older_item.json()["id"]) < title_ids.index(
++        newer_item.json()["id"]
++    )
++    assert default_ids.index(newer_item.json()["id"]) < default_ids.index(
++        older_item.json()["id"]
++    )
++
++
+ def test_update_item(
+     client: TestClient, superuser_token_headers: dict[str, str], db: Session
+ ) -> None:
+--- status ---
+ M backend/app/api/routes/items.py
+ M backend/tests/api/routes/test_items.py
+--- migration changes ---
+--- frontend changes ---
+
+diff --git a/backend/app/api/routes/items.py b/backend/app/api/routes/items.py
+index f0eb30e4cee50ac09904df0e3e30e5949b1edb04..0d27c66c2e333e7f4e7fab2773ae261f9c4dda0b
+--- a/backend/app/api/routes/items.py
++++ b/backend/app/api/routes/items.py
+@@ -1,5 +1,5 @@
+ import uuid
+-from typing import Any
++from typing import Any, Literal
+ 
+ from fastapi import APIRouter, HTTPException
+ from sqlmodel import col, func, select
+@@ -12,17 +12,25 @@
+ 
+ @router.get("/", response_model=ItemsPublic)
+ def read_items(
+-    session: SessionDep, current_user: CurrentUser, skip: int = 0, limit: int = 100
++    session: SessionDep,
++    current_user: CurrentUser,
++    skip: int = 0,
++    limit: int = 100,
++    order_by: Literal["created_at", "title"] = "created_at",
+ ) -> Any:
+     """
+     Retrieve items.
+     """
+ 
++    order_clause = (
++        col(Item.title) if order_by == "title" else col(Item.created_at).desc()
++    )
++
+     if current_user.is_superuser:
+         count_statement = select(func.count()).select_from(Item)
+         count = session.exec(count_statement).one()
+         statement = (
+-            select(Item).order_by(col(Item.created_at).desc()).offset(skip).limit(limit)
++            select(Item).order_by(order_clause).offset(skip).limit(limit)
+         )
+         items = session.exec(statement).all()
+     else:
+@@ -35,7 +43,7 @@
+         statement = (
+             select(Item)
+             .where(Item.owner_id == current_user.id)
+-            .order_by(col(Item.created_at).desc())
++            .order_by(order_clause)
+             .offset(skip)
+             .limit(limit)
+         )
+diff --git a/backend/tests/api/routes/test_items.py b/backend/tests/api/routes/test_items.py
+index 3e82cd0134757608c8f95e6084d7c967f52230d6..07513dd346d9d2906481b74aba47bb5f19b61cda
+--- a/backend/tests/api/routes/test_items.py
++++ b/backend/tests/api/routes/test_items.py
+@@ -79,6 +79,46 @@
+     assert len(content["data"]) >= 2
+ 
+ 
++def test_read_items_ordering(
++    client: TestClient, normal_user_token_headers: dict[str, str]
++) -> None:
++    older_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item A"},
++    )
++    newer_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item Z"},
++    )
++    assert older_item.status_code == 200
++    assert newer_item.status_code == 200
++
++    title_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        params={"order_by": "title"},
++    )
++    default_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++    )
++
++    assert title_response.status_code == 200
++    assert default_response.status_code == 200
++    title_items = title_response.json()["data"]
++    default_items = default_response.json()["data"]
++    title_ids = [item["id"] for item in title_items]
++    default_ids = [item["id"] for item in default_items]
++    assert title_ids.index(older_item.json()["id"]) < title_ids.index(
++        newer_item.json()["id"]
++    )
++    assert default_ids.index(newer_item.json()["id"]) < default_ids.index(
++        older_item.json()["id"]
++    )
++
++
+ def test_update_item(
+     client: TestClient, superuser_token_headers: dict[str, str], db: Session
+ ) -> None:
+
+codex
+Full backend verification passes: 59 tests, including the new ordering test; Ruff also reports all changed-file checks clean. The diff contains only the route and backend test so far. I’m recording the required metrics and ignore rule now, then doing one final status/diff check.
+exec
+/bin/zsh -lc 'date -u +%FT%TZ' in /Users/garry/code/benchmark/repo-baseline
+ succeeded in 0ms:
+2026-09-26T22:19:55Z
+
+diff --git a/backend/app/api/routes/items.py b/backend/app/api/routes/items.py
+index f0eb30e4cee50ac09904df0e3e30e5949b1edb04..0d27c66c2e333e7f4e7fab2773ae261f9c4dda0b
+--- a/backend/app/api/routes/items.py
++++ b/backend/app/api/routes/items.py
+@@ -1,5 +1,5 @@
+ import uuid
+-from typing import Any
++from typing import Any, Literal
+ 
+ from fastapi import APIRouter, HTTPException
+ from sqlmodel import col, func, select
+@@ -12,17 +12,25 @@
+ 
+ @router.get("/", response_model=ItemsPublic)
+ def read_items(
+-    session: SessionDep, current_user: CurrentUser, skip: int = 0, limit: int = 100
++    session: SessionDep,
++    current_user: CurrentUser,
++    skip: int = 0,
++    limit: int = 100,
++    order_by: Literal["created_at", "title"] = "created_at",
+ ) -> Any:
+     """
+     Retrieve items.
+     """
+ 
++    order_clause = (
++        col(Item.title) if order_by == "title" else col(Item.created_at).desc()
++    )
++
+     if current_user.is_superuser:
+         count_statement = select(func.count()).select_from(Item)
+         count = session.exec(count_statement).one()
+         statement = (
+-            select(Item).order_by(col(Item.created_at).desc()).offset(skip).limit(limit)
++            select(Item).order_by(order_clause).offset(skip).limit(limit)
+         )
+         items = session.exec(statement).all()
+     else:
+@@ -35,7 +43,7 @@
+         statement = (
+             select(Item)
+             .where(Item.owner_id == current_user.id)
+-            .order_by(col(Item.created_at).desc())
++            .order_by(order_clause)
+             .offset(skip)
+             .limit(limit)
+         )
+diff --git a/backend/tests/api/routes/test_items.py b/backend/tests/api/routes/test_items.py
+index 3e82cd0134757608c8f95e6084d7c967f52230d6..07513dd346d9d2906481b74aba47bb5f19b61cda
+--- a/backend/tests/api/routes/test_items.py
++++ b/backend/tests/api/routes/test_items.py
+@@ -79,6 +79,46 @@
+     assert len(content["data"]) >= 2
+ 
+ 
++def test_read_items_ordering(
++    client: TestClient, normal_user_token_headers: dict[str, str]
++) -> None:
++    older_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item A"},
++    )
++    newer_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item Z"},
++    )
++    assert older_item.status_code == 200
++    assert newer_item.status_code == 200
++
++    title_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        params={"order_by": "title"},
++    )
++    default_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++    )
++
++    assert title_response.status_code == 200
++    assert default_response.status_code == 200
++    title_items = title_response.json()["data"]
++    default_items = default_response.json()["data"]
++    title_ids = [item["id"] for item in title_items]
++    default_ids = [item["id"] for item in default_items]
++    assert title_ids.index(older_item.json()["id"]) < title_ids.index(
++        newer_item.json()["id"]
++    )
++    assert default_ids.index(newer_item.json()["id"]) < default_ids.index(
++        older_item.json()["id"]
++    )
++
++
+ def test_update_item(
+     client: TestClient, superuser_token_headers: dict[str, str], db: Session
+ ) -> None:
+
+apply patch
+patch: completed
+/Users/garry/code/benchmark/repo-baseline/.gitignore
+/Users/garry/code/benchmark/repo-baseline/RUN_METRICS.json
+diff --git a/.gitignore b/.gitignore
+index 3c697eb7da302748ae5598d7007ba354212004db..7f6febdc6959b7f7bcc949fffbca20f43dc2d416
+--- a/.gitignore
++++ b/.gitignore
+@@ -6,3 +6,4 @@
+ /playwright-report/
+ /blob-report/
+ /playwright/.cache/
++RUN_METRICS.json
+diff --git a/RUN_METRICS.json b/RUN_METRICS.json
+new file mode 100644
+index 0000000000000000000000000000000000000000..45116a58f287bc57a836422e9cc082512ca5afa5
+--- /dev/null
++++ b/RUN_METRICS.json
+@@ -0,0 +1,65 @@
++{
++  "repo": "repo-baseline",
++  "task": "simple_change",
++  "start_time": "2026-09-26T22:17:26Z",
++  "end_time": "2026-09-26T22:19:55Z",
++  "duration_seconds": 149,
++  "time_to_first_edit_seconds": 47,
++  "tool_calls": {
++    "read": 6,
++    "edit_or_write": 2,
++    "bash": 10,
++    "search_or_grep": 1,
++    "other": 4,
++    "total": 23
++  },
++  "files_read": [
++    "/Users/garry/.agents/skills/using-superpowers/SKILL.md",
++    "/Users/garry/.agents/skills/using-superpowers/references/codex-tools.md",
++    "/Users/garry/.agents/skills/tdd/SKILL.md",
++    "/Users/garry/.agents/skills/tdd/tests.md",
++    "/Users/garry/.agents/skills/tdd/mocking.md",
++    "backend/app/api/routes/items.py",
++    "backend/tests/api/routes/test_items.py",
++    "backend/tests/utils/item.py",
++    "backend/tests/conftest.py",
++    "backend/pyproject.toml",
++    "backend/scripts/test.sh",
++    "backend/scripts/tests-start.sh",
++    "scripts/test-local.sh",
++    "compose.yml",
++    "backend/app/core/db.py",
++    "backend/app/core/config.py",
++    ".gitignore"
++  ],
++  "files_created_or_edited": [
++    "backend/app/api/routes/items.py",
++    "backend/tests/api/routes/test_items.py",
++    ".gitignore",
++    "RUN_METRICS.json"
++  ],
++  "timeline": [
++    {"time": "2026-09-26T22:17:26Z", "event": "start_time recorded"},
++    {"time": "2026-09-26T22:17:43Z", "event": "explored repo"},
++    {"time": "2026-09-26T22:18:13Z", "event": "first file edit: wrote backend ordering test"},
++    {"time": "2026-09-26T22:18:28Z", "event": "ran focused test; blocked by missing database tables"},
++    {"time": "2026-09-26T22:18:44Z", "event": "implemented order_by route parameter and ordering"},
++    {"time": "2026-09-26T22:19:15Z", "event": "focused ordering test passed after applying existing migrations"},
++    {"time": "2026-09-26T22:19:22Z", "event": "full backend test suite passed"},
++    {"time": "2026-09-26T22:19:55Z", "event": "done timestamp recorded"}
++  ],
++  "definition_of_done": {
++    "order_by_param_added": true,
++    "title_ordering_correct": true,
++    "default_ordering_unchanged": true,
++    "new_test_added_and_passes": true,
++    "no_migration_created": true,
++    "no_frontend_touched": true
++  },
++  "docs_consulted": [],
++  "blockers_hit": [
++    "Initial focused test setup failed because the local database had no schema; Docker was unavailable, so the existing Alembic head was applied before retrying."
++  ],
++  "self_assessed_completion": "complete",
++  "notes": "Small scoped change was straightforward after locating the route-level integration tests; existing conventions support a Literal query parameter and shared order clause."
++}
+diff --git a/backend/app/api/routes/items.py b/backend/app/api/routes/items.py
+index f0eb30e4cee50ac09904df0e3e30e5949b1edb04..0d27c66c2e333e7f4e7fab2773ae261f9c4dda0b
+--- a/backend/app/api/routes/items.py
++++ b/backend/app/api/routes/items.py
+@@ -1,5 +1,5 @@
+ import uuid
+-from typing import Any
++from typing import Any, Literal
+ 
+ from fastapi import APIRouter, HTTPException
+ from sqlmodel import col, func, select
+@@ -12,17 +12,25 @@
+ 
+ @router.get("/", response_model=ItemsPublic)
+ def read_items(
+-    session: SessionDep, current_user: CurrentUser, skip: int = 0, limit: int = 100
++    session: SessionDep,
++    current_user: CurrentUser,
++    skip: int = 0,
++    limit: int = 100,
++    order_by: Literal["created_at", "title"] = "created_at",
+ ) -> Any:
+     """
+     Retrieve items.
+     """
+ 
++    order_clause = (
++        col(Item.title) if order_by == "title" else col(Item.created_at).desc()
++    )
++
+     if current_user.is_superuser:
+         count_statement = select(func.count()).select_from(Item)
+         count = session.exec(count_statement).one()
+         statement = (
+-            select(Item).order_by(col(Item.created_at).desc()).offset(skip).limit(limit)
++            select(Item).order_by(order_clause).offset(skip).limit(limit)
+         )
+         items = session.exec(statement).all()
+     else:
+@@ -35,7 +43,7 @@
+         statement = (
+             select(Item)
+             .where(Item.owner_id == current_user.id)
+-            .order_by(col(Item.created_at).desc())
++            .order_by(order_clause)
+             .offset(skip)
+             .limit(limit)
+         )
+diff --git a/backend/tests/api/routes/test_items.py b/backend/tests/api/routes/test_items.py
+index 3e82cd0134757608c8f95e6084d7c967f52230d6..07513dd346d9d2906481b74aba47bb5f19b61cda
+--- a/backend/tests/api/routes/test_items.py
++++ b/backend/tests/api/routes/test_items.py
+@@ -79,6 +79,46 @@
+     assert len(content["data"]) >= 2
+ 
+ 
++def test_read_items_ordering(
++    client: TestClient, normal_user_token_headers: dict[str, str]
++) -> None:
++    older_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item A"},
++    )
++    newer_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item Z"},
++    )
++    assert older_item.status_code == 200
++    assert newer_item.status_code == 200
++
++    title_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        params={"order_by": "title"},
++    )
++    default_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++    )
++
++    assert title_response.status_code == 200
++    assert default_response.status_code == 200
++    title_items = title_response.json()["data"]
++    default_items = default_response.json()["data"]
++    title_ids = [item["id"] for item in title_items]
++    default_ids = [item["id"] for item in default_items]
++    assert title_ids.index(older_item.json()["id"]) < title_ids.index(
++        newer_item.json()["id"]
++    )
++    assert default_ids.index(newer_item.json()["id"]) < default_ids.index(
++        older_item.json()["id"]
++    )
++
++
+ def test_update_item(
+     client: TestClient, superuser_token_headers: dict[str, str], db: Session
+ ) -> None:
+
+diff --git a/.gitignore b/.gitignore
+index 3c697eb7da302748ae5598d7007ba354212004db..7f6febdc6959b7f7bcc949fffbca20f43dc2d416
+--- a/.gitignore
++++ b/.gitignore
+@@ -6,3 +6,4 @@
+ /playwright-report/
+ /blob-report/
+ /playwright/.cache/
++RUN_METRICS.json
+diff --git a/RUN_METRICS.json b/RUN_METRICS.json
+new file mode 100644
+index 0000000000000000000000000000000000000000..45116a58f287bc57a836422e9cc082512ca5afa5
+--- /dev/null
++++ b/RUN_METRICS.json
+@@ -0,0 +1,65 @@
++{
++  "repo": "repo-baseline",
++  "task": "simple_change",
++  "start_time": "2026-09-26T22:17:26Z",
++  "end_time": "2026-09-26T22:19:55Z",
++  "duration_seconds": 149,
++  "time_to_first_edit_seconds": 47,
++  "tool_calls": {
++    "read": 6,
++    "edit_or_write": 2,
++    "bash": 10,
++    "search_or_grep": 1,
++    "other": 4,
++    "total": 23
++  },
++  "files_read": [
++    "/Users/garry/.agents/skills/using-superpowers/SKILL.md",
++    "/Users/garry/.agents/skills/using-superpowers/references/codex-tools.md",
++    "/Users/garry/.agents/skills/tdd/SKILL.md",
++    "/Users/garry/.agents/skills/tdd/tests.md",
++    "/Users/garry/.agents/skills/tdd/mocking.md",
++    "backend/app/api/routes/items.py",
++    "backend/tests/api/routes/test_items.py",
++    "backend/tests/utils/item.py",
++    "backend/tests/conftest.py",
++    "backend/pyproject.toml",
++    "backend/scripts/test.sh",
++    "backend/scripts/tests-start.sh",
++    "scripts/test-local.sh",
++    "compose.yml",
++    "backend/app/core/db.py",
++    "backend/app/core/config.py",
++    ".gitignore"
++  ],
++  "files_created_or_edited": [
++    "backend/app/api/routes/items.py",
++    "backend/tests/api/routes/test_items.py",
++    ".gitignore",
++    "RUN_METRICS.json"
++  ],
++  "timeline": [
++    {"time": "2026-09-26T22:17:26Z", "event": "start_time recorded"},
++    {"time": "2026-09-26T22:17:43Z", "event": "explored repo"},
++    {"time": "2026-09-26T22:18:13Z", "event": "first file edit: wrote backend ordering test"},
++    {"time": "2026-09-26T22:18:28Z", "event": "ran focused test; blocked by missing database tables"},
++    {"time": "2026-09-26T22:18:44Z", "event": "implemented order_by route parameter and ordering"},
++    {"time": "2026-09-26T22:19:15Z", "event": "focused ordering test passed after applying existing migrations"},
++    {"time": "2026-09-26T22:19:22Z", "event": "full backend test suite passed"},
++    {"time": "2026-09-26T22:19:55Z", "event": "done timestamp recorded"}
++  ],
++  "definition_of_done": {
++    "order_by_param_added": true,
++    "title_ordering_correct": true,
++    "default_ordering_unchanged": true,
++    "new_test_added_and_passes": true,
++    "no_migration_created": true,
++    "no_frontend_touched": true
++  },
++  "docs_consulted": [],
++  "blockers_hit": [
++    "Initial focused test setup failed because the local database had no schema; Docker was unavailable, so the existing Alembic head was applied before retrying."
++  ],
++  "self_assessed_completion": "complete",
++  "notes": "Small scoped change was straightforward after locating the route-level integration tests; existing conventions support a Literal query parameter and shared order clause."
++}
+diff --git a/backend/app/api/routes/items.py b/backend/app/api/routes/items.py
+index f0eb30e4cee50ac09904df0e3e30e5949b1edb04..0d27c66c2e333e7f4e7fab2773ae261f9c4dda0b
+--- a/backend/app/api/routes/items.py
++++ b/backend/app/api/routes/items.py
+@@ -1,5 +1,5 @@
+ import uuid
+-from typing import Any
++from typing import Any, Literal
+ 
+ from fastapi import APIRouter, HTTPException
+ from sqlmodel import col, func, select
+@@ -12,17 +12,25 @@
+ 
+ @router.get("/", response_model=ItemsPublic)
+ def read_items(
+-    session: SessionDep, current_user: CurrentUser, skip: int = 0, limit: int = 100
++    session: SessionDep,
++    current_user: CurrentUser,
++    skip: int = 0,
++    limit: int = 100,
++    order_by: Literal["created_at", "title"] = "created_at",
+ ) -> Any:
+     """
+     Retrieve items.
+     """
+ 
++    order_clause = (
++        col(Item.title) if order_by == "title" else col(Item.created_at).desc()
++    )
++
+     if current_user.is_superuser:
+         count_statement = select(func.count()).select_from(Item)
+         count = session.exec(count_statement).one()
+         statement = (
+-            select(Item).order_by(col(Item.created_at).desc()).offset(skip).limit(limit)
++            select(Item).order_by(order_clause).offset(skip).limit(limit)
+         )
+         items = session.exec(statement).all()
+     else:
+@@ -35,7 +43,7 @@
+         statement = (
+             select(Item)
+             .where(Item.owner_id == current_user.id)
+-            .order_by(col(Item.created_at).desc())
++            .order_by(order_clause)
+             .offset(skip)
+             .limit(limit)
+         )
+diff --git a/backend/tests/api/routes/test_items.py b/backend/tests/api/routes/test_items.py
+index 3e82cd0134757608c8f95e6084d7c967f52230d6..07513dd346d9d2906481b74aba47bb5f19b61cda
+--- a/backend/tests/api/routes/test_items.py
++++ b/backend/tests/api/routes/test_items.py
+@@ -79,6 +79,46 @@
+     assert len(content["data"]) >= 2
+ 
+ 
++def test_read_items_ordering(
++    client: TestClient, normal_user_token_headers: dict[str, str]
++) -> None:
++    older_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item A"},
++    )
++    newer_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item Z"},
++    )
++    assert older_item.status_code == 200
++    assert newer_item.status_code == 200
++
++    title_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        params={"order_by": "title"},
++    )
++    default_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++    )
++
++    assert title_response.status_code == 200
++    assert default_response.status_code == 200
++    title_items = title_response.json()["data"]
++    default_items = default_response.json()["data"]
++    title_ids = [item["id"] for item in title_items]
++    default_ids = [item["id"] for item in default_items]
++    assert title_ids.index(older_item.json()["id"]) < title_ids.index(
++        newer_item.json()["id"]
++    )
++    assert default_ids.index(newer_item.json()["id"]) < default_ids.index(
++        older_item.json()["id"]
++    )
++
++
+ def test_update_item(
+     client: TestClient, superuser_token_headers: dict[str, str], db: Session
+ ) -> None:
+
+exec
+/bin/zsh -lc "date -u +%FT%TZ && uv run python -m json.tool RUN_METRICS.json >/dev/null && printf '%s\\n' '--- status ---' && git status --short --ignored RUN_METRICS.json && printf '%s\\n' '--- diff stat ---' && git diff --stat && printf '%s\\n' '--- changed paths ---' && git diff --name-only && printf '%s\\n' '--- migration/frontend status ---' && git status --short backend/app/alembic/versions frontend" in /Users/garry/code/benchmark/repo-baseline
+ succeeded in 0ms:
+2026-09-26T22:20:27Z
+--- status ---
+!! RUN_METRICS.json
+--- diff stat ---
+ .gitignore                             |  1 +
+ backend/app/api/routes/items.py        | 16 ++++++++++----
+ backend/tests/api/routes/test_items.py | 40 ++++++++++++++++++++++++++++++++++
+ 3 files changed, 53 insertions(+), 4 deletions(-)
+--- changed paths ---
+.gitignore
+backend/app/api/routes/items.py
+backend/tests/api/routes/test_items.py
+--- migration/frontend status ---
+
+diff --git a/.gitignore b/.gitignore
+index 3c697eb7da302748ae5598d7007ba354212004db..7f6febdc6959b7f7bcc949fffbca20f43dc2d416
+--- a/.gitignore
++++ b/.gitignore
+@@ -6,3 +6,4 @@
+ /playwright-report/
+ /blob-report/
+ /playwright/.cache/
++RUN_METRICS.json
+diff --git a/RUN_METRICS.json b/RUN_METRICS.json
+new file mode 100644
+index 0000000000000000000000000000000000000000..45116a58f287bc57a836422e9cc082512ca5afa5
+--- /dev/null
++++ b/RUN_METRICS.json
+@@ -0,0 +1,65 @@
++{
++  "repo": "repo-baseline",
++  "task": "simple_change",
++  "start_time": "2026-09-26T22:17:26Z",
++  "end_time": "2026-09-26T22:19:55Z",
++  "duration_seconds": 149,
++  "time_to_first_edit_seconds": 47,
++  "tool_calls": {
++    "read": 6,
++    "edit_or_write": 2,
++    "bash": 10,
++    "search_or_grep": 1,
++    "other": 4,
++    "total": 23
++  },
++  "files_read": [
++    "/Users/garry/.agents/skills/using-superpowers/SKILL.md",
++    "/Users/garry/.agents/skills/using-superpowers/references/codex-tools.md",
++    "/Users/garry/.agents/skills/tdd/SKILL.md",
++    "/Users/garry/.agents/skills/tdd/tests.md",
++    "/Users/garry/.agents/skills/tdd/mocking.md",
++    "backend/app/api/routes/items.py",
++    "backend/tests/api/routes/test_items.py",
++    "backend/tests/utils/item.py",
++    "backend/tests/conftest.py",
++    "backend/pyproject.toml",
++    "backend/scripts/test.sh",
++    "backend/scripts/tests-start.sh",
++    "scripts/test-local.sh",
++    "compose.yml",
++    "backend/app/core/db.py",
++    "backend/app/core/config.py",
++    ".gitignore"
++  ],
++  "files_created_or_edited": [
++    "backend/app/api/routes/items.py",
++    "backend/tests/api/routes/test_items.py",
++    ".gitignore",
++    "RUN_METRICS.json"
++  ],
++  "timeline": [
++    {"time": "2026-09-26T22:17:26Z", "event": "start_time recorded"},
++    {"time": "2026-09-26T22:17:43Z", "event": "explored repo"},
++    {"time": "2026-09-26T22:18:13Z", "event": "first file edit: wrote backend ordering test"},
++    {"time": "2026-09-26T22:18:28Z", "event": "ran focused test; blocked by missing database tables"},
++    {"time": "2026-09-26T22:18:44Z", "event": "implemented order_by route parameter and ordering"},
++    {"time": "2026-09-26T22:19:15Z", "event": "focused ordering test passed after applying existing migrations"},
++    {"time": "2026-09-26T22:19:22Z", "event": "full backend test suite passed"},
++    {"time": "2026-09-26T22:19:55Z", "event": "done timestamp recorded"}
++  ],
++  "definition_of_done": {
++    "order_by_param_added": true,
++    "title_ordering_correct": true,
++    "default_ordering_unchanged": true,
++    "new_test_added_and_passes": true,
++    "no_migration_created": true,
++    "no_frontend_touched": true
++  },
++  "docs_consulted": [],
++  "blockers_hit": [
++    "Initial focused test setup failed because the local database had no schema; Docker was unavailable, so the existing Alembic head was applied before retrying."
++  ],
++  "self_assessed_completion": "complete",
++  "notes": "Small scoped change was straightforward after locating the route-level integration tests; existing conventions support a Literal query parameter and shared order clause."
++}
+diff --git a/backend/app/api/routes/items.py b/backend/app/api/routes/items.py
+index f0eb30e4cee50ac09904df0e3e30e5949b1edb04..0d27c66c2e333e7f4e7fab2773ae261f9c4dda0b
+--- a/backend/app/api/routes/items.py
++++ b/backend/app/api/routes/items.py
+@@ -1,5 +1,5 @@
+ import uuid
+-from typing import Any
++from typing import Any, Literal
+ 
+ from fastapi import APIRouter, HTTPException
+ from sqlmodel import col, func, select
+@@ -12,17 +12,25 @@
+ 
+ @router.get("/", response_model=ItemsPublic)
+ def read_items(
+-    session: SessionDep, current_user: CurrentUser, skip: int = 0, limit: int = 100
++    session: SessionDep,
++    current_user: CurrentUser,
++    skip: int = 0,
++    limit: int = 100,
++    order_by: Literal["created_at", "title"] = "created_at",
+ ) -> Any:
+     """
+     Retrieve items.
+     """
+ 
++    order_clause = (
++        col(Item.title) if order_by == "title" else col(Item.created_at).desc()
++    )
++
+     if current_user.is_superuser:
+         count_statement = select(func.count()).select_from(Item)
+         count = session.exec(count_statement).one()
+         statement = (
+-            select(Item).order_by(col(Item.created_at).desc()).offset(skip).limit(limit)
++            select(Item).order_by(order_clause).offset(skip).limit(limit)
+         )
+         items = session.exec(statement).all()
+     else:
+@@ -35,7 +43,7 @@
+         statement = (
+             select(Item)
+             .where(Item.owner_id == current_user.id)
+-            .order_by(col(Item.created_at).desc())
++            .order_by(order_clause)
+             .offset(skip)
+             .limit(limit)
+         )
+diff --git a/backend/tests/api/routes/test_items.py b/backend/tests/api/routes/test_items.py
+index 3e82cd0134757608c8f95e6084d7c967f52230d6..07513dd346d9d2906481b74aba47bb5f19b61cda
+--- a/backend/tests/api/routes/test_items.py
++++ b/backend/tests/api/routes/test_items.py
+@@ -79,6 +79,46 @@
+     assert len(content["data"]) >= 2
+ 
+ 
++def test_read_items_ordering(
++    client: TestClient, normal_user_token_headers: dict[str, str]
++) -> None:
++    older_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item A"},
++    )
++    newer_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item Z"},
++    )
++    assert older_item.status_code == 200
++    assert newer_item.status_code == 200
++
++    title_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        params={"order_by": "title"},
++    )
++    default_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++    )
++
++    assert title_response.status_code == 200
++    assert default_response.status_code == 200
++    title_items = title_response.json()["data"]
++    default_items = default_response.json()["data"]
++    title_ids = [item["id"] for item in title_items]
++    default_ids = [item["id"] for item in default_items]
++    assert title_ids.index(older_item.json()["id"]) < title_ids.index(
++        newer_item.json()["id"]
++    )
++    assert default_ids.index(newer_item.json()["id"]) < default_ids.index(
++        older_item.json()["id"]
++    )
++
++
+ def test_update_item(
+     client: TestClient, superuser_token_headers: dict[str, str], db: Session
+ ) -> None:
+
+apply patch
+patch: completed
+/Users/garry/code/benchmark/repo-baseline/RUN_METRICS.json
+diff --git a/.gitignore b/.gitignore
+index 3c697eb7da302748ae5598d7007ba354212004db..7f6febdc6959b7f7bcc949fffbca20f43dc2d416
+--- a/.gitignore
++++ b/.gitignore
+@@ -6,3 +6,4 @@
+ /playwright-report/
+ /blob-report/
+ /playwright/.cache/
++RUN_METRICS.json
+diff --git a/RUN_METRICS.json b/RUN_METRICS.json
+new file mode 100644
+index 0000000000000000000000000000000000000000..1c1ed19685b38fb62f711242f5ab147a0ab47920
+--- /dev/null
++++ b/RUN_METRICS.json
+@@ -0,0 +1,65 @@
++{
++  "repo": "repo-baseline",
++  "task": "simple_change",
++  "start_time": "2026-09-26T22:17:26Z",
++  "end_time": "2026-09-26T22:20:27Z",
++  "duration_seconds": 181,
++  "time_to_first_edit_seconds": 47,
++  "tool_calls": {
++    "read": 6,
++    "edit_or_write": 4,
++    "bash": 12,
++    "search_or_grep": 1,
++    "other": 4,
++    "total": 27
++  },
++  "files_read": [
++    "/Users/garry/.agents/skills/using-superpowers/SKILL.md",
++    "/Users/garry/.agents/skills/using-superpowers/references/codex-tools.md",
++    "/Users/garry/.agents/skills/tdd/SKILL.md",
++    "/Users/garry/.agents/skills/tdd/tests.md",
++    "/Users/garry/.agents/skills/tdd/mocking.md",
++    "backend/app/api/routes/items.py",
++    "backend/tests/api/routes/test_items.py",
++    "backend/tests/utils/item.py",
++    "backend/tests/conftest.py",
++    "backend/pyproject.toml",
++    "backend/scripts/test.sh",
++    "backend/scripts/tests-start.sh",
++    "scripts/test-local.sh",
++    "compose.yml",
++    "backend/app/core/db.py",
++    "backend/app/core/config.py",
++    ".gitignore"
++  ],
++  "files_created_or_edited": [
++    "backend/app/api/routes/items.py",
++    "backend/tests/api/routes/test_items.py",
++    ".gitignore",
++    "RUN_METRICS.json"
++  ],
++  "timeline": [
++    {"time": "2026-09-26T22:17:26Z", "event": "start_time recorded"},
++    {"time": "2026-09-26T22:17:43Z", "event": "explored repo"},
++    {"time": "2026-09-26T22:18:13Z", "event": "first file edit: wrote backend ordering test"},
++    {"time": "2026-09-26T22:18:28Z", "event": "ran focused test; blocked by missing database tables"},
++    {"time": "2026-09-26T22:18:44Z", "event": "implemented order_by route parameter and ordering"},
++    {"time": "2026-09-26T22:19:15Z", "event": "focused ordering test passed after applying existing migrations"},
++    {"time": "2026-09-26T22:19:22Z", "event": "full backend test suite passed"},
++    {"time": "2026-09-26T22:20:27Z", "event": "done timestamp recorded and metrics JSON validated"}
++  ],
++  "definition_of_done": {
++    "order_by_param_added": true,
++    "title_ordering_correct": true,
++    "default_ordering_unchanged": true,
++    "new_test_added_and_passes": true,
++    "no_migration_created": true,
++    "no_frontend_touched": true
++  },
++  "docs_consulted": [],
++  "blockers_hit": [
++    "Initial focused test setup failed because the local database had no schema; Docker was unavailable, so the existing Alembic head was applied before retrying."
++  ],
++  "self_assessed_completion": "complete",
++  "notes": "Small scoped change was straightforward after locating the route-level integration tests; existing conventions support a Literal query parameter and shared order clause."
++}
+diff --git a/backend/app/api/routes/items.py b/backend/app/api/routes/items.py
+index f0eb30e4cee50ac09904df0e3e30e5949b1edb04..0d27c66c2e333e7f4e7fab2773ae261f9c4dda0b
+--- a/backend/app/api/routes/items.py
++++ b/backend/app/api/routes/items.py
+@@ -1,5 +1,5 @@
+ import uuid
+-from typing import Any
++from typing import Any, Literal
+ 
+ from fastapi import APIRouter, HTTPException
+ from sqlmodel import col, func, select
+@@ -12,17 +12,25 @@
+ 
+ @router.get("/", response_model=ItemsPublic)
+ def read_items(
+-    session: SessionDep, current_user: CurrentUser, skip: int = 0, limit: int = 100
++    session: SessionDep,
++    current_user: CurrentUser,
++    skip: int = 0,
++    limit: int = 100,
++    order_by: Literal["created_at", "title"] = "created_at",
+ ) -> Any:
+     """
+     Retrieve items.
+     """
+ 
++    order_clause = (
++        col(Item.title) if order_by == "title" else col(Item.created_at).desc()
++    )
++
+     if current_user.is_superuser:
+         count_statement = select(func.count()).select_from(Item)
+         count = session.exec(count_statement).one()
+         statement = (
+-            select(Item).order_by(col(Item.created_at).desc()).offset(skip).limit(limit)
++            select(Item).order_by(order_clause).offset(skip).limit(limit)
+         )
+         items = session.exec(statement).all()
+     else:
+@@ -35,7 +43,7 @@
+         statement = (
+             select(Item)
+             .where(Item.owner_id == current_user.id)
+-            .order_by(col(Item.created_at).desc())
++            .order_by(order_clause)
+             .offset(skip)
+             .limit(limit)
+         )
+diff --git a/backend/tests/api/routes/test_items.py b/backend/tests/api/routes/test_items.py
+index 3e82cd0134757608c8f95e6084d7c967f52230d6..07513dd346d9d2906481b74aba47bb5f19b61cda
+--- a/backend/tests/api/routes/test_items.py
++++ b/backend/tests/api/routes/test_items.py
+@@ -79,6 +79,46 @@
+     assert len(content["data"]) >= 2
+ 
+ 
++def test_read_items_ordering(
++    client: TestClient, normal_user_token_headers: dict[str, str]
++) -> None:
++    older_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item A"},
++    )
++    newer_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item Z"},
++    )
++    assert older_item.status_code == 200
++    assert newer_item.status_code == 200
++
++    title_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        params={"order_by": "title"},
++    )
++    default_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++    )
++
++    assert title_response.status_code == 200
++    assert default_response.status_code == 200
++    title_items = title_response.json()["data"]
++    default_items = default_response.json()["data"]
++    title_ids = [item["id"] for item in title_items]
++    default_ids = [item["id"] for item in default_items]
++    assert title_ids.index(older_item.json()["id"]) < title_ids.index(
++        newer_item.json()["id"]
++    )
++    assert default_ids.index(newer_item.json()["id"]) < default_ids.index(
++        older_item.json()["id"]
++    )
++
++
+ def test_update_item(
+     client: TestClient, superuser_token_headers: dict[str, str], db: Session
+ ) -> None:
+
+diff --git a/.gitignore b/.gitignore
+index 3c697eb7da302748ae5598d7007ba354212004db..7f6febdc6959b7f7bcc949fffbca20f43dc2d416
+--- a/.gitignore
++++ b/.gitignore
+@@ -6,3 +6,4 @@
+ /playwright-report/
+ /blob-report/
+ /playwright/.cache/
++RUN_METRICS.json
+diff --git a/RUN_METRICS.json b/RUN_METRICS.json
+new file mode 100644
+index 0000000000000000000000000000000000000000..1c1ed19685b38fb62f711242f5ab147a0ab47920
+--- /dev/null
++++ b/RUN_METRICS.json
+@@ -0,0 +1,65 @@
++{
++  "repo": "repo-baseline",
++  "task": "simple_change",
++  "start_time": "2026-09-26T22:17:26Z",
++  "end_time": "2026-09-26T22:20:27Z",
++  "duration_seconds": 181,
++  "time_to_first_edit_seconds": 47,
++  "tool_calls": {
++    "read": 6,
++    "edit_or_write": 4,
++    "bash": 12,
++    "search_or_grep": 1,
++    "other": 4,
++    "total": 27
++  },
++  "files_read": [
++    "/Users/garry/.agents/skills/using-superpowers/SKILL.md",
++    "/Users/garry/.agents/skills/using-superpowers/references/codex-tools.md",
++    "/Users/garry/.agents/skills/tdd/SKILL.md",
++    "/Users/garry/.agents/skills/tdd/tests.md",
++    "/Users/garry/.agents/skills/tdd/mocking.md",
++    "backend/app/api/routes/items.py",
++    "backend/tests/api/routes/test_items.py",
++    "backend/tests/utils/item.py",
++    "backend/tests/conftest.py",
++    "backend/pyproject.toml",
++    "backend/scripts/test.sh",
++    "backend/scripts/tests-start.sh",
++    "scripts/test-local.sh",
++    "compose.yml",
++    "backend/app/core/db.py",
++    "backend/app/core/config.py",
++    ".gitignore"
++  ],
++  "files_created_or_edited": [
++    "backend/app/api/routes/items.py",
++    "backend/tests/api/routes/test_items.py",
++    ".gitignore",
++    "RUN_METRICS.json"
++  ],
++  "timeline": [
++    {"time": "2026-09-26T22:17:26Z", "event": "start_time recorded"},
++    {"time": "2026-09-26T22:17:43Z", "event": "explored repo"},
++    {"time": "2026-09-26T22:18:13Z", "event": "first file edit: wrote backend ordering test"},
++    {"time": "2026-09-26T22:18:28Z", "event": "ran focused test; blocked by missing database tables"},
++    {"time": "2026-09-26T22:18:44Z", "event": "implemented order_by route parameter and ordering"},
++    {"time": "2026-09-26T22:19:15Z", "event": "focused ordering test passed after applying existing migrations"},
++    {"time": "2026-09-26T22:19:22Z", "event": "full backend test suite passed"},
++    {"time": "2026-09-26T22:20:27Z", "event": "done timestamp recorded and metrics JSON validated"}
++  ],
++  "definition_of_done": {
++    "order_by_param_added": true,
++    "title_ordering_correct": true,
++    "default_ordering_unchanged": true,
++    "new_test_added_and_passes": true,
++    "no_migration_created": true,
++    "no_frontend_touched": true
++  },
++  "docs_consulted": [],
++  "blockers_hit": [
++    "Initial focused test setup failed because the local database had no schema; Docker was unavailable, so the existing Alembic head was applied before retrying."
++  ],
++  "self_assessed_completion": "complete",
++  "notes": "Small scoped change was straightforward after locating the route-level integration tests; existing conventions support a Literal query parameter and shared order clause."
++}
+diff --git a/backend/app/api/routes/items.py b/backend/app/api/routes/items.py
+index f0eb30e4cee50ac09904df0e3e30e5949b1edb04..0d27c66c2e333e7f4e7fab2773ae261f9c4dda0b
+--- a/backend/app/api/routes/items.py
++++ b/backend/app/api/routes/items.py
+@@ -1,5 +1,5 @@
+ import uuid
+-from typing import Any
++from typing import Any, Literal
+ 
+ from fastapi import APIRouter, HTTPException
+ from sqlmodel import col, func, select
+@@ -12,17 +12,25 @@
+ 
+ @router.get("/", response_model=ItemsPublic)
+ def read_items(
+-    session: SessionDep, current_user: CurrentUser, skip: int = 0, limit: int = 100
++    session: SessionDep,
++    current_user: CurrentUser,
++    skip: int = 0,
++    limit: int = 100,
++    order_by: Literal["created_at", "title"] = "created_at",
+ ) -> Any:
+     """
+     Retrieve items.
+     """
+ 
++    order_clause = (
++        col(Item.title) if order_by == "title" else col(Item.created_at).desc()
++    )
++
+     if current_user.is_superuser:
+         count_statement = select(func.count()).select_from(Item)
+         count = session.exec(count_statement).one()
+         statement = (
+-            select(Item).order_by(col(Item.created_at).desc()).offset(skip).limit(limit)
++            select(Item).order_by(order_clause).offset(skip).limit(limit)
+         )
+         items = session.exec(statement).all()
+     else:
+@@ -35,7 +43,7 @@
+         statement = (
+             select(Item)
+             .where(Item.owner_id == current_user.id)
+-            .order_by(col(Item.created_at).desc())
++            .order_by(order_clause)
+             .offset(skip)
+             .limit(limit)
+         )
+diff --git a/backend/tests/api/routes/test_items.py b/backend/tests/api/routes/test_items.py
+index 3e82cd0134757608c8f95e6084d7c967f52230d6..07513dd346d9d2906481b74aba47bb5f19b61cda
+--- a/backend/tests/api/routes/test_items.py
++++ b/backend/tests/api/routes/test_items.py
+@@ -79,6 +79,46 @@
+     assert len(content["data"]) >= 2
+ 
+ 
++def test_read_items_ordering(
++    client: TestClient, normal_user_token_headers: dict[str, str]
++) -> None:
++    older_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item A"},
++    )
++    newer_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item Z"},
++    )
++    assert older_item.status_code == 200
++    assert newer_item.status_code == 200
++
++    title_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        params={"order_by": "title"},
++    )
++    default_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++    )
++
++    assert title_response.status_code == 200
++    assert default_response.status_code == 200
++    title_items = title_response.json()["data"]
++    default_items = default_response.json()["data"]
++    title_ids = [item["id"] for item in title_items]
++    default_ids = [item["id"] for item in default_items]
++    assert title_ids.index(older_item.json()["id"]) < title_ids.index(
++        newer_item.json()["id"]
++    )
++    assert default_ids.index(newer_item.json()["id"]) < default_ids.index(
++        older_item.json()["id"]
++    )
++
++
+ def test_update_item(
+     client: TestClient, superuser_token_headers: dict[str, str], db: Session
+ ) -> None:
+
+codex
+Implemented optional item sorting.
+
+- Added `order_by: Literal["created_at", "title"] = "created_at"`.
+- Preserved default `created_at DESC`; added `title ASC`.
+- Added backend coverage for both orderings.
+- No migrations or frontend files changed.
+- Added ignored `RUN_METRICS.json`.
+
+Validation:
+
+- `59 passed`
+- Ruff checks passed.
+diff --git a/.gitignore b/.gitignore
+index 3c697eb7da302748ae5598d7007ba354212004db..7f6febdc6959b7f7bcc949fffbca20f43dc2d416
+--- a/.gitignore
++++ b/.gitignore
+@@ -6,3 +6,4 @@
+ /playwright-report/
+ /blob-report/
+ /playwright/.cache/
++RUN_METRICS.json
+diff --git a/RUN_METRICS.json b/RUN_METRICS.json
+new file mode 100644
+index 0000000000000000000000000000000000000000..1c1ed19685b38fb62f711242f5ab147a0ab47920
+--- /dev/null
++++ b/RUN_METRICS.json
+@@ -0,0 +1,65 @@
++{
++  "repo": "repo-baseline",
++  "task": "simple_change",
++  "start_time": "2026-09-26T22:17:26Z",
++  "end_time": "2026-09-26T22:20:27Z",
++  "duration_seconds": 181,
++  "time_to_first_edit_seconds": 47,
++  "tool_calls": {
++    "read": 6,
++    "edit_or_write": 4,
++    "bash": 12,
++    "search_or_grep": 1,
++    "other": 4,
++    "total": 27
++  },
++  "files_read": [
++    "/Users/garry/.agents/skills/using-superpowers/SKILL.md",
++    "/Users/garry/.agents/skills/using-superpowers/references/codex-tools.md",
++    "/Users/garry/.agents/skills/tdd/SKILL.md",
++    "/Users/garry/.agents/skills/tdd/tests.md",
++    "/Users/garry/.agents/skills/tdd/mocking.md",
++    "backend/app/api/routes/items.py",
++    "backend/tests/api/routes/test_items.py",
++    "backend/tests/utils/item.py",
++    "backend/tests/conftest.py",
++    "backend/pyproject.toml",
++    "backend/scripts/test.sh",
++    "backend/scripts/tests-start.sh",
++    "scripts/test-local.sh",
++    "compose.yml",
++    "backend/app/core/db.py",
++    "backend/app/core/config.py",
++    ".gitignore"
++  ],
++  "files_created_or_edited": [
++    "backend/app/api/routes/items.py",
++    "backend/tests/api/routes/test_items.py",
++    ".gitignore",
++    "RUN_METRICS.json"
++  ],
++  "timeline": [
++    {"time": "2026-09-26T22:17:26Z", "event": "start_time recorded"},
++    {"time": "2026-09-26T22:17:43Z", "event": "explored repo"},
++    {"time": "2026-09-26T22:18:13Z", "event": "first file edit: wrote backend ordering test"},
++    {"time": "2026-09-26T22:18:28Z", "event": "ran focused test; blocked by missing database tables"},
++    {"time": "2026-09-26T22:18:44Z", "event": "implemented order_by route parameter and ordering"},
++    {"time": "2026-09-26T22:19:15Z", "event": "focused ordering test passed after applying existing migrations"},
++    {"time": "2026-09-26T22:19:22Z", "event": "full backend test suite passed"},
++    {"time": "2026-09-26T22:20:27Z", "event": "done timestamp recorded and metrics JSON validated"}
++  ],
++  "definition_of_done": {
++    "order_by_param_added": true,
++    "title_ordering_correct": true,
++    "default_ordering_unchanged": true,
++    "new_test_added_and_passes": true,
++    "no_migration_created": true,
++    "no_frontend_touched": true
++  },
++  "docs_consulted": [],
++  "blockers_hit": [
++    "Initial focused test setup failed because the local database had no schema; Docker was unavailable, so the existing Alembic head was applied before retrying."
++  ],
++  "self_assessed_completion": "complete",
++  "notes": "Small scoped change was straightforward after locating the route-level integration tests; existing conventions support a Literal query parameter and shared order clause."
++}
+diff --git a/backend/app/api/routes/items.py b/backend/app/api/routes/items.py
+index f0eb30e4cee50ac09904df0e3e30e5949b1edb04..0d27c66c2e333e7f4e7fab2773ae261f9c4dda0b
+--- a/backend/app/api/routes/items.py
++++ b/backend/app/api/routes/items.py
+@@ -1,5 +1,5 @@
+ import uuid
+-from typing import Any
++from typing import Any, Literal
+ 
+ from fastapi import APIRouter, HTTPException
+ from sqlmodel import col, func, select
+@@ -12,17 +12,25 @@
+ 
+ @router.get("/", response_model=ItemsPublic)
+ def read_items(
+-    session: SessionDep, current_user: CurrentUser, skip: int = 0, limit: int = 100
++    session: SessionDep,
++    current_user: CurrentUser,
++    skip: int = 0,
++    limit: int = 100,
++    order_by: Literal["created_at", "title"] = "created_at",
+ ) -> Any:
+     """
+     Retrieve items.
+     """
+ 
++    order_clause = (
++        col(Item.title) if order_by == "title" else col(Item.created_at).desc()
++    )
++
+     if current_user.is_superuser:
+         count_statement = select(func.count()).select_from(Item)
+         count = session.exec(count_statement).one()
+         statement = (
+-            select(Item).order_by(col(Item.created_at).desc()).offset(skip).limit(limit)
++            select(Item).order_by(order_clause).offset(skip).limit(limit)
+         )
+         items = session.exec(statement).all()
+     else:
+@@ -35,7 +43,7 @@
+         statement = (
+             select(Item)
+             .where(Item.owner_id == current_user.id)
+-            .order_by(col(Item.created_at).desc())
++            .order_by(order_clause)
+             .offset(skip)
+             .limit(limit)
+         )
+diff --git a/backend/tests/api/routes/test_items.py b/backend/tests/api/routes/test_items.py
+index 3e82cd0134757608c8f95e6084d7c967f52230d6..07513dd346d9d2906481b74aba47bb5f19b61cda
+--- a/backend/tests/api/routes/test_items.py
++++ b/backend/tests/api/routes/test_items.py
+@@ -79,6 +79,46 @@
+     assert len(content["data"]) >= 2
+ 
+ 
++def test_read_items_ordering(
++    client: TestClient, normal_user_token_headers: dict[str, str]
++) -> None:
++    older_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item A"},
++    )
++    newer_item = client.post(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        json={"title": "Sorting item Z"},
++    )
++    assert older_item.status_code == 200
++    assert newer_item.status_code == 200
++
++    title_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++        params={"order_by": "title"},
++    )
++    default_response = client.get(
++        f"{settings.API_V1_STR}/items/",
++        headers=normal_user_token_headers,
++    )
++
++    assert title_response.status_code == 200
++    assert default_response.status_code == 200
++    title_items = title_response.json()["data"]
++    default_items = default_response.json()["data"]
++    title_ids = [item["id"] for item in title_items]
++    default_ids = [item["id"] for item in default_items]
++    assert title_ids.index(older_item.json()["id"]) < title_ids.index(
++        newer_item.json()["id"]
++    )
++    assert default_ids.index(newer_item.json()["id"]) < default_ids.index(
++        older_item.json()["id"]
++    )
++
++
+ def test_update_item(
+     client: TestClient, superuser_token_headers: dict[str, str], db: Session
+ ) -> None:
+
+tokens used
+62,368
+Implemented optional item sorting.
+
+- Added `order_by: Literal["created_at", "title"] = "created_at"`.
+- Preserved default `created_at DESC`; added `title ASC`.
+- Added backend coverage for both orderings.
+- No migrations or frontend files changed.
+- Added ignored `RUN_METRICS.json`.
+
+Validation:
+
+- `59 passed`
+- Ruff checks passed.

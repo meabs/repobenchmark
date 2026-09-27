@@ -1,0 +1,16 @@
+{
+  "cell": "simple_change__repo-agent-optimised",
+  "repo": "repo-agent-optimised",
+  "task": "simple_change",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 238,
+  "run_metrics_present": true,
+  "total_tokens": 1138034,
+  "api_turns": 31,
+  "verification": {
+    "migrate_exit_code": 0,
+    "test_exit_code": 0,
+    "test_summary_line": "59 passed, 2 warnings in 2.87s"
+  }
+}

@@ -1,0 +1,7 @@
+Completed the comprehension task.
+
+- Answers: [ANSWER.md](/Users/garry/code/benchmark/repo-agent-skill/ANSWER.md)
+- Metrics: `RUN_METRICS.json` (gitignored)
+- Added `RUN_METRICS.json` to `.gitignore`
+
+Notably, Q3 documents that no current test actually catches the cascade regression.

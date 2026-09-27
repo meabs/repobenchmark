@@ -1,0 +1,19 @@
+Implemented archive support end to end.
+
+- Added `is_archived` with Alembic migration.
+- Added archive/unarchive endpoints with ownership checks.
+- Added default filtering and `include_archived`.
+- Regenerated OpenAPI client.
+- Added UI archive/unarchive actions, filter, and archived styling.
+- Added backend and Playwright coverage.
+- Added ignored `RUN_METRICS.json`.
+
+Verification:
+
+- Fresh PostgreSQL migration: passed.
+- Backend: 60 passed.
+- Frontend lint/build: passed.
+- Items Playwright spec: 11 passed.
+- UI detector: clean.
+
+Key files: [items.py](/Users/garry/code/benchmark/repo-agent-skill/backend/app/api/routes/items.py), [migration](/Users/garry/code/benchmark/repo-agent-skill/backend/app/alembic/versions/ec3fc4921a01_add_item_archive_state.py), [ArchiveItem.tsx](/Users/garry/code/benchmark/repo-agent-skill/frontend/src/components/Items/ArchiveItem.tsx).

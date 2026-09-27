@@ -1,0 +1,753 @@
+=== ROUND ext-r5 (repo-baseline) starting ===
+=== CELL understanding__repo-baseline__ext-r5 (timeout 1200s) ===
+{
+  "cell": "understanding__repo-baseline__ext-r5",
+  "repo": "repo-baseline",
+  "task": "understanding",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 201,
+  "run_metrics_present": true,
+  "verification": {
+    "answer_present": true,
+    "unexpected_file_changes": 0
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/26/rollout-2026-09-26T22-53-19-01a0dfb5-5946-7e52-b16e-a8cca6011b6a.jsonl",
+    "cwd": "/Users/garry/code/benchmark/repo-baseline",
+    "api_turns": 18,
+    "tool_calls_total": 17,
+    "file_edits": 3,
+    "shell_execs": 14,
+    "reasoning_steps": 20,
+    "input_tokens": 792279,
+    "cached_input_tokens": 714240,
+    "output_tokens": 8918,
+    "reasoning_output_tokens": 3552,
+    "total_tokens": 801197
+  }
+}
+=== CELL understanding__repo-baseline__ext-r5 done: exit=0 timed_out=false wall=201s tokens=801197 ===
+    understanding__repo-baseline__ext-r5: OK
+=== CELL simple_change__repo-baseline__ext-r5 (timeout 1200s) ===
+{
+  "cell": "simple_change__repo-baseline__ext-r5",
+  "repo": "repo-baseline",
+  "task": "simple_change",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 210,
+  "run_metrics_present": true,
+  "verification": {
+    "migrate_exit_code": 0,
+    "test_exit_code": 0,
+    "test_summary_line": "59 passed, 2 warnings in 2.85s"
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/26/rollout-2026-09-26T22-56-40-01a0dfb8-6d04-7e60-8ab3-308960514a3e.jsonl",
+    "cwd": "/Users/garry/code/benchmark/repo-baseline",
+    "api_turns": 29,
+    "tool_calls_total": 28,
+    "file_edits": 4,
+    "shell_execs": 24,
+    "reasoning_steps": 31,
+    "input_tokens": 936868,
+    "cached_input_tokens": 864000,
+    "output_tokens": 8233,
+    "reasoning_output_tokens": 3393,
+    "total_tokens": 945101
+  }
+}
+=== CELL simple_change__repo-baseline__ext-r5 done: exit=0 timed_out=false wall=210s tokens=945101 ===
+    simple_change__repo-baseline__ext-r5: OK
+=== CELL complex__repo-baseline__ext-r5 (timeout 1800s) ===
+{
+  "cell": "complex__repo-baseline__ext-r5",
+  "repo": "repo-baseline",
+  "task": "complex",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 823,
+  "run_metrics_present": true,
+  "verification": {
+    "migrate_exit_code": 0,
+    "test_exit_code": 0,
+    "test_summary_line": "63 passed, 1 warning in 2.85s"
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/26/rollout-2026-09-26T23-00-18-01a0dfbb-bd70-7f00-a3f0-a419ea7368c1.jsonl",
+    "cwd": "/Users/garry/code/benchmark/repo-baseline",
+    "api_turns": 109,
+    "tool_calls_total": 108,
+    "file_edits": 8,
+    "shell_execs": 100,
+    "reasoning_steps": 108,
+    "input_tokens": 8582393,
+    "cached_input_tokens": 8418048,
+    "output_tokens": 25735,
+    "reasoning_output_tokens": 7877,
+    "total_tokens": 8608128
+  }
+}
+=== CELL complex__repo-baseline__ext-r5 done: exit=0 timed_out=false wall=823s tokens=8608128 ===
+    complex__repo-baseline__ext-r5: OK
+=== ROUND ext-r5 (repo-baseline) complete ===
+=== ROUND ext-r6 (repo-baseline) starting ===
+=== CELL understanding__repo-baseline__ext-r6 (timeout 1200s) ===
+{
+  "cell": "understanding__repo-baseline__ext-r6",
+  "repo": "repo-baseline",
+  "task": "understanding",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 189,
+  "run_metrics_present": true,
+  "verification": {
+    "answer_present": true,
+    "unexpected_file_changes": 0
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/26/rollout-2026-09-26T23-14-09-01a0dfc8-6e17-7b00-8f35-fdac900bf1bc.jsonl",
+    "cwd": "/Users/garry/code/benchmark/repo-baseline",
+    "api_turns": 15,
+    "tool_calls_total": 14,
+    "file_edits": 2,
+    "shell_execs": 12,
+    "reasoning_steps": 18,
+    "input_tokens": 572282,
+    "cached_input_tokens": 467200,
+    "output_tokens": 8033,
+    "reasoning_output_tokens": 3629,
+    "total_tokens": 580315
+  }
+}
+=== CELL understanding__repo-baseline__ext-r6 done: exit=0 timed_out=false wall=189s tokens=580315 ===
+    understanding__repo-baseline__ext-r6: OK
+=== CELL simple_change__repo-baseline__ext-r6 (timeout 1200s) ===
+{
+  "cell": "simple_change__repo-baseline__ext-r6",
+  "repo": "repo-baseline",
+  "task": "simple_change",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 204,
+  "run_metrics_present": true,
+  "verification": {
+    "migrate_exit_code": 0,
+    "test_exit_code": 0,
+    "test_summary_line": "59 passed, 2 warnings in 2.75s"
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/26/rollout-2026-09-26T23-17-19-01a0dfcb-552b-73b1-9331-a99d121a4866.jsonl",
+    "cwd": "/Users/garry/code/benchmark/repo-baseline",
+    "api_turns": 28,
+    "tool_calls_total": 27,
+    "file_edits": 4,
+    "shell_execs": 23,
+    "reasoning_steps": 29,
+    "input_tokens": 951907,
+    "cached_input_tokens": 898048,
+    "output_tokens": 8509,
+    "reasoning_output_tokens": 3330,
+    "total_tokens": 960416
+  }
+}
+=== CELL simple_change__repo-baseline__ext-r6 done: exit=0 timed_out=false wall=204s tokens=960416 ===
+    simple_change__repo-baseline__ext-r6: OK
+=== CELL complex__repo-baseline__ext-r6 (timeout 1800s) ===
+{
+  "cell": "complex__repo-baseline__ext-r6",
+  "repo": "repo-baseline",
+  "task": "complex",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 673,
+  "run_metrics_present": true,
+  "verification": {
+    "migrate_exit_code": 0,
+    "test_exit_code": 0,
+    "test_summary_line": "62 passed, 1 warning in 2.88s"
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/26/rollout-2026-09-26T23-20-49-01a0dfce-88b8-7381-9ce1-066162c0aeaf.jsonl",
+    "cwd": "/Users/garry/code/benchmark/repo-baseline",
+    "api_turns": 57,
+    "tool_calls_total": 56,
+    "file_edits": 10,
+    "shell_execs": 46,
+    "reasoning_steps": 60,
+    "input_tokens": 3746370,
+    "cached_input_tokens": 3624704,
+    "output_tokens": 20923,
+    "reasoning_output_tokens": 5729,
+    "total_tokens": 3767293
+  }
+}
+=== CELL complex__repo-baseline__ext-r6 done: exit=0 timed_out=false wall=673s tokens=3767293 ===
+    complex__repo-baseline__ext-r6: OK
+=== ROUND ext-r6 (repo-baseline) complete ===
+=== ROUND ext-r7 (repo-baseline) starting ===
+=== CELL understanding__repo-baseline__ext-r7 (timeout 1200s) ===
+{
+  "cell": "understanding__repo-baseline__ext-r7",
+  "repo": "repo-baseline",
+  "task": "understanding",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 177,
+  "run_metrics_present": true,
+  "verification": {
+    "answer_present": true,
+    "unexpected_file_changes": 0
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/26/rollout-2026-09-26T23-32-12-01a0dfd8-f2f4-7b73-8624-3efa1a66642b.jsonl",
+    "cwd": "/Users/garry/code/benchmark/repo-baseline",
+    "api_turns": 22,
+    "tool_calls_total": 21,
+    "file_edits": 4,
+    "shell_execs": 17,
+    "reasoning_steps": 23,
+    "input_tokens": 769112,
+    "cached_input_tokens": 674304,
+    "output_tokens": 7932,
+    "reasoning_output_tokens": 3225,
+    "total_tokens": 777044
+  }
+}
+=== CELL understanding__repo-baseline__ext-r7 done: exit=0 timed_out=false wall=177s tokens=777044 ===
+    understanding__repo-baseline__ext-r7: OK
+=== CELL simple_change__repo-baseline__ext-r7 (timeout 1200s) ===
+{
+  "cell": "simple_change__repo-baseline__ext-r7",
+  "repo": "repo-baseline",
+  "task": "simple_change",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 215,
+  "run_metrics_present": true,
+  "verification": {
+    "migrate_exit_code": 0,
+    "test_exit_code": 0,
+    "test_summary_line": "59 passed, 2 warnings in 2.87s"
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/26/rollout-2026-09-26T23-35-10-01a0dfdb-abb1-7c02-be61-3c7d4d0d386d.jsonl",
+    "cwd": "/Users/garry/code/benchmark/repo-baseline",
+    "api_turns": 35,
+    "tool_calls_total": 34,
+    "file_edits": 4,
+    "shell_execs": 30,
+    "reasoning_steps": 29,
+    "input_tokens": 1043690,
+    "cached_input_tokens": 971008,
+    "output_tokens": 8175,
+    "reasoning_output_tokens": 3070,
+    "total_tokens": 1051865
+  }
+}
+=== CELL simple_change__repo-baseline__ext-r7 done: exit=0 timed_out=false wall=215s tokens=1051865 ===
+    simple_change__repo-baseline__ext-r7: OK
+=== CELL complex__repo-baseline__ext-r7 (timeout 1800s) ===
+{
+  "cell": "complex__repo-baseline__ext-r7",
+  "repo": "repo-baseline",
+  "task": "complex",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 493,
+  "run_metrics_present": true,
+  "verification": {
+    "migrate_exit_code": 0,
+    "test_exit_code": 0,
+    "test_summary_line": "62 passed, 1 warning in 2.90s"
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/26/rollout-2026-09-26T23-38-52-01a0dfdf-0e7a-7620-b19d-e7ef38765f2c.jsonl",
+    "cwd": "/Users/garry/code/benchmark/repo-baseline",
+    "api_turns": 67,
+    "tool_calls_total": 66,
+    "file_edits": 9,
+    "shell_execs": 57,
+    "reasoning_steps": 62,
+    "input_tokens": 4211112,
+    "cached_input_tokens": 4087040,
+    "output_tokens": 19892,
+    "reasoning_output_tokens": 5904,
+    "total_tokens": 4231004
+  }
+}
+=== CELL complex__repo-baseline__ext-r7 done: exit=0 timed_out=false wall=493s tokens=4231004 ===
+    complex__repo-baseline__ext-r7: OK
+=== ROUND ext-r7 (repo-baseline) complete ===
+=== ROUND ext-r8 (repo-baseline) starting ===
+=== CELL understanding__repo-baseline__ext-r8 (timeout 1200s) ===
+{
+  "cell": "understanding__repo-baseline__ext-r8",
+  "repo": "repo-baseline",
+  "task": "understanding",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 207,
+  "run_metrics_present": true,
+  "verification": {
+    "answer_present": true,
+    "unexpected_file_changes": 0
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/26/rollout-2026-09-26T23-47-14-01a0dfe6-b89b-7071-a0b4-7ffd0f608ab5.jsonl",
+    "cwd": "/Users/garry/code/benchmark/repo-baseline",
+    "api_turns": 26,
+    "tool_calls_total": 25,
+    "file_edits": 4,
+    "shell_execs": 21,
+    "reasoning_steps": 28,
+    "input_tokens": 1122942,
+    "cached_input_tokens": 1059328,
+    "output_tokens": 9543,
+    "reasoning_output_tokens": 4271,
+    "total_tokens": 1132485
+  }
+}
+=== CELL understanding__repo-baseline__ext-r8 done: exit=0 timed_out=false wall=207s tokens=1132485 ===
+    understanding__repo-baseline__ext-r8: OK
+=== CELL simple_change__repo-baseline__ext-r8 (timeout 1200s) ===
+{
+  "cell": "simple_change__repo-baseline__ext-r8",
+  "repo": "repo-baseline",
+  "task": "simple_change",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 276,
+  "run_metrics_present": true,
+  "verification": {
+    "migrate_exit_code": 0,
+    "test_exit_code": 0,
+    "test_summary_line": "59 passed, 2 warnings in 2.74s"
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/26/rollout-2026-09-26T23-50-41-01a0dfe9-e075-70e0-a90f-411dcc920a6b.jsonl",
+    "cwd": "/Users/garry/code/benchmark/repo-baseline",
+    "api_turns": 31,
+    "tool_calls_total": 30,
+    "file_edits": 7,
+    "shell_execs": 23,
+    "reasoning_steps": 32,
+    "input_tokens": 1161025,
+    "cached_input_tokens": 1066240,
+    "output_tokens": 10593,
+    "reasoning_output_tokens": 4550,
+    "total_tokens": 1171618
+  }
+}
+=== CELL simple_change__repo-baseline__ext-r8 done: exit=0 timed_out=false wall=276s tokens=1171618 ===
+    simple_change__repo-baseline__ext-r8: OK
+=== CELL complex__repo-baseline__ext-r8 (timeout 1800s) ===
+{
+  "cell": "complex__repo-baseline__ext-r8",
+  "repo": "repo-baseline",
+  "task": "complex",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 658,
+  "run_metrics_present": true,
+  "verification": {
+    "migrate_exit_code": 0,
+    "test_exit_code": 0,
+    "test_summary_line": "61 passed, 1 warning in 2.82s"
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/26/rollout-2026-09-26T23-55-23-01a0dfee-2e63-7523-90f7-b0476501b5db.jsonl",
+    "cwd": "/Users/garry/code/benchmark/repo-baseline",
+    "api_turns": 57,
+    "tool_calls_total": 56,
+    "file_edits": 8,
+    "shell_execs": 48,
+    "reasoning_steps": 62,
+    "input_tokens": 3767438,
+    "cached_input_tokens": 3645184,
+    "output_tokens": 22448,
+    "reasoning_output_tokens": 6776,
+    "total_tokens": 3789886
+  }
+}
+=== CELL complex__repo-baseline__ext-r8 done: exit=0 timed_out=false wall=658s tokens=3789886 ===
+    complex__repo-baseline__ext-r8: OK
+=== ROUND ext-r8 (repo-baseline) complete ===
+=== ROUND ext-r5 (repo-agent-recommended) starting ===
+=== CELL understanding__repo-agent-recommended__ext-r5 (timeout 1200s) ===
+{
+  "cell": "understanding__repo-agent-recommended__ext-r5",
+  "repo": "repo-agent-recommended",
+  "task": "understanding",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 213,
+  "run_metrics_present": true,
+  "verification": {
+    "answer_present": true,
+    "unexpected_file_changes": 0
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/27/rollout-2026-09-27T00-06-31-01a0dff8-5d4f-7ea3-8958-34797a705f78.jsonl",
+    "cwd": "/Users/garry/code/benchmark/repo-agent-recommended",
+    "api_turns": 22,
+    "tool_calls_total": 21,
+    "file_edits": 5,
+    "shell_execs": 16,
+    "reasoning_steps": 24,
+    "input_tokens": 1011888,
+    "cached_input_tokens": 930304,
+    "output_tokens": 9642,
+    "reasoning_output_tokens": 4299,
+    "total_tokens": 1021530
+  }
+}
+=== CELL understanding__repo-agent-recommended__ext-r5 done: exit=0 timed_out=false wall=213s tokens=1021530 ===
+    understanding__repo-agent-recommended__ext-r5: OK
+=== CELL simple_change__repo-agent-recommended__ext-r5 (timeout 1200s) ===
+{
+  "cell": "simple_change__repo-agent-recommended__ext-r5",
+  "repo": "repo-agent-recommended",
+  "task": "simple_change",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 212,
+  "run_metrics_present": true,
+  "verification": {
+    "migrate_exit_code": 0,
+    "test_exit_code": 0,
+    "test_summary_line": "59 passed, 2 warnings in 2.75s"
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/27/rollout-2026-09-27T00-10-05-01a0dffb-a0dd-7913-8da1-0893c1fc6fef.jsonl",
+    "cwd": "/Users/garry/code/benchmark/repo-agent-recommended",
+    "api_turns": 27,
+    "tool_calls_total": 26,
+    "file_edits": 6,
+    "shell_execs": 20,
+    "reasoning_steps": 28,
+    "input_tokens": 925130,
+    "cached_input_tokens": 865536,
+    "output_tokens": 8799,
+    "reasoning_output_tokens": 3956,
+    "total_tokens": 933929
+  }
+}
+=== CELL simple_change__repo-agent-recommended__ext-r5 done: exit=0 timed_out=false wall=212s tokens=933929 ===
+    simple_change__repo-agent-recommended__ext-r5: OK
+=== CELL complex__repo-agent-recommended__ext-r5 (timeout 1800s) ===
+{
+  "cell": "complex__repo-agent-recommended__ext-r5",
+  "repo": "repo-agent-recommended",
+  "task": "complex",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 578,
+  "run_metrics_present": true,
+  "verification": {
+    "migrate_exit_code": 0,
+    "test_exit_code": 0,
+    "test_summary_line": "62 passed, 1 warning in 2.88s"
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/27/rollout-2026-09-27T00-13-43-01a0dffe-f461-7b30-9560-5a40c06b6272.jsonl",
+    "cwd": "/Users/garry/code/benchmark/repo-agent-recommended",
+    "api_turns": 46,
+    "tool_calls_total": 45,
+    "file_edits": 4,
+    "shell_execs": 41,
+    "reasoning_steps": 47,
+    "input_tokens": 2974255,
+    "cached_input_tokens": 2791936,
+    "output_tokens": 16191,
+    "reasoning_output_tokens": 4522,
+    "total_tokens": 2990446
+  }
+}
+=== CELL complex__repo-agent-recommended__ext-r5 done: exit=0 timed_out=false wall=578s tokens=2990446 ===
+    complex__repo-agent-recommended__ext-r5: OK
+=== ROUND ext-r5 (repo-agent-recommended) complete ===
+=== ROUND ext-r6 (repo-agent-recommended) starting ===
+=== CELL understanding__repo-agent-recommended__ext-r6 (timeout 1200s) ===
+{
+  "cell": "understanding__repo-agent-recommended__ext-r6",
+  "repo": "repo-agent-recommended",
+  "task": "understanding",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 212,
+  "run_metrics_present": true,
+  "verification": {
+    "answer_present": true,
+    "unexpected_file_changes": 0
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/27/rollout-2026-09-27T00-23-30-01a0e007-e9eb-7c53-8868-119312ec1a63.jsonl",
+    "cwd": "/Users/garry/code/benchmark/repo-agent-recommended",
+    "api_turns": 24,
+    "tool_calls_total": 23,
+    "file_edits": 4,
+    "shell_execs": 19,
+    "reasoning_steps": 23,
+    "input_tokens": 959444,
+    "cached_input_tokens": 854016,
+    "output_tokens": 9369,
+    "reasoning_output_tokens": 3788,
+    "total_tokens": 968813
+  }
+}
+=== CELL understanding__repo-agent-recommended__ext-r6 done: exit=0 timed_out=false wall=212s tokens=968813 ===
+    understanding__repo-agent-recommended__ext-r6: OK
+=== CELL simple_change__repo-agent-recommended__ext-r6 (timeout 1200s) ===
+{
+  "cell": "simple_change__repo-agent-recommended__ext-r6",
+  "repo": "repo-agent-recommended",
+  "task": "simple_change",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 186,
+  "run_metrics_present": true,
+  "verification": {
+    "migrate_exit_code": 0,
+    "test_exit_code": 0,
+    "test_summary_line": "59 passed, 2 warnings in 2.76s"
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/27/rollout-2026-09-27T00-27-02-01a0e00b-28bb-7952-8e74-19298fde100a.jsonl",
+    "cwd": "/Users/garry/code/benchmark/repo-agent-recommended",
+    "api_turns": 24,
+    "tool_calls_total": 23,
+    "file_edits": 5,
+    "shell_execs": 18,
+    "reasoning_steps": 24,
+    "input_tokens": 704003,
+    "cached_input_tokens": 657408,
+    "output_tokens": 8106,
+    "reasoning_output_tokens": 3241,
+    "total_tokens": 712109
+  }
+}
+=== CELL simple_change__repo-agent-recommended__ext-r6 done: exit=0 timed_out=false wall=186s tokens=712109 ===
+    simple_change__repo-agent-recommended__ext-r6: OK
+=== CELL complex__repo-agent-recommended__ext-r6 (timeout 1800s) ===
+{
+  "cell": "complex__repo-agent-recommended__ext-r6",
+  "repo": "repo-agent-recommended",
+  "task": "complex",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 457,
+  "run_metrics_present": true,
+  "verification": {
+    "migrate_exit_code": 0,
+    "test_exit_code": 0,
+    "test_summary_line": "60 passed, 1 warning in 2.77s"
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/27/rollout-2026-09-27T00-30-15-01a0e00e-1737-7fb0-9c90-8ca506558ccb.jsonl",
+    "cwd": "/Users/garry/code/benchmark/repo-agent-recommended",
+    "api_turns": 56,
+    "tool_calls_total": 55,
+    "file_edits": 9,
+    "shell_execs": 46,
+    "reasoning_steps": 55,
+    "input_tokens": 3520661,
+    "cached_input_tokens": 3399680,
+    "output_tokens": 16034,
+    "reasoning_output_tokens": 4618,
+    "total_tokens": 3536695
+  }
+}
+=== CELL complex__repo-agent-recommended__ext-r6 done: exit=0 timed_out=false wall=457s tokens=3536695 ===
+    complex__repo-agent-recommended__ext-r6: OK
+=== ROUND ext-r6 (repo-agent-recommended) complete ===
+=== ROUND ext-r7 (repo-agent-recommended) starting ===
+=== CELL understanding__repo-agent-recommended__ext-r7 (timeout 1200s) ===
+{
+  "cell": "understanding__repo-agent-recommended__ext-r7",
+  "repo": "repo-agent-recommended",
+  "task": "understanding",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 194,
+  "run_metrics_present": true,
+  "verification": {
+    "answer_present": true,
+    "unexpected_file_changes": 0
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/27/rollout-2026-09-27T00-38-01-01a0e015-348f-7050-a07e-57362e56a898.jsonl",
+    "cwd": "/Users/garry/code/benchmark/repo-agent-recommended",
+    "api_turns": 19,
+    "tool_calls_total": 18,
+    "file_edits": 2,
+    "shell_execs": 16,
+    "reasoning_steps": 22,
+    "input_tokens": 734798,
+    "cached_input_tokens": 678144,
+    "output_tokens": 8662,
+    "reasoning_output_tokens": 3587,
+    "total_tokens": 743460
+  }
+}
+=== CELL understanding__repo-agent-recommended__ext-r7 done: exit=0 timed_out=false wall=194s tokens=743460 ===
+    understanding__repo-agent-recommended__ext-r7: OK
+=== CELL simple_change__repo-agent-recommended__ext-r7 (timeout 1200s) ===
+{
+  "cell": "simple_change__repo-agent-recommended__ext-r7",
+  "repo": "repo-agent-recommended",
+  "task": "simple_change",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 197,
+  "run_metrics_present": true,
+  "verification": {
+    "migrate_exit_code": 0,
+    "test_exit_code": 0,
+    "test_summary_line": "59 passed, 2 warnings in 2.75s"
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/27/rollout-2026-09-27T00-41-16-01a0e018-2db6-7fd3-b32d-5b8c30b87a9d.jsonl",
+    "cwd": "/Users/garry/code/benchmark/repo-agent-recommended",
+    "api_turns": 20,
+    "tool_calls_total": 19,
+    "file_edits": 3,
+    "shell_execs": 16,
+    "reasoning_steps": 20,
+    "input_tokens": 643014,
+    "cached_input_tokens": 581632,
+    "output_tokens": 7492,
+    "reasoning_output_tokens": 3148,
+    "total_tokens": 650506
+  }
+}
+=== CELL simple_change__repo-agent-recommended__ext-r7 done: exit=0 timed_out=false wall=197s tokens=650506 ===
+    simple_change__repo-agent-recommended__ext-r7: OK
+=== CELL complex__repo-agent-recommended__ext-r7 (timeout 1800s) ===
+{
+  "cell": "complex__repo-agent-recommended__ext-r7",
+  "repo": "repo-agent-recommended",
+  "task": "complex",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 535,
+  "run_metrics_present": true,
+  "verification": {
+    "migrate_exit_code": 0,
+    "test_exit_code": 0,
+    "test_summary_line": "62 passed, 2 warnings in 2.88s"
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/27/rollout-2026-09-27T00-44-38-01a0e01b-4387-78c3-a3c1-d582c72374ef.jsonl",
+    "cwd": "/Users/garry/code/benchmark/repo-agent-recommended",
+    "api_turns": 53,
+    "tool_calls_total": 50,
+    "file_edits": 11,
+    "shell_execs": 39,
+    "reasoning_steps": 56,
+    "input_tokens": 3238580,
+    "cached_input_tokens": 3131136,
+    "output_tokens": 19516,
+    "reasoning_output_tokens": 6065,
+    "total_tokens": 3258096
+  }
+}
+=== CELL complex__repo-agent-recommended__ext-r7 done: exit=0 timed_out=false wall=535s tokens=3258096 ===
+    complex__repo-agent-recommended__ext-r7: OK
+=== ROUND ext-r7 (repo-agent-recommended) complete ===
+=== ROUND ext-r8 (repo-agent-recommended) starting ===
+=== CELL understanding__repo-agent-recommended__ext-r8 (timeout 1200s) ===
+{
+  "cell": "understanding__repo-agent-recommended__ext-r8",
+  "repo": "repo-agent-recommended",
+  "task": "understanding",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 163,
+  "run_metrics_present": true,
+  "verification": {
+    "answer_present": true,
+    "unexpected_file_changes": 0
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/27/rollout-2026-09-27T00-53-42-01a0e023-8f93-78c2-9388-349ba99e5755.jsonl",
+    "cwd": "/Users/garry/code/benchmark/repo-agent-recommended",
+    "api_turns": 16,
+    "tool_calls_total": 15,
+    "file_edits": 4,
+    "shell_execs": 11,
+    "reasoning_steps": 17,
+    "input_tokens": 708976,
+    "cached_input_tokens": 650240,
+    "output_tokens": 7522,
+    "reasoning_output_tokens": 3263,
+    "total_tokens": 716498
+  }
+}
+=== CELL understanding__repo-agent-recommended__ext-r8 done: exit=0 timed_out=false wall=163s tokens=716498 ===
+    understanding__repo-agent-recommended__ext-r8: OK
+=== CELL simple_change__repo-agent-recommended__ext-r8 (timeout 1200s) ===
+{
+  "cell": "simple_change__repo-agent-recommended__ext-r8",
+  "repo": "repo-agent-recommended",
+  "task": "simple_change",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 229,
+  "run_metrics_present": true,
+  "verification": {
+    "migrate_exit_code": 0,
+    "test_exit_code": 0,
+    "test_summary_line": "59 passed, 2 warnings in 2.68s"
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/27/rollout-2026-09-27T00-56-23-01a0e026-0511-74b3-9fad-eaa8ef98a738.jsonl",
+    "cwd": "/Users/garry/code/benchmark/repo-agent-recommended",
+    "api_turns": 30,
+    "tool_calls_total": 29,
+    "file_edits": 8,
+    "shell_execs": 21,
+    "reasoning_steps": 33,
+    "input_tokens": 1172597,
+    "cached_input_tokens": 1107456,
+    "output_tokens": 9423,
+    "reasoning_output_tokens": 3995,
+    "total_tokens": 1182020
+  }
+}
+=== CELL simple_change__repo-agent-recommended__ext-r8 done: exit=0 timed_out=false wall=229s tokens=1182020 ===
+    simple_change__repo-agent-recommended__ext-r8: OK
+=== CELL complex__repo-agent-recommended__ext-r8 (timeout 1800s) ===
+{
+  "cell": "complex__repo-agent-recommended__ext-r8",
+  "repo": "repo-agent-recommended",
+  "task": "complex",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 526,
+  "run_metrics_present": true,
+  "verification": {
+    "migrate_exit_code": 0,
+    "test_exit_code": 0,
+    "test_summary_line": "62 passed, 1 warning in 2.79s"
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/27/rollout-2026-09-27T01-00-18-01a0e029-9afc-71c3-9382-397fb41350e4.jsonl",
+    "cwd": "/Users/garry/code/benchmark/repo-agent-recommended",
+    "api_turns": 63,
+    "tool_calls_total": 62,
+    "file_edits": 11,
+    "shell_execs": 51,
+    "reasoning_steps": 63,
+    "input_tokens": 3828781,
+    "cached_input_tokens": 3689728,
+    "output_tokens": 18518,
+    "reasoning_output_tokens": 4367,
+    "total_tokens": 3847299
+  }
+}
+=== CELL complex__repo-agent-recommended__ext-r8 done: exit=0 timed_out=false wall=526s tokens=3847299 ===
+    complex__repo-agent-recommended__ext-r8: OK
+=== ROUND ext-r8 (repo-agent-recommended) complete ===
+=== EXTENSION TO N=8 COMPLETE (repo-baseline + repo-agent-recommended, rounds 5-8) ===

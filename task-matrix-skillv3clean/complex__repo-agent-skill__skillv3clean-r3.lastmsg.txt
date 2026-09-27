@@ -1,0 +1,18 @@
+Implemented archive support for Items.
+
+- Added `is_archived` model field and Alembic migration.
+- Added archive/unarchive endpoints with ownership checks.
+- Added archived filtering and `include_archived`.
+- Regenerated the API client.
+- Added archive/unarchive UI actions, archived styling, toggle, and Playwright coverage.
+- Added backend tests.
+
+Verification:
+
+- Migration from empty database: passed.
+- Backend tests: `62 passed`.
+- Ruff: passed.
+- Frontend build: passed.
+- Items Playwright specs: `11 passed`.
+- Full Playwright suite: `60 passed, 3 failed`; 2 failures require unavailable Mailpit infrastructure.
+- Metrics recorded in ignored [RUN_METRICS.json](/Users/garry/code/benchmark/repo-agent-skill/RUN_METRICS.json).

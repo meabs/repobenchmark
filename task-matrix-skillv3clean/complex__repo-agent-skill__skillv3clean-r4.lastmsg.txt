@@ -1,0 +1,18 @@
+Implemented archive support for Items.
+
+- Added `is_archived` field and Alembic migration.
+- Added archive/unarchive endpoints with ownership checks.
+- Added archived filtering and `include_archived`.
+- Regenerated API client via `scripts/generate-client.sh`.
+- Added UI actions, archived badge, and “Show archived” toggle.
+- Added backend and Playwright coverage.
+- Added ignored `RUN_METRICS.json`.
+
+Verification:
+
+- Fresh PostgreSQL migration: passed.
+- Backend tests: 60 passed.
+- Ruff/lint: passed.
+- Frontend build: passed.
+- Direct Chromium archive/unarchive flow: passed.
+- Standard Playwright setup remains blocked by its existing auth-navigation/Vite-origin configuration; the requested UI behavior was verified directly in Chromium.

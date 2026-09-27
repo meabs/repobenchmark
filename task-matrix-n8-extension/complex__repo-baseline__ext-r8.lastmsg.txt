@@ -1,0 +1,16 @@
+Implemented Item archiving end to end.
+
+- Added `is_archived` with migration `4f7a2e6c1b90`.
+- Added archive/unarchive endpoints with ownership checks.
+- Added filtered listing with `include_archived`.
+- Regenerated OpenAPI TypeScript client.
+- Added archive controls, archived styling, and toggle to Items UI.
+- Added backend and Playwright tests.
+- Added `RUN_METRICS.json` and ignored it.
+
+Verification:
+
+- Fresh PostgreSQL migration: passed.
+- Backend: 61 tests passed.
+- Frontend lint/build: passed.
+- Playwright Items spec: 11 tests passed, including archive/unarchive UI behavior.

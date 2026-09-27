@@ -1,0 +1,5 @@
+Completed:
+
+- [ANSWER.md](/Users/garry/code/benchmark/repo-agent-skill/ANSWER.md) with precise answers to all five questions.
+- [RUN_METRICS.json](/Users/garry/code/benchmark/repo-agent-skill/RUN_METRICS.json) with required metrics.
+- Added `RUN_METRICS.json` to `.gitignore`.

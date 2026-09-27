@@ -1,0 +1,27 @@
+{
+  "cell": "understanding__repo-agent-recommended__ext-r6",
+  "repo": "repo-agent-recommended",
+  "task": "understanding",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 212,
+  "run_metrics_present": true,
+  "verification": {
+    "answer_present": true,
+    "unexpected_file_changes": 0
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/27/rollout-2026-09-27T00-23-30-01a0e007-e9eb-7c53-8868-119312ec1a63.jsonl",
+    "cwd": "/Users/garry/code/benchmark/repo-agent-recommended",
+    "api_turns": 24,
+    "tool_calls_total": 23,
+    "file_edits": 4,
+    "shell_execs": 19,
+    "reasoning_steps": 23,
+    "input_tokens": 959444,
+    "cached_input_tokens": 854016,
+    "output_tokens": 9369,
+    "reasoning_output_tokens": 3788,
+    "total_tokens": 968813
+  }
+}

@@ -1,0 +1,7 @@
+Completed:
+
+- [ANSWER.md](/Users/garry/code/benchmark/repo-agent-recommended/ANSWER.md)
+- `RUN_METRICS.json` created and ignored
+- `.gitignore` updated with `RUN_METRICS.json`
+
+All five questions are answered with exact files, functions, and relevant line references.

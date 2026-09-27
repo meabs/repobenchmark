@@ -1,0 +1,9 @@
+Implemented optional item sorting.
+
+- Added `order_by: Literal["created_at", "title"] = "created_at"`.
+- Preserved default `created_at DESC`; added `title ASC`.
+- Added ordering test covering both behaviors.
+- No migration or frontend files changed.
+- Added ignored `RUN_METRICS.json`.
+
+Validation: `59 passed`; Ruff passed. Frontend build was unavailable because dependencies/`tsc` are not installed.

@@ -1,0 +1,19 @@
+# Secrets — never commit a real .env; each fixture repo ships .env.example instead
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Generated / installed — regenerate locally with the fixture's own tooling
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+dist/
+build/
+.pytest_cache/
+
+# OS / editor cruft
+.DS_Store
+*.swp

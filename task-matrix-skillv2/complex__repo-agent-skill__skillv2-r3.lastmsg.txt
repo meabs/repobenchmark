@@ -1,0 +1,19 @@
+Implemented archive support for Items.
+
+- Added `is_archived` with Alembic migration; applied from scratch to head.
+- Added archive/unarchive endpoints with ownership checks.
+- Added archived filtering and `include_archived`.
+- Regenerated OpenAPI client.
+- Added archive/unarchive UI, archived badge, and toggle.
+- Added backend and Playwright coverage.
+- Updated OKF docs and ignored `RUN_METRICS.json`.
+
+Verification:
+
+- Backend tests: 61 passed.
+- Item tests: 14 passed.
+- Frontend lint/build: passed.
+- Archive/unarchive Playwright flow: 2 passed.
+- Full Items spec: 10 passed; 1 existing title-selector strictness failure unrelated to this change.
+
+Metrics are recorded in ignored [RUN_METRICS.json](/Users/garry/code/benchmark/repo-agent-skill/RUN_METRICS.json).

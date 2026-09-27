@@ -1,0 +1,16 @@
+Implemented archive support end-to-end.
+
+- Added `is_archived` field and Alembic migration.
+- Added archive/unarchive endpoints with ownership checks.
+- Added filtered listing with `include_archived`.
+- Regenerated API client from OpenAPI.
+- Updated Items UI with archive actions, archived styling, and include toggle.
+- Added backend and Playwright coverage.
+- Added `RUN_METRICS.json` and ignored it.
+
+Verified:
+
+- Fresh PostgreSQL migration through `alembic upgrade head`: passed.
+- Backend: 62 tests passed; targeted archive tests: 15 passed.
+- Ruff, mypy, frontend build: passed.
+- Playwright Items spec: 11 passed, including archive/unarchive UI behavior.

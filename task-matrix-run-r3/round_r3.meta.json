@@ -1,0 +1,8 @@
+{
+  "round": "r3",
+  "order_understanding": ["repo-agent-optimised", "repo-agent-skill", "repo-baseline"],
+  "order_simple_change": ["repo-agent-skill", "repo-baseline", "repo-agent-optimised"],
+  "order_complex": ["repo-baseline", "repo-agent-skill", "repo-agent-optimised"],
+  "model": "gpt-5.6-luna",
+  "note": "one cell (simple_change x repo-agent-skill) was killed by the 900s watchdog ~58s after its own work (migration+tests) had already completed and verified clean; timeouts bumped to 1200/1200/1800 and resumed manually for the remaining 7 cells rather than restarting the round."
+}

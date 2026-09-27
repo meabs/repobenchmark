@@ -1,0 +1,9 @@
+Implemented optional item sorting.
+
+- Added `order_by: Literal["created_at", "title"] = "created_at"` to the endpoint.
+- Preserved default `created_at DESC`; added `title ASC`.
+- Added backend coverage for both orderings.
+- No migrations or frontend files changed.
+- Added ignored `RUN_METRICS.json`.
+
+Validation: `59 passed`, targeted item tests `12 passed`, Ruff clean.

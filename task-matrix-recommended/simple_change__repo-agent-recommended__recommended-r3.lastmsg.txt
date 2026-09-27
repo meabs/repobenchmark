@@ -1,0 +1,7 @@
+Implemented optional item sorting.
+
+- Added `order_by: Literal["created_at", "title"] = "created_at"`.
+- Added title-ascending and default created-at-descending test coverage.
+- Full backend suite passes: `59 passed`.
+- No migration or frontend files changed.
+- Added ignored [`RUN_METRICS.json`](/Users/garry/code/benchmark/repo-agent-recommended/RUN_METRICS.json) and `.gitignore` entry.

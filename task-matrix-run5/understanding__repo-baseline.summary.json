@@ -1,0 +1,15 @@
+{
+  "cell": "understanding__repo-baseline",
+  "repo": "repo-baseline",
+  "task": "understanding",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 189,
+  "run_metrics_present": true,
+  "total_tokens": 964294,
+  "api_turns": 20,
+  "verification": {
+    "answer_present": true,
+    "unexpected_file_changes": 0
+  }
+}

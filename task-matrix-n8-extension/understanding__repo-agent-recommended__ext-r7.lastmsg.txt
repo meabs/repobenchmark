@@ -1,0 +1,6 @@
+Created:
+
+- [ANSWER.md](/Users/garry/code/benchmark/repo-agent-recommended/ANSWER.md)
+- [RUN_METRICS.json](/Users/garry/code/benchmark/repo-agent-recommended/RUN_METRICS.json)
+
+Added `RUN_METRICS.json` to `.gitignore`. Question 3 notes that no existing test actually catches removal of the database cascade.

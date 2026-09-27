@@ -1,0 +1,326 @@
+{
+  "understanding|repo-baseline": {
+    "task": "understanding",
+    "repo": "repo-baseline",
+    "rounds": [
+      {
+        "round": 1,
+        "tokens": 964294,
+        "tool_calls": 19,
+        "cost_usd": 0.0452
+      },
+      {
+        "round": 2,
+        "tokens": 947570,
+        "tool_calls": 24,
+        "cost_usd": 0.0423
+      },
+      {
+        "round": 3,
+        "tokens": 1024342,
+        "tool_calls": 24,
+        "cost_usd": 0.0421
+      },
+      {
+        "round": 4,
+        "tokens": 1590262,
+        "tool_calls": 33,
+        "cost_usd": 0.0604
+      }
+    ],
+    "tokens_mean": 1131617,
+    "tokens_stdev": 307535.0636854276,
+    "tools_mean": 25,
+    "tools_stdev": 5.830951894845301,
+    "cost_mean": 0.0475,
+    "cost_stdev": 0.0087
+  },
+  "understanding|repo-agent-optimised": {
+    "task": "understanding",
+    "repo": "repo-agent-optimised",
+    "rounds": [
+      {
+        "round": 1,
+        "tokens": 793052,
+        "tool_calls": 16,
+        "cost_usd": 0.0401
+      },
+      {
+        "round": 2,
+        "tokens": 1440121,
+        "tool_calls": 27,
+        "cost_usd": 0.0591
+      },
+      {
+        "round": 3,
+        "tokens": 688628,
+        "tool_calls": 16,
+        "cost_usd": 0.0375
+      },
+      {
+        "round": 4,
+        "tokens": 985961,
+        "tool_calls": 23,
+        "cost_usd": 0.0426
+      }
+    ],
+    "tokens_mean": 976940.5,
+    "tokens_stdev": 332443.79128357925,
+    "tools_mean": 20.5,
+    "tools_stdev": 5.446711546122731,
+    "cost_mean": 0.0448,
+    "cost_stdev": 0.0097
+  },
+  "understanding|repo-agent-skill": {
+    "task": "understanding",
+    "repo": "repo-agent-skill",
+    "rounds": [
+      {
+        "round": 1,
+        "tokens": 1162468,
+        "tool_calls": 24,
+        "cost_usd": 0.0493
+      },
+      {
+        "round": 2,
+        "tokens": 1014065,
+        "tool_calls": 21,
+        "cost_usd": 0.0433
+      },
+      {
+        "round": 3,
+        "tokens": 887186,
+        "tool_calls": 22,
+        "cost_usd": 0.0386
+      },
+      {
+        "round": 4,
+        "tokens": 643592,
+        "tool_calls": 15,
+        "cost_usd": 0.0415
+      }
+    ],
+    "tokens_mean": 926827.75,
+    "tokens_stdev": 219795.8322540489,
+    "tools_mean": 20.5,
+    "tools_stdev": 3.872983346207417,
+    "cost_mean": 0.0432,
+    "cost_stdev": 0.0045
+  },
+  "simple_change|repo-baseline": {
+    "task": "simple_change",
+    "repo": "repo-baseline",
+    "rounds": [
+      {
+        "round": 1,
+        "tokens": 959789,
+        "tool_calls": 28,
+        "cost_usd": 0.0441
+      },
+      {
+        "round": 2,
+        "tokens": 1007023,
+        "tool_calls": 29,
+        "cost_usd": 0.045
+      },
+      {
+        "round": 3,
+        "tokens": 756296,
+        "tool_calls": 21,
+        "cost_usd": 0.0359
+      },
+      {
+        "round": 4,
+        "tokens": 773253,
+        "tool_calls": 23,
+        "cost_usd": 0.0411
+      }
+    ],
+    "tokens_mean": 874090.25,
+    "tokens_stdev": 127878.88553204031,
+    "tools_mean": 25.25,
+    "tools_stdev": 3.8622100754188224,
+    "cost_mean": 0.0415,
+    "cost_stdev": 0.0041
+  },
+  "simple_change|repo-agent-optimised": {
+    "task": "simple_change",
+    "repo": "repo-agent-optimised",
+    "rounds": [
+      {
+        "round": 1,
+        "tokens": 1138034,
+        "tool_calls": 30,
+        "cost_usd": 0.0487
+      },
+      {
+        "round": 2,
+        "tokens": 1455020,
+        "tool_calls": 34,
+        "cost_usd": 0.0599
+      },
+      {
+        "round": 3,
+        "tokens": 1175106,
+        "tool_calls": 31,
+        "cost_usd": 0.0522
+      },
+      {
+        "round": 4,
+        "tokens": 1104116,
+        "tool_calls": 30,
+        "cost_usd": 0.0528
+      }
+    ],
+    "tokens_mean": 1218069,
+    "tokens_stdev": 160605.60721220166,
+    "tools_mean": 31.25,
+    "tools_stdev": 1.8929694486000912,
+    "cost_mean": 0.0534,
+    "cost_stdev": 0.0047
+  },
+  "simple_change|repo-agent-skill": {
+    "task": "simple_change",
+    "repo": "repo-agent-skill",
+    "rounds": [
+      {
+        "round": 1,
+        "tokens": 842685,
+        "tool_calls": 25,
+        "cost_usd": 0.0376
+      },
+      {
+        "round": 2,
+        "tokens": 947975,
+        "tool_calls": 27,
+        "cost_usd": 0.0471
+      },
+      {
+        "round": 3,
+        "tokens": 810023,
+        "tool_calls": 25,
+        "cost_usd": 0.0399
+      },
+      {
+        "round": 4,
+        "tokens": 756426,
+        "tool_calls": 24,
+        "cost_usd": 0.0355
+      }
+    ],
+    "tokens_mean": 839277.25,
+    "tokens_stdev": 80719.58536553154,
+    "tools_mean": 25.25,
+    "tools_stdev": 1.2583057392117916,
+    "cost_mean": 0.04,
+    "cost_stdev": 0.005
+  },
+  "complex|repo-baseline": {
+    "task": "complex",
+    "repo": "repo-baseline",
+    "rounds": [
+      {
+        "round": 1,
+        "tokens": 4143697,
+        "tool_calls": 57,
+        "cost_usd": 0.1458
+      },
+      {
+        "round": 2,
+        "tokens": 7105515,
+        "tool_calls": 97,
+        "cost_usd": 0.2182
+      },
+      {
+        "round": 3,
+        "tokens": 7251188,
+        "tool_calls": 92,
+        "cost_usd": 0.2026
+      },
+      {
+        "round": 4,
+        "tokens": 3053631,
+        "tool_calls": 52,
+        "cost_usd": 0.1052
+      }
+    ],
+    "tokens_mean": 5388507.75,
+    "tokens_stdev": 2114938.5216674544,
+    "tools_mean": 74.5,
+    "tools_stdev": 23.27373340628157,
+    "cost_mean": 0.168,
+    "cost_stdev": 0.0521
+  },
+  "complex|repo-agent-optimised": {
+    "task": "complex",
+    "repo": "repo-agent-optimised",
+    "rounds": [
+      {
+        "round": 1,
+        "tokens": 8665008,
+        "tool_calls": 104,
+        "cost_usd": 0.234
+      },
+      {
+        "round": 2,
+        "tokens": 6547096,
+        "tool_calls": 84,
+        "cost_usd": 0.1982
+      },
+      {
+        "round": 3,
+        "tokens": 3909776,
+        "tool_calls": 56,
+        "cost_usd": 0.1223
+      },
+      {
+        "round": 4,
+        "tokens": 5148779,
+        "tool_calls": 79,
+        "cost_usd": 0.1505
+      }
+    ],
+    "tokens_mean": 6067664.75,
+    "tokens_stdev": 2039352.933385714,
+    "tools_mean": 80.75,
+    "tools_stdev": 19.72097022630141,
+    "cost_mean": 0.1762,
+    "cost_stdev": 0.0496
+  },
+  "complex|repo-agent-skill": {
+    "task": "complex",
+    "repo": "repo-agent-skill",
+    "rounds": [
+      {
+        "round": 1,
+        "tokens": 7260819,
+        "tool_calls": 95,
+        "cost_usd": 0.1987
+      },
+      {
+        "round": 2,
+        "tokens": 3821805,
+        "tool_calls": 67,
+        "cost_usd": 0.1214
+      },
+      {
+        "round": 3,
+        "tokens": 4571994,
+        "tool_calls": 69,
+        "cost_usd": 0.1407
+      },
+      {
+        "round": 4,
+        "tokens": 3880908,
+        "tool_calls": 61,
+        "cost_usd": 0.1192
+      }
+    ],
+    "tokens_mean": 4883881.5,
+    "tokens_stdev": 1620809.2654717274,
+    "tools_mean": 73,
+    "tools_stdev": 15.05545305418162,
+    "cost_mean": 0.145,
+    "cost_stdev": 0.0371
+  }
+}

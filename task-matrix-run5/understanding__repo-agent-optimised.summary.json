@@ -1,0 +1,15 @@
+{
+  "cell": "understanding__repo-agent-optimised",
+  "repo": "repo-agent-optimised",
+  "task": "understanding",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 202,
+  "run_metrics_present": true,
+  "total_tokens": 793052,
+  "api_turns": 17,
+  "verification": {
+    "answer_present": true,
+    "unexpected_file_changes": 0
+  }
+}

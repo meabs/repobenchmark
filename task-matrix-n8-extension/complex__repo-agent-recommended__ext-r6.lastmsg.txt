@@ -1,0 +1,16 @@
+Implemented archive support for Items.
+
+- Added `is_archived` with Alembic migration and database default `false`.
+- Added archive/unarchive endpoints with owner/superuser authorization.
+- Added archived filtering via `include_archived`.
+- Regenerated the frontend client.
+- Added archive/unarchive UI actions, archived badge styling, and filter checkbox.
+- Added backend and Playwright coverage.
+- Added ignored `RUN_METRICS.json`.
+
+Verified:
+
+- Scratch database migration from zero to head passed.
+- Backend: 60 tests passed.
+- Frontend lint/build passed.
+- Items Playwright suite: 11 tests passed, including archive/unarchive interaction.

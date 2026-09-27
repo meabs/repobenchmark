@@ -1,0 +1,8 @@
+Implemented optional item sorting.
+
+- Added `order_by: Literal["created_at", "title"] = "created_at"`.
+- Preserved default `created_at DESC`; added `title ASC`.
+- Added test covering both orderings.
+- Full backend suite passes: **59 tests**.
+- No migration or frontend files touched; client not regenerated.
+- Recorded metrics in ignored [RUN_METRICS.json](/Users/garry/code/benchmark/repo-agent-recommended/RUN_METRICS.json).

@@ -1,0 +1,5 @@
+Completed:
+
+- [ANSWER.md](/Users/garry/code/benchmark/repo-agent-skill/ANSWER.md)
+- [RUN_METRICS.json](/Users/garry/code/benchmark/repo-agent-skill/RUN_METRICS.json)
+- Added `RUN_METRICS.json` to [.gitignore](/Users/garry/code/benchmark/repo-agent-skill/.gitignore)
