@@ -324,13 +324,14 @@
     <div class="pick">Recommendation</div>
     <h3>Ship the <code>repo-agent-recommended</code> layout: tiny <code>AGENTS.md</code> index + six task-scoped skills + OKF with rationale folded in, no separate tree of "why we built it this way" documents.</h3>
     <p>
-      It is the only one of six tested configurations with <b>no measured cost penalty
-      anywhere</b>. <code>repo-agent-optimised</code>&mdash;the always-loaded
+      In the single-repo study it is the only one of six tested configurations with <b>no measured cost penalty
+      on any task</b>. <code>repo-agent-optimised</code>&mdash;the always-loaded
       <code>AGENTS.md</code> plus a full set of separate rationale documents (ADRs,
       short for architecture decision records)&mdash;has a proven, sign-consistent
-      <b>+40.3% token cost on the simple-change task</b>, holding in all four rounds.
-      Nothing in <code>repo-agent-recommended</code> replicates that anywhere; its mean
-      cost sits at or below baseline on all three task types.
+      <b>+40.3% token cost on the simple-change task</b> (mean of the four per-round token deltas; +28.7% on mean dollar cost), positive in all four rounds.
+      <code>repo-agent-recommended</code> shows no such penalty in that study; its mean
+      cost sits at or below baseline on all three task types. The five-repo study below
+      is a separate, n=1-per-cell check and does not change this statement.
     </p>
     <p>
       It inherits <code>skill v3</code>'s discovery behaviour exactly: across
@@ -342,7 +343,7 @@
     </p>
     <p>
       Doubled to n=8 rounds against baseline specifically to stress-test this: still
-      no penalty anywhere, and on two of three tasks a cost advantage now leaning real
+      no penalty on any of the three tasks, and on two of three tasks a cost advantage now leaning real
       (7 of 8 rounds cheaper, p&#8239;=&#8239;0.07) though not yet past the conventional
       bar for proven &mdash; see the extension section below.
     </p>
@@ -448,10 +449,10 @@
     independently re-verified after every session, not taken on trust: a fresh
     migration and full backend test run on a clean database for the two coding
     tasks, and a manual check against the real source code for the comprehension
-    task. Every comparison in this document is <b>4 independent repeats (rounds) per
-    combination</b>, and a result is only called <em>real</em> when it points the
-    same direction in every single one &mdash; the same bar used throughout, not
-    relaxed for any one design.
+    task. Every comparison in the single-repo study is <b>4 independent repeats (rounds) per
+    combination</b> (8 for the final recommended-vs-baseline extension); the five-repo and Cursor
+    studies later in this document are <b>n=1 per cell</b> and are reported as such. In the single-repo study a result is only called <em>real</em> when it points the
+    same direction in every round &mdash; the same bar for every design.
   </p>
   <div class="callout">
     <b>Two prompt regimes, not one.</b> <code>repo-agent-optimised</code> and skill
@@ -482,9 +483,9 @@
   <h2 class="h">Cost, by config, all six<span class="tag">real dollars, standard-tier pricing</span></h2>
   <div class="stat-grid">
     <div class="stat-tile"><div class="lbl">Total study cost, all 6 configs</div><div class="val">$5.52</div><div class="sub">96 sessions across the full project</div></div>
-    <div class="stat-tile"><div class="lbl">Proven cost penalty</div><div class="val" style="color:var(--bad)">+40.3%</div><div class="sub">repo-agent-optimised, simple-change, 4/4 rounds</div></div>
-    <div class="stat-tile"><div class="lbl">Proven cost saving</div><div class="val" style="color:var(--good)">&minus;8.7%</div><div class="sub">skill v3, simple-change, 4/4 rounds</div></div>
-    <div class="stat-tile"><div class="lbl">Recommended vs. optimised</div><div class="val" style="color:var(--c-recommended)">&minus;32.5%</div><div class="sub">mean cost, simple-change task</div></div>
+    <div class="stat-tile"><div class="lbl">Proven cost penalty</div><div class="val" style="color:var(--bad)">+40.3%</div><div class="sub">repo-agent-optimised, simple-change, mean of 4 per-round token deltas (4/4 positive); +28.7% on mean dollar cost</div></div>
+    <div class="stat-tile"><div class="lbl">Proven cost saving</div><div class="val" style="color:var(--good)">&minus;8.8%</div><div class="sub">skill v3 vs baseline, simple-change, mean cost (&minus;7.9% tokens)</div></div>
+    <div class="stat-tile"><div class="lbl">Recommended vs. optimised</div><div class="val" style="color:var(--c-recommended)">&minus;33.9%</div><div class="sub">mean cost, simple-change task (&minus;32.9% tokens)</div></div>
   </div>
 
   <h3 class="sub">Full evolution &mdash; mean cost per session, by task</h3>
@@ -572,7 +573,7 @@
     &minus;52%). That's a real pattern forming, but 7/8 still has roughly a 7%
     chance of happening by pure luck (two-sided binomial test) &mdash; suggestive,
     short of the conventional bar for "proven." <code>repo-agent-recommended</code>'s
-    case is now: never shows a penalty anywhere, and on two of three tasks a cost
+    case is now: no penalty on any of the three tasks in the single-repo study, and on two of three tasks a cost
     advantage that's leaning real but not yet confirmed. More rounds on just those
     two tasks (not understanding) would be the next lever if it's worth settling.
   </div>
@@ -1177,9 +1178,11 @@
     "Migrations applied cleanly" means: a fresh, empty database was brought up to
     date using the agent's own change and it worked without errors. "Independently
     re-verified" means this was checked separately after each session finished, not
-    taken on the agent's word. No configuration ever traded correctness for speed or
-    cost &mdash; every design difference measured in this study is a difference in
-    <em>how much it cost to get there</em>, never in whether the agent got there.
+    taken on the agent's word. In the single-repo study no configuration traded correctness for speed or
+    cost &mdash; every design difference measured there is a difference in
+    <em>how much it cost to get there</em>, not in whether the agent got there. The five-repo study
+    is different: graded answers were 46 vs 47 of 50 and the java-spring recommended layer failed twice
+    until a <code>verify-work</code> skill was added (see that section).
   </p>
 </section>
 

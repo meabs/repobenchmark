@@ -2,7 +2,7 @@
 
 **Does the shape of a codebase's documentation for an AI coding agent actually change how much a task costs?**
 
-Six documentation-layer designs, built on top of the identical real-world application, tested against the same three tasks, the same model, the same settings — four independent rounds per design (eight for the final comparison) — with every number pulled from the model provider's own transcript, never the agent's self-report.
+Six documentation-layer designs, built on top of the identical real-world application, tested against the same three tasks, the same model, the same settings — four independent rounds per design (eight for the final comparison) in the single-repo study; the five-repo and Cursor studies are n=1 per cell — with every number pulled from the model provider's own transcript, never the agent's self-report.
 
 This repository is the complete, reproducible artefact: the four test-fixture repositories with their documentation layers, the orchestration scripts that ran every session, and the raw + consolidated results data behind every number in the analysis below.
 
@@ -73,7 +73,7 @@ All six are built on the same pinned commit of [`fastapi/full-stack-fastapi-temp
 - **Tokens, tool calls, and dollar cost** are extracted directly from each session's own AI-provider transcript (`token_usage.py` reads the raw session log's `token_usage_record` and `custom_tool_call` events) — never the agent's self-report of what it did.
 - **Dollar cost** is computed from those real token counts at the model's published standard-tier rate: $0.20 / 1M input tokens, $0.02 / 1M cached-input tokens, $1.20 / 1M output tokens.
 - **Correctness** is independently re-verified after every session, not taken on trust: a fresh migration and full backend test run on a clean, isolated database for the two coding tasks; a diff check for zero unexpected file changes plus manual grading against the real source code for the comprehension task.
-- **Every comparison uses four independent repeats (rounds) minimum** — eight for the final `recommended`-vs-`baseline` comparison — with the repo execution order randomized per round to control for cache-warming effects. A result is only called *real* if it holds the same sign in every round.
+- **Single-repo study: every comparison uses four independent repeats (rounds) minimum** — eight for the final `recommended`-vs-`baseline` comparison — with the repo execution order randomized per round to control for cache-warming effects. A result is only called *real* if it holds the same sign in every round.
 - **One constant across every session in this study, all six designs, including baseline:** the execution environment carries a pre-existing, repo-independent general-purpose skill catalogue, unrelated to this codebase, that every session had equal access to. It does not bias the *comparisons* between designs — it was present identically everywhere — but it means "emergent discovery" here means discovery of *this repo's own* documentation on top of that constant scaffold, not discovery by a completely blank agent.
 
 ## Findings
@@ -95,7 +95,7 @@ Mean cost per session, at published standard-tier pricing:
 
 Out of every design-vs-baseline comparison run (18 at n=4, plus 3 more at n=8 for `recommended`), only two held the same sign in every single round:
 
-- **`repo-agent-optimised` is proven more expensive** on the simple-change task: **+19%, +44%, +55%, +43%** across four rounds (mean +40.3%). The always-loaded documentation costs more than it saves on a task this small.
+- **`repo-agent-optimised` is proven more expensive** on the simple-change task: **+19%, +44%, +55%, +43%** across four rounds (mean of the four token deltas +40.3%; +28.7% on mean dollar cost). The always-loaded documentation costs more than it saves on a task this small.
 - **`repo-agent-skill` v3 is proven cheaper** on the same task: **−1%, −17%, −3%, −10%** across four rounds. Same task, opposite design philosophy, opposite result.
 
 This third, independent measure (tool-call count) confirms it: `repo-agent-optimised`'s simple-change tool-call count ranges **30–34** across all four rounds — entirely above `repo-baseline`'s **21–29**. The ranges do not touch.
@@ -121,7 +121,7 @@ The agent found its own documentation, every time, without being told it existed
 | Comprehension answers present, zero unexpected file changes | 32/32 |
 | Caught a deliberate regression trap in the source (no existing test catches it) | 32/32 |
 
-No design ever traded correctness for speed or cost. Every difference measured in this study is a difference in *how much it cost to get there* — never in whether the agent got there.
+In the single-repo study no design traded correctness for speed or cost; every difference there is in *how much it cost to get there*, not whether the agent got there. The five-repo study is different: graded answers were 46 vs 47 of 50 and the java-spring recommended layer failed twice until a `verify-work` skill was added (see External validity).
 
 ### The n=8 stress test
 
@@ -235,7 +235,7 @@ Fix: a new `verify-work` skill covering both conventions, logged in the bundle's
 
 Four reasons, all independent of the still-unconfirmed n=8 cost trend:
 
-1. **No proven cost penalty anywhere.** `repo-agent-optimised` has one, proven, +40% on the simple-change task. `repo-agent-recommended` never replicates that on any task.
+1. **No proven cost penalty in the single-repo study.** `repo-agent-optimised` has one, proven, +40% (tokens; +29% dollars) on the simple-change task. `repo-agent-recommended` does not replicate that on any of the three tasks there. The n=1 five-repo study is a separate check.
 2. **Inherits proven discovery precision.** 24/24 correct, unprompted skill selections.
 3. **Structurally the cleanest of the six.** Auditing `repo-agent-optimised`'s six architecture-decision records against OKF found four of six already fully duplicated as plain description — exact repetition across artefacts. The two genuinely load-bearing facts were moved into the OKF page they're actually attached to, instead of recreating a parallel "why" tree.
 4. **Correctness and comprehension quality are tied for perfect** with every other design — this choice costs nothing on the one dimension every design already wins.
