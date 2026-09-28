@@ -1,0 +1,14 @@
+Implemented deceased tracking for Pets.
+
+- Added persisted `Pet.deceased` field and schema/data updates for H2, MySQL, and PostgreSQL.
+- Added owner-scoped `POST /owners/{ownerId}/pets/{petId}/deceased`.
+- Blocked direct create/edit binding via `@InitBinder`.
+- Updated owner details UI with deceased labels and living-pet POST buttons.
+- Added persistence, controller, ownership, form-binding, and rendered HTML tests.
+- Added i18n keys across locales.
+
+Validation:
+
+- `./mvnw -q -B test` passed.
+- Docker unavailable, so MySQL Testcontainers tests were skipped.
+- Metrics recorded in ignored [RUN_METRICS.json](/Users/garry/code/multi-repo-benchmark/java-spring-recommended/RUN_METRICS.json).

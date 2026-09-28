@@ -1,0 +1,25 @@
+[1/12] START understanding / react-frontend-baseline (timeout 1200s) 2026-09-28T18:39:47Z
+[1/12] DONE  understanding / react-frontend-baseline (harness_exit=0) exit=0 timed_out=False wall=784s verify={"answer_present": true, "unexpected_file_changes": 0} 2026-09-28T18:52:51Z
+[2/12] START simple_change / react-frontend-baseline (timeout 1200s) 2026-09-28T18:52:51Z
+[2/12] DONE  simple_change / react-frontend-baseline (harness_exit=0) exit=0 timed_out=False wall=542s verify={"test_exit_code": 0, "test_summary_line": "Test Files  13 passed (13)"} 2026-09-28T19:02:10Z
+[3/12] START complex / react-frontend-baseline (timeout 1800s) 2026-09-28T19:02:10Z
+[3/12] DONE  complex / react-frontend-baseline (harness_exit=0) exit=0 timed_out=False wall=440s verify={"test_exit_code": 0, "test_summary_line": "Test Files  12 passed (12)"} 2026-09-28T19:09:44Z
+[4/12] START understanding / react-frontend-recommended (timeout 1200s) 2026-09-28T19:09:44Z
+[4/12] DONE  understanding / react-frontend-recommended (harness_exit=0) exit=0 timed_out=False wall=482s verify={"answer_present": true, "unexpected_file_changes": 0} 2026-09-28T19:17:46Z
+[5/12] START simple_change / react-frontend-recommended (timeout 1200s) 2026-09-28T19:17:46Z
+[5/12] DONE  simple_change / react-frontend-recommended (harness_exit=0) exit=0 timed_out=False wall=446s verify={"test_exit_code": 0, "test_summary_line": "Test Files  13 passed (13)"} 2026-09-28T19:25:20Z
+[6/12] START complex / react-frontend-recommended (timeout 1800s) 2026-09-28T19:25:20Z
+[6/12] DONE  complex / react-frontend-recommended (harness_exit=0) exit=0 timed_out=False wall=549s verify={"test_exit_code": 0, "test_summary_line": "Test Files  12 passed (12)"} 2026-09-28T19:34:44Z
+[7/12] START understanding / java-spring-baseline (timeout 1200s) 2026-09-28T19:34:44Z
+[7/12] DONE  understanding / java-spring-baseline (harness_exit=0) exit=0 timed_out=False wall=520s verify={"answer_present": true, "unexpected_file_changes": 0} 2026-09-28T19:43:24Z
+[8/12] START simple_change / java-spring-baseline (timeout 1200s) 2026-09-28T19:43:24Z
+[8/12] DONE  simple_change / java-spring-baseline (harness_exit=0) exit=0 timed_out=False wall=370s verify={"test_exit_code": 0, "tests_passed": 55, "tests_failed": 0, "tests_errored": 0} 2026-09-28T19:49:45Z
+[9/12] START complex / java-spring-baseline (timeout 1800s) 2026-09-28T19:49:45Z
+[9/12] DONE  complex / java-spring-baseline (harness_exit=0) exit=0 timed_out=False wall=780s verify={"test_exit_code": 0, "tests_passed": 56, "tests_failed": 0, "tests_errored": 0} 2026-09-28T20:02:56Z
+[10/12] START understanding / java-spring-recommended (timeout 1200s) 2026-09-28T20:02:56Z
+[10/12] DONE  understanding / java-spring-recommended (harness_exit=0) exit=0 timed_out=False wall=453s verify={"answer_present": true, "unexpected_file_changes": 0} 2026-09-28T20:10:29Z
+[11/12] START simple_change / java-spring-recommended (timeout 1200s) 2026-09-28T20:10:29Z
+[11/12] DONE  simple_change / java-spring-recommended (harness_exit=0) exit=0 timed_out=False wall=387s verify={"test_exit_code": 0, "tests_passed": 58, "tests_failed": 0, "tests_errored": 0} 2026-09-28T20:17:07Z
+[12/12] START complex / java-spring-recommended (timeout 1800s) 2026-09-28T20:17:07Z
+[12/12] DONE  complex / java-spring-recommended (harness_exit=0) exit=0 timed_out=False wall=727s verify={"test_exit_code": 0, "tests_passed": 58, "tests_failed": 0, "tests_errored": 0} 2026-09-28T20:29:25Z
+=== CURSOR PILOT COMPLETE 2026-09-28T20:29:25Z ===

@@ -1,0 +1,63 @@
+You're working in this repo: a React + TypeScript + Vite app (the runnable app is at
+`apps/react-vite`) built on the "bulletproof-react" architecture — feature folders,
+TanStack Query, MSW for a mocked backend, React Router, React Hook Form + Zod.
+
+Task: add a client-side sort control to the discussions list.
+
+Requirements:
+1. In `DiscussionsList` (`src/features/discussions/components/discussions-list.tsx`),
+   add a sort control (e.g. a small select or two buttons) that toggles between
+   "Newest first" (default — matches current behavior) and "Oldest first", sorting
+   the currently-fetched page of discussions by `createdAt` before rendering.
+2. No backend/MSW handler change and no change to `getDiscussions`/its query
+   options — this is a purely client-side sort of the already-fetched page's data,
+   not a new query parameter.
+3. Sorting must not break pagination or the existing prefetch-on-hover behavior on
+   the "View" link.
+4. Add a test (colocated under a `__tests__/` directory, following the existing
+   convention) verifying that switching the sort control actually reorders the
+   rendered rows.
+
+Definition of done:
+- Existing tests still pass (`npx vitest run` from `apps/react-vite` — remember you
+  need a `.env` file there first, see `.env.example` if one doesn't already exist).
+- The new test passes.
+- No files outside `src/features/discussions/` and its test file are touched.
+
+Work through this yourself — explore the codebase as needed and match its existing
+conventions.
+
+---
+METRICS PROTOCOL (do this regardless of the task above — it does not count as part of
+the deliverable and should not be committed):
+
+1. Immediately, before doing anything else, run `date -u +%FT%TZ` and record it as
+   `start_time`.
+2. As you work, keep a running timeline with timestamps (`date -u +%FT%TZ`) for each
+   distinct phase (explored repo, first edit, wrote test, ran tests, done). If any
+   gap between two consecutive events exceeds 5 minutes, record what you were doing.
+3. Keep a running tally of tool calls by type as you go — don't reconstruct this
+   from memory at the end.
+4. Note the timestamp of your first file edit/write (distinct from read/explore).
+5. When done, run `date -u +%FT%TZ` for `end_time`, then write a single JSON file to
+   `RUN_METRICS.json` at the repo root with this shape:
+
+{
+  "repo": "react-frontend-baseline",
+  "task": "simple_change",
+  "start_time": "...",
+  "end_time": "...",
+  "duration_seconds": <int>,
+  "time_to_first_edit_seconds": <int>,
+  "tool_calls": {"read": <int>, "edit_or_write": <int>, "bash": <int>, "search_or_grep": <int>, "other": <int>, "total": <int>},
+  "files_read": [...],
+  "files_created_or_edited": [...],
+  "timeline": [{"time": "...", "event": "..."}, ...],
+  "definition_of_done": {"sort_control_added": true/false, "oldest_first_correct": true/false, "default_newest_first_unchanged": true/false, "pagination_and_prefetch_unaffected": true/false, "new_test_added_and_passes": true/false, "only_discussions_files_touched": true/false},
+  "docs_consulted": [],
+  "blockers_hit": ["one line per blocker, or any >5min gap and why"],
+  "self_assessed_completion": "complete | partial | blocked",
+  "notes": "anything relevant to how easy or hard orientation was for a small, scoped change in this repo"
+}
+
+6. Add `RUN_METRICS.json` to `.gitignore` (create the entry if it's not already there).

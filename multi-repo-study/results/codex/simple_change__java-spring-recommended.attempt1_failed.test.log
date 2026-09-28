@@ -1,0 +1,12 @@
+[ERROR] Failed to execute goal io.spring.javaformat:spring-javaformat-maven-plugin:0.0.47:validate (default) on project spring-petclinic: Formatting violations found in the following files:
+[ERROR]  * /Users/garry/code/multi-repo-benchmark/java-spring-recommended/src/main/java/org/springframework/samples/petclinic/owner/OwnerRepository.java
+[ERROR]  * /Users/garry/code/multi-repo-benchmark/java-spring-recommended/src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java
+[ERROR] 
+[ERROR] Run `spring-javaformat:apply` to fix.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

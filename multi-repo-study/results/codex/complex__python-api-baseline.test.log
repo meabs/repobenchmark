@@ -1,0 +1,667 @@
+/Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/apps/analytics/reports.py:93: RemovedInDjango70Warning: Calling select_related() with no arguments is deprecated. Specify the fields to fetch instead.
+  queryset = UserRecord._default_manager.select_related().all()
+........................................................................ [  4%]
+........................................................................ [  8%]
+........................................................................ [ 12%]
+........................................................................ [ 16%]
+........................................................................ [ 20%]
+........................................................................ [ 24%]
+........................................................................ [ 28%]
+........................................................................ [ 32%]
+........................................................................ [ 36%]
+........................................................................ [ 40%]
+........................................................................ [ 44%]
+........................................................................ [ 48%]
+........................................................................ [ 52%]
+................................................................................................................ [ 58%]
+........................................................................ [ 62%]
+........................................................................ [ 66%]
+........................................................................ [ 70%]
+........................................................................ [ 74%]
+........................................................................ [ 78%]
+........................................................................ [ 82%]
+........................................................................ [ 86%]
+........................................................................ [ 90%]
+...................................................s.................... [ 94%]
+........................................................................ [ 98%]
+............................                                             [100%]
+=============================== warnings summary ===============================
+tests/functional/basket/test_manipulation.py: 5 warnings
+tests/functional/checkout/test_customer_checkout.py: 74 warnings
+tests/functional/checkout/test_guest_checkout.py: 84 warnings
+tests/functional/checkout/test_session.py: 2 warnings
+tests/functional/customer/test_alert.py: 2 warnings
+tests/functional/dashboard/test_catalogue.py: 21 warnings
+tests/functional/dashboard/test_order.py: 2 warnings
+tests/functional/dashboard/test_product.py: 5 warnings
+tests/functional/dashboard/test_user.py: 8 warnings
+tests/functional/test_basket.py: 2 warnings
+tests/integration/basket/test_forms.py: 10 warnings
+tests/integration/basket/test_models.py: 6 warnings
+tests/integration/basket/test_utils.py: 18 warnings
+tests/integration/basket/test_views.py: 4 warnings
+tests/integration/catalogue/test_attributes.py: 10 warnings
+tests/integration/catalogue/test_product.py: 2 warnings
+tests/integration/catalogue/test_product_image.py: 2 warnings
+tests/integration/customer/test_custom_user_model.py: 1 warning
+tests/integration/dashboard/test_catalogue_bulk_actions.py: 16 warnings
+tests/integration/dashboard/test_catalogue_form.py: 1 warning
+tests/integration/dashboard/test_offer_views.py: 30 warnings
+tests/integration/dashboard/test_permissions.py: 5 warnings
+tests/integration/offer/test_absolute_benefit.py: 4 warnings
+tests/integration/offer/test_condition.py: 15 warnings
+tests/integration/offer/test_fixed_unit_benefit.py: 4 warnings
+tests/integration/offer/test_upsell_messages.py: 1 warning
+tests/integration/order/test_event_handler.py: 9 warnings
+tests/integration/order/test_models.py: 2 warnings
+tests/integration/partner/test_dashboard_views.py: 1 warning
+tests/integration/partner/test_models.py: 3 warnings
+tests/integration/partner/test_strategy.py: 3 warnings
+tests/integration/shipping/test_model_method.py: 2 warnings
+tests/unit/catalogue/test_managers.py: 2 warnings
+tests/unit/catalogue/test_models.py: 6 warnings
+tests/unit/templatetags/test_wishlist_tags.py: 2 warnings
+tests/integration/order/test_creator.py: 2 warnings
+tests/integration/order/test_stockrecord_locking.py: 2 warnings
+tests/unit/catalogue/test_product_attributes.py: 21 warnings
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/venv/lib/python3.13/site-packages/factory/django.py:182: DeprecationWarning: PartnerFactory._after_postgeneration will stop saving the instance after postgeneration hooks in the next major release.
+  If the save call is extraneous, set skip_postgeneration_save=True in the PartnerFactory.Meta.
+  To keep saving the instance, move the save call to your postgeneration hooks or override _after_postgeneration.
+    warnings.warn(
+
+tests/functional/basket/test_manipulation.py: 6 warnings
+tests/functional/catalogue/test_catalogue.py: 17 warnings
+tests/functional/checkout/test_customer_checkout.py: 40 warnings
+tests/functional/checkout/test_guest_checkout.py: 45 warnings
+tests/functional/checkout/test_session.py: 1 warning
+tests/functional/customer/test_alert.py: 2 warnings
+tests/functional/dashboard/test_catalogue.py: 8 warnings
+tests/functional/dashboard/test_category.py: 22 warnings
+tests/functional/dashboard/test_product.py: 8 warnings
+tests/functional/dashboard/test_review.py: 15 warnings
+tests/functional/dashboard/test_user.py: 8 warnings
+tests/functional/test_basket.py: 2 warnings
+tests/integration/basket/test_forms.py: 10 warnings
+tests/integration/basket/test_models.py: 6 warnings
+tests/integration/basket/test_utils.py: 18 warnings
+tests/integration/basket/test_views.py: 2 warnings
+tests/integration/catalogue/test_attributes.py: 10 warnings
+tests/integration/catalogue/test_category.py: 137 warnings
+tests/integration/catalogue/test_product.py: 1 warning
+tests/integration/catalogue/test_product_image.py: 2 warnings
+tests/integration/customer/test_custom_user_model.py: 1 warning
+tests/integration/dashboard/test_catalogue_form.py: 1 warning
+tests/integration/dashboard/test_offer_views.py: 30 warnings
+tests/integration/dashboard/test_permissions.py: 6 warnings
+tests/integration/dashboard/test_reviews.py: 40 warnings
+tests/integration/offer/test_absolute_benefit.py: 4 warnings
+tests/integration/offer/test_condition.py: 26 warnings
+tests/integration/offer/test_fixed_unit_benefit.py: 4 warnings
+tests/integration/offer/test_range.py: 21 warnings
+tests/integration/offer/test_upsell_messages.py: 1 warning
+tests/integration/order/test_event_handler.py: 9 warnings
+tests/integration/order/test_models.py: 2 warnings
+tests/integration/partner/test_import.py: 22 warnings
+tests/integration/partner/test_models.py: 3 warnings
+tests/integration/partner/test_strategy.py: 3 warnings
+tests/integration/shipping/test_model_method.py: 2 warnings
+tests/integration/templatetags/test_oscar_thumbnail.py: 14 warnings
+tests/unit/catalogue/test_managers.py: 286 warnings
+tests/unit/catalogue/test_models.py: 6 warnings
+tests/unit/core/test_thumbnails.py: 10 warnings
+tests/unit/templatetags/test_wishlist_tags.py: 2 warnings
+tests/integration/order/test_creator.py: 2 warnings
+tests/integration/order/test_stockrecord_locking.py: 2 warnings
+tests/unit/catalogue/test_product_attributes.py: 21 warnings
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/apps/catalogue/abstract_models.py:260: RemovedInTreebeard8Warning: Using Category.get_tree() is deprecated. Use Category.objects.get_tree() instead.
+    self.get_descendants_and_self().update(
+
+tests/functional/basket/test_manipulation.py: 6 warnings
+tests/functional/checkout/test_customer_checkout.py: 40 warnings
+tests/functional/checkout/test_guest_checkout.py: 45 warnings
+tests/functional/checkout/test_session.py: 1 warning
+tests/functional/customer/test_alert.py: 2 warnings
+tests/functional/dashboard/test_catalogue.py: 1 warning
+tests/functional/dashboard/test_product.py: 6 warnings
+tests/functional/dashboard/test_review.py: 15 warnings
+tests/functional/dashboard/test_user.py: 8 warnings
+tests/functional/test_basket.py: 2 warnings
+tests/integration/basket/test_forms.py: 10 warnings
+tests/integration/basket/test_models.py: 6 warnings
+tests/integration/basket/test_utils.py: 18 warnings
+tests/integration/basket/test_views.py: 2 warnings
+tests/integration/catalogue/test_attributes.py: 10 warnings
+tests/integration/catalogue/test_product.py: 1 warning
+tests/integration/catalogue/test_product_image.py: 2 warnings
+tests/integration/customer/test_custom_user_model.py: 1 warning
+tests/integration/dashboard/test_catalogue_form.py: 1 warning
+tests/integration/dashboard/test_offer_views.py: 30 warnings
+tests/integration/dashboard/test_permissions.py: 5 warnings
+tests/integration/dashboard/test_reviews.py: 40 warnings
+tests/integration/offer/test_absolute_benefit.py: 4 warnings
+tests/integration/offer/test_condition.py: 15 warnings
+tests/integration/offer/test_fixed_unit_benefit.py: 4 warnings
+tests/integration/offer/test_upsell_messages.py: 1 warning
+tests/integration/order/test_event_handler.py: 9 warnings
+tests/integration/order/test_models.py: 2 warnings
+tests/integration/partner/test_models.py: 3 warnings
+tests/integration/partner/test_strategy.py: 3 warnings
+tests/integration/shipping/test_model_method.py: 2 warnings
+tests/integration/templatetags/test_oscar_thumbnail.py: 14 warnings
+tests/unit/catalogue/test_managers.py: 286 warnings
+tests/unit/catalogue/test_models.py: 6 warnings
+tests/unit/core/test_thumbnails.py: 10 warnings
+tests/unit/templatetags/test_wishlist_tags.py: 2 warnings
+tests/integration/order/test_creator.py: 2 warnings
+tests/integration/order/test_stockrecord_locking.py: 2 warnings
+tests/unit/catalogue/test_product_attributes.py: 41 warnings
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/venv/lib/python3.13/site-packages/factory/django.py:182: DeprecationWarning: ProductFactory._after_postgeneration will stop saving the instance after postgeneration hooks in the next major release.
+  If the save call is extraneous, set skip_postgeneration_save=True in the ProductFactory.Meta.
+  To keep saving the instance, move the save call to your postgeneration hooks or override _after_postgeneration.
+    warnings.warn(
+
+tests/functional/basket/test_manipulation.py: 6 warnings
+tests/functional/catalogue/test_catalogue.py: 13 warnings
+tests/functional/catalogue/test_review.py: 7 warnings
+tests/functional/checkout/test_customer_checkout.py: 52 warnings
+tests/functional/checkout/test_guest_checkout.py: 49 warnings
+tests/functional/checkout/test_session.py: 1 warning
+tests/functional/customer/test_alert.py: 8 warnings
+tests/functional/customer/test_auth.py: 9 warnings
+tests/functional/customer/test_history.py: 3 warnings
+tests/functional/customer/test_notification.py: 1 warning
+tests/functional/customer/test_order_status.py: 1 warning
+tests/functional/customer/test_profile.py: 2 warnings
+tests/functional/customer/test_wishlists.py: 1 warning
+tests/functional/test_basket.py: 23 warnings
+tests/functional/test_offer.py: 3 warnings
+tests/functional/wishlists/test_wishlists.py: 8 warnings
+tests/integration/basket/test_views.py: 7 warnings
+tests/integration/checkout/test_views.py: 1 warning
+tests/integration/search/test_views.py: 2 warnings
+tests/integration/test_hidden_features.py: 4 warnings
+tests/unit/catalogue/test_views_reviews.py: 4 warnings
+tests/unit/customer/test_views.py: 1 warning
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/venv/lib/python3.13/site-packages/django/template/library.py:343: RemovedInTreebeard8Warning: Using Category.get_tree() is deprecated. Use Category.objects.get_tree() instead.
+    output = self.func(*resolved_args, **resolved_kwargs)
+
+tests/functional/catalogue/test_catalogue.py::TestProductDetailView::test_does_not_go_into_redirect_loop_with_unicode_slug
+  /Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/cookiejar.py:1630: UserWarning: http.cookiejar bug!
+  Traceback (most recent call last):
+    File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/cookiejar.py", line 1627, in make_cookies
+      ns_cookies = self._cookies_from_attrs_set(
+          parse_ns_headers(ns_hdrs), request)
+    File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/cookiejar.py", line 1584, in _cookies_from_attrs_set
+      cookie = self._cookie_from_cookie_tuple(tup, request)
+    File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/cookiejar.py", line 1533, in _cookie_from_cookie_tuple
+      req_host, erhn = eff_request_host(request)
+                       ~~~~~~~~~~~~~~~~^^^^^^^^^
+    File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/cookiejar.py", line 643, in eff_request_host
+      erhn = req_host = request_host(request)
+                        ~~~~~~~~~~~~^^^^^^^^^
+    File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/cookiejar.py", line 628, in request_host
+      url = request.get_full_url()
+    File "/Users/garry/code/multi-repo-benchmark/python-api-baseline/venv/lib/python3.13/site-packages/webtest/utils.py", line 125, in get_full_url
+      return self._request.url
+             ^^^^^^^^^^^^^^^^^
+    File "/Users/garry/code/multi-repo-benchmark/python-api-baseline/venv/lib/python3.13/site-packages/webob/request.py", line 497, in url
+      url = self.path_url
+            ^^^^^^^^^^^^^
+    File "/Users/garry/code/multi-repo-benchmark/python-api-baseline/venv/lib/python3.13/site-packages/webob/request.py", line 469, in path_url
+      bpath_info = bytes_(self.path_info, self.url_encoding)
+                          ^^^^^^^^^^^^^^
+    File "/Users/garry/code/multi-repo-benchmark/python-api-baseline/venv/lib/python3.13/site-packages/webob/descriptors.py", line 70, in fget
+      return req.encget(key, encattr=encattr)
+             ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+    File "/Users/garry/code/multi-repo-benchmark/python-api-baseline/venv/lib/python3.13/site-packages/webob/request.py", line 167, in encget
+      return bytes_(val, 'latin-1').decode(encoding)
+             ~~~~~~^^^^^^^^^^^^^^^^
+    File "/Users/garry/code/multi-repo-benchmark/python-api-baseline/venv/lib/python3.13/site-packages/webob/compat.py", line 33, in bytes_
+      return s.encode(encoding, errors)
+             ~~~~~~~~^^^^^^^^^^^^^^^^^^
+  UnicodeEncodeError: 'latin-1' codec can't encode characters in position 11-14: ordinal not in range(256)
+  
+    _warn_unhandled_exception()
+
+tests/functional/catalogue/test_catalogue.py: 10 warnings
+tests/functional/checkout/test_customer_checkout.py: 1 warning
+tests/functional/customer/test_notification.py: 1 warning
+tests/functional/test_basket.py: 1 warning
+tests/integration/checkout/test_views.py: 1 warning
+tests/integration/search/test_views.py: 4 warnings
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/venv/lib/python3.13/site-packages/haystack/backends/__init__.py:32: Warning: Whoosh does not handle query faceting.
+    return func(obj, query_string, *args, **kwargs)
+
+tests/functional/catalogue/test_catalogue.py::TestProductCategoryView::test_browsable_contains_public_child
+tests/functional/catalogue/test_catalogue.py::TestProductCategoryView::test_browsable_hides_public_child
+tests/functional/catalogue/test_catalogue.py::TestProductCategoryView::test_browsing_works
+tests/functional/catalogue/test_catalogue.py::TestProductCategoryView::test_enforces_canonical_url
+tests/functional/catalogue/test_catalogue.py::TestProductCategoryView::test_is_public_child
+tests/functional/catalogue/test_catalogue.py::TestProductCategoryView::test_is_public_off
+tests/functional/catalogue/test_catalogue.py::TestProductCategoryView::test_is_public_on
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/functional/catalogue/test_catalogue.py:138: RemovedInTreebeard8Warning: Using Category.add_root() is deprecated. Use Category.objects.add_root() instead.
+    self.category = Category.add_root(name="Products")
+
+tests/functional/catalogue/test_catalogue.py::TestProductCategoryView::test_browsable_contains_public_child
+tests/functional/catalogue/test_catalogue.py::TestProductCategoryView::test_is_public_on
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/functional/catalogue/test_catalogue.py:160: RemovedInTreebeard8Warning: Using Category.add_root() is deprecated. Use Category.objects.add_root() instead.
+    category = Category.add_root(name="Barfoos", is_public=True)
+
+tests/functional/catalogue/test_catalogue.py::TestProductCategoryView::test_browsable_contains_public_child
+tests/functional/catalogue/test_catalogue.py::TestProductCategoryView::test_browsing_works
+tests/functional/catalogue/test_catalogue.py::TestProductCategoryView::test_is_public_child
+tests/functional/catalogue/test_catalogue.py::TestProductCategoryView::test_is_public_on
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/apps/search/views/catalogue.py:90: RemovedInTreebeard8Warning: Using Category.get_tree() is deprecated. Use Category.objects.get_tree() instead.
+    kwargs["categories"] = self.category.get_descendants_and_self()
+
+tests/functional/catalogue/test_catalogue.py::TestProductCategoryView::test_browsable_contains_public_child
+tests/functional/catalogue/test_catalogue.py::TestProductCategoryView::test_browsing_works
+tests/functional/catalogue/test_catalogue.py::TestProductCategoryView::test_is_public_child
+tests/functional/catalogue/test_catalogue.py::TestProductCategoryView::test_is_public_on
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/venv/lib/python3.13/site-packages/django/template/base.py:1016: RemovedInTreebeard8Warning: Using Category.get_ancestors() is deprecated. Use Category.objects.get_ancestors() instead.
+    current = current()
+
+tests/functional/catalogue/test_catalogue.py::TestProductCategoryView::test_browsable_contains_public_child
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/functional/catalogue/test_catalogue.py:168: RemovedInTreebeard8Warning: Using Category.add_child() is deprecated. Use Category.objects.add_child(target) instead.
+    child = cat.add_child(name="Koe", is_public=True)
+
+tests/functional/catalogue/test_catalogue.py::TestProductCategoryView::test_browsable_hides_public_child
+tests/functional/catalogue/test_catalogue.py::TestProductCategoryView::test_is_public_child
+tests/functional/catalogue/test_catalogue.py::TestProductCategoryView::test_is_public_off
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/functional/catalogue/test_catalogue.py:154: RemovedInTreebeard8Warning: Using Category.add_root() is deprecated. Use Category.objects.add_root() instead.
+    category = Category.add_root(name="Foobars", is_public=False)
+
+tests/functional/catalogue/test_catalogue.py::TestProductCategoryView::test_browsable_hides_public_child
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/functional/catalogue/test_catalogue.py:178: RemovedInTreebeard8Warning: Using Category.add_child() is deprecated. Use Category.objects.add_child(target) instead.
+    child = cat.add_child(name="Koe", is_public=True)
+
+tests/functional/catalogue/test_catalogue.py::TestProductCategoryView::test_is_public_child
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/functional/catalogue/test_catalogue.py:183: RemovedInTreebeard8Warning: Using Category.add_child() is deprecated. Use Category.objects.add_child(target) instead.
+    child = cat.add_child(name="Koe", is_public=True)
+
+tests/functional/catalogue/test_catalogue.py: 1 warning
+tests/functional/dashboard/test_category.py: 4 warnings
+tests/integration/catalogue/test_category.py: 13 warnings
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/apps/catalogue/abstract_models.py:213: RemovedInTreebeard8Warning: Using Category.get_parent() is deprecated. Use Category.objects.get_parent() instead.
+    parent_slug if parent_slug is not None else self.get_parent().full_slug
+
+tests/functional/catalogue/test_catalogue.py::TestProductCategoryView::test_is_public_off
+  /Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/case.py:707: DeprecationWarning: It is deprecated to return a value that is not None from a test case (<bound method TestProductCategoryView.test_is_public_off of <tests.functional.catalogue.test_catalogue.TestProductCategoryView testMethod=test_is_public_off>>)
+    return self.run(*args, **kwds)
+
+tests/functional/catalogue/test_catalogue.py::TestProductCategoryView::test_is_public_on
+  /Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/case.py:707: DeprecationWarning: It is deprecated to return a value that is not None from a test case (<bound method TestProductCategoryView.test_is_public_on of <tests.functional.catalogue.test_catalogue.TestProductCategoryView testMethod=test_is_public_on>>)
+    return self.run(*args, **kwds)
+
+tests/functional/catalogue/test_review.py: 2 warnings
+tests/functional/checkout/test_guest_checkout.py: 1 warning
+tests/functional/customer/test_alert.py: 17 warnings
+tests/functional/customer/test_auth.py: 1 warning
+tests/functional/customer/test_emails.py: 12 warnings
+tests/functional/customer/test_notification.py: 4 warnings
+tests/functional/dashboard/test_communication.py: 2 warnings
+tests/functional/dashboard/test_dashboard.py: 2 warnings
+tests/functional/dashboard/test_review.py: 8 warnings
+tests/functional/dashboard/test_user.py: 211 warnings
+tests/functional/order/test_emails.py: 4 warnings
+tests/functional/test_basket.py: 2 warnings
+tests/integration/address/test_forms.py: 1 warning
+tests/integration/address/test_models.py: 22 warnings
+tests/integration/basket/test_views.py: 2 warnings
+tests/integration/catalogue/reviews/test_forms.py: 7 warnings
+tests/integration/catalogue/reviews/test_models.py: 17 warnings
+tests/integration/checkout/test_mixins.py: 3 warnings
+tests/integration/communication/test_notification.py: 7 warnings
+tests/integration/core/test_decorator.py: 2 warnings
+tests/integration/customer/test_alert.py: 1 warning
+tests/integration/customer/test_auth_backend.py: 2 warnings
+tests/integration/customer/test_custom_user_model.py: 2 warnings
+tests/integration/dashboard/test_catalogue_bulk_actions.py: 28 warnings
+tests/integration/dashboard/test_nav.py: 12 warnings
+tests/integration/dashboard/test_permissions.py: 1 warning
+tests/integration/dashboard/test_reviews.py: 40 warnings
+tests/integration/offer/test_availability.py: 4 warnings
+tests/integration/offer/test_condition.py: 2 warnings
+tests/integration/offer/test_upsell_messages.py: 1 warning
+tests/integration/partner/test_dashboard_views.py: 1 warning
+tests/integration/payment/test_models.py: 1 warning
+tests/integration/voucher/test_models.py: 5 warnings
+tests/unit/basket/test_offers.py: 2 warnings
+tests/unit/catalogue/test_views_reviews.py: 8 warnings
+tests/unit/customer/test_forms.py: 2 warnings
+tests/unit/dashboard/test_tables.py: 2 warnings
+tests/unit/templatetags/test_wishlist_tags.py: 1 warning
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/venv/lib/python3.13/site-packages/factory/django.py:182: DeprecationWarning: UserFactory._after_postgeneration will stop saving the instance after postgeneration hooks in the next major release.
+  If the save call is extraneous, set skip_postgeneration_save=True in the UserFactory.Meta.
+  To keep saving the instance, move the save call to your postgeneration hooks or override _after_postgeneration.
+    warnings.warn(
+
+tests/functional/checkout/test_customer_checkout.py: 7 warnings
+tests/functional/checkout/test_guest_checkout.py: 5 warnings
+tests/functional/checkout/test_session.py: 1 warning
+tests/functional/customer/test_alert.py: 12 warnings
+tests/functional/customer/test_auth.py: 5 warnings
+tests/functional/customer/test_emails.py: 12 warnings
+tests/functional/customer/test_profile.py: 2 warnings
+tests/functional/dashboard/test_communication.py: 1 warning
+tests/functional/dashboard/test_user.py: 1 warning
+tests/functional/order/test_emails.py: 4 warnings
+tests/integration/communication/test_dispatcher.py: 2 warnings
+tests/integration/dashboard/test_permissions.py: 1 warning
+tests/integration/order/test_order_dispatcher.py: 4 warnings
+tests/unit/customer/test_forms.py: 1 warning
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/apps/communication/utils.py:138: RemovedInDjango70Warning: Django 7.0 will not have a default mailer. Configure settings.MAILERS to avoid errors when sending email.
+    email.send()
+
+tests/functional/dashboard/test_catalogue.py::TestCatalogueViews::test_exist
+tests/functional/dashboard/test_category.py::TestCategoryDashboard::test_handles_invalid_form_gracefully
+tests/functional/dashboard/test_category.py::TestCategoryDashboard::test_redirects_to_main_dashboard_after_creating_top_level_category
+tests/integration/dashboard/test_permissions.py::CatalogueDashboardAccessTest::test_view_access_restrictions
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/venv/lib/python3.13/site-packages/django/views/generic/list.py:158: RemovedInTreebeard8Warning: Using Category.get_root_nodes() is deprecated. Use Category.objects.get_root_nodes() instead.
+    self.object_list = self.get_queryset()
+
+tests/functional/dashboard/test_catalogue.py::TestCatalogueViews::test_exist
+tests/functional/dashboard/test_category.py::TestCategoryDashboard::test_handles_invalid_form_gracefully
+tests/functional/dashboard/test_category.py::TestCategoryDashboard::test_name_filter
+tests/functional/dashboard/test_category.py::TestCategoryDashboard::test_redirects_to_main_dashboard_after_creating_top_level_category
+tests/integration/dashboard/test_permissions.py::CatalogueDashboardAccessTest::test_view_access_restrictions
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/venv/lib/python3.13/site-packages/django/views/generic/list.py:178: RemovedInTreebeard8Warning: Using Category.get_root_nodes() is deprecated. Use Category.objects.get_root_nodes() instead.
+    context = self.get_context_data()
+
+tests/functional/dashboard/test_catalogue.py::TestAStaffUser::test_can_delete_a_standalone_product
+tests/functional/dashboard/test_catalogue.py::TestANonStaffUser::test_can_delete_a_standalone_product
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/functional/dashboard/test_catalogue.py:238: RemovedInTreebeard8Warning: Using Category.add_root() is deprecated. Use Category.objects.add_root() instead.
+    category = Category.add_root(name="Test Category")
+
+tests/functional/dashboard/test_category.py: 6 warnings
+tests/integration/catalogue/test_category.py: 16 warnings
+tests/integration/partner/test_import.py: 11 warnings
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/apps/catalogue/categories.py:17: RemovedInTreebeard8Warning: Using Category.add_root() is deprecated. Use Category.objects.add_root() instead.
+    root = Category.add_root(name=name)
+
+tests/functional/dashboard/test_category.py: 12 warnings
+tests/integration/catalogue/test_category.py: 140 warnings
+tests/integration/partner/test_import.py: 110 warnings
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/apps/catalogue/categories.py:27: RemovedInTreebeard8Warning: Using Category.get_children() is deprecated. Use Category.objects.get_children() instead.
+    child = parent.get_children().get(name=name)
+
+tests/functional/dashboard/test_category.py: 12 warnings
+tests/integration/catalogue/test_category.py: 100 warnings
+tests/integration/partner/test_import.py: 11 warnings
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/apps/catalogue/categories.py:29: RemovedInTreebeard8Warning: Using Category.add_child() is deprecated. Use Category.objects.add_child(target) instead.
+    child = parent.add_child(name=name)
+
+tests/functional/dashboard/test_category.py::TestCategoryDashboard::test_handles_invalid_form_gracefully
+tests/functional/dashboard/test_category.py::TestCategoryDashboard::test_name_filter
+tests/functional/dashboard/test_category.py::TestCategoryDashboard::test_redirects_to_main_dashboard_after_creating_top_level_category
+tests/functional/dashboard/test_category.py::TestCategoryDashboard::test_redirects_to_main_dashboard_after_creating_top_level_category
+tests/functional/dashboard/test_category.py::TestCategoryDashboard::test_redirects_to_parent_list_after_creating_child_category
+tests/functional/dashboard/test_category.py::TestCategoryDashboard::test_redirects_to_parent_list_after_creating_child_category
+tests/integration/dashboard/test_permissions.py::CatalogueDashboardAccessTest::test_view_access_restrictions
+tests/integration/dashboard/test_permissions.py::CatalogueDashboardAccessTest::test_view_access_restrictions
+tests/integration/dashboard/test_permissions.py::CatalogueDashboardAccessTest::test_view_access_restrictions
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/apps/catalogue/abstract_models.py:344: RemovedInTreebeard8Warning: Using Category.get_children_count() is deprecated. Use Category.objects.get_children_count() instead.
+    return self.get_children_count()
+
+tests/functional/dashboard/test_category.py: 12 warnings
+tests/integration/catalogue/test_category.py: 1 warning
+tests/integration/dashboard/test_permissions.py: 6 warnings
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/apps/catalogue/abstract_models.py:341: RemovedInTreebeard8Warning: Using Category.get_children() is deprecated. Use Category.objects.get_children() instead.
+    return self.get_children().exists()
+
+tests/functional/dashboard/test_category.py: 10 warnings
+tests/integration/catalogue/test_category.py: 8 warnings
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/apps/catalogue/abstract_models.py:298: RemovedInTreebeard8Warning: Using Category.get_ancestors() is deprecated. Use Category.objects.get_ancestors() instead.
+    return list(self.get_ancestors()) + [self]
+
+tests/functional/dashboard/test_category.py::TestCategoryDashboard::test_make_public
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/views/generic.py:142: RemovedInTreebeard8Warning: Using Category.get_root_nodes() is deprecated. Use Category.objects.get_root_nodes() instead.
+    self.get_queryset().filter(pk__in=posted_ids).values_list("pk", flat=True)
+
+tests/functional/dashboard/test_category.py::TestCategoryDashboard::test_make_public
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/views/generic.py:177: RemovedInTreebeard8Warning: Using Category.get_root_nodes() is deprecated. Use Category.objects.get_root_nodes() instead.
+    return self.get_queryset().filter(pk__in=ids)
+
+tests/functional/dashboard/test_category.py::TestCategoryDashboard::test_redirects_to_main_dashboard_after_creating_top_level_category
+tests/functional/dashboard/test_category.py::TestCategoryDashboard::test_redirects_to_parent_list_after_creating_child_category
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/apps/dashboard/catalogue/views.py:878: RemovedInTreebeard8Warning: Using Category.get_parent() is deprecated. Use Category.objects.get_parent() instead.
+    parent = self.object.get_parent(update=True)
+
+tests/functional/dashboard/test_category.py::TestCategoryDashboard::test_redirects_to_parent_list_after_creating_child_category
+tests/integration/dashboard/test_permissions.py::CatalogueDashboardAccessTest::test_view_access_restrictions
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/apps/dashboard/catalogue/views.py:866: RemovedInTreebeard8Warning: Using Category.get_children() is deprecated. Use Category.objects.get_children() instead.
+    return self.object.get_children()
+
+tests/functional/dashboard/test_category.py::TestCategoryDashboard::test_redirects_to_parent_list_after_creating_child_category
+tests/integration/dashboard/test_permissions.py::CatalogueDashboardAccessTest::test_view_access_restrictions
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/apps/dashboard/catalogue/views.py:871: RemovedInTreebeard8Warning: Using Category.get_children() is deprecated. Use Category.objects.get_children() instead.
+    ctx["child_categories"] = self.object.get_children()
+
+tests/functional/dashboard/test_offer.py: 20 warnings
+tests/integration/dashboard/test_offer_views.py: 1 warning
+tests/integration/dashboard/test_permissions.py: 1 warning
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/venv/lib/python3.13/site-packages/django/views/generic/list.py:91: UnorderedObjectListWarning: Pagination may yield inconsistent results with an unordered object_list: <class 'oscar.apps.offer.models.ConditionalOffer'> QuerySet.
+    return self.paginator_class(
+
+tests/functional/test_basket.py: 3 warnings
+tests/integration/basket/test_forms.py: 3 warnings
+tests/integration/basket/test_models.py: 6 warnings
+tests/integration/basket/test_report.py: 68 warnings
+tests/integration/basket/test_utils.py: 9 warnings
+tests/integration/checkout/test_views.py: 1 warning
+tests/integration/dashboard/test_permissions.py: 1 warning
+tests/integration/offer/test_applicator.py: 4 warnings
+tests/integration/order/test_models.py: 5 warnings
+tests/integration/shipping/test_model_method.py: 2 warnings
+tests/integration/voucher/test_models.py: 4 warnings
+tests/integration/order/test_creator.py: 10 warnings
+tests/integration/order/test_stockrecord_locking.py: 4 warnings
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/venv/lib/python3.13/site-packages/factory/django.py:182: DeprecationWarning: BasketFactory._after_postgeneration will stop saving the instance after postgeneration hooks in the next major release.
+  If the save call is extraneous, set skip_postgeneration_save=True in the BasketFactory.Meta.
+  To keep saving the instance, move the save call to your postgeneration hooks or override _after_postgeneration.
+    warnings.warn(
+
+tests/functional/test_offer.py: 3 warnings
+tests/integration/basket/test_forms.py: 10 warnings
+tests/integration/basket/test_utils.py: 31 warnings
+tests/integration/basket/test_views.py: 2 warnings
+tests/integration/dashboard/test_offer_views.py: 123 warnings
+tests/integration/dashboard/test_permissions.py: 5 warnings
+tests/integration/dashboard/test_voucher_form.py: 3 warnings
+tests/integration/dashboard/test_voucher_views.py: 80 warnings
+tests/integration/offer/test_absolute_benefit.py: 5 warnings
+tests/integration/offer/test_applicator.py: 4 warnings
+tests/integration/offer/test_benefit.py: 2 warnings
+tests/integration/offer/test_condition.py: 42 warnings
+tests/integration/offer/test_conditionaloffer_delete.py: 4 warnings
+tests/integration/offer/test_fixed_unit_benefit.py: 4 warnings
+tests/integration/offer/test_forms.py: 4 warnings
+tests/integration/offer/test_multibuy_benefit.py: 1 warning
+tests/integration/offer/test_offer.py: 4 warnings
+tests/integration/offer/test_results.py: 4 warnings
+tests/integration/offer/test_status.py: 4 warnings
+tests/integration/offer/test_upsell_messages.py: 1 warning
+tests/integration/voucher/test_forms.py: 13 warnings
+tests/integration/voucher/test_models.py: 9 warnings
+tests/unit/offer/test_reports.py: 2 warnings
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/venv/lib/python3.13/site-packages/factory/django.py:182: DeprecationWarning: RangeFactory._after_postgeneration will stop saving the instance after postgeneration hooks in the next major release.
+  If the save call is extraneous, set skip_postgeneration_save=True in the RangeFactory.Meta.
+  To keep saving the instance, move the save call to your postgeneration hooks or override _after_postgeneration.
+    warnings.warn(
+
+tests/functional/test_offer.py::TestOfferDetailsPageWithUnicodeSlug::test_url_with_unicode_characters
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/apps/offer/views.py:34: RemovedInDjango70Warning: Calling select_related() with no arguments is deprecated. Specify the fields to fetch instead.
+    self.offer = ConditionalOffer.active.select_related().get(
+
+tests/integration/basket/test_views.py: 1 warning
+tests/integration/dashboard/test_permissions.py: 1 warning
+tests/integration/dashboard/test_voucher_form.py: 1 warning
+tests/integration/dashboard/test_voucher_views.py: 39 warnings
+tests/integration/voucher/test_forms.py: 2 warnings
+tests/integration/voucher/test_models.py: 4 warnings
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/venv/lib/python3.13/site-packages/factory/django.py:182: DeprecationWarning: VoucherSetFactory._after_postgeneration will stop saving the instance after postgeneration hooks in the next major release.
+  If the save call is extraneous, set skip_postgeneration_save=True in the VoucherSetFactory.Meta.
+  To keep saving the instance, move the save call to your postgeneration hooks or override _after_postgeneration.
+    warnings.warn(
+
+tests/integration/catalogue/test_category.py::TestCategory::test_has_children_method
+tests/integration/catalogue/test_category.py::TestCategory::test_includes_parents_name_in_full_name
+tests/integration/catalogue/test_category.py::TestCategory::test_slugs_were_autogenerated
+tests/integration/catalogue/test_category.py::TestCategory::test_supplied_slug_is_not_altered
+tests/integration/catalogue/test_category.py::TestCategory::test_unicode_slug
+tests/integration/catalogue/test_category.py::TestCategory::test_url_caching
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/integration/catalogue/test_category.py:15: RemovedInTreebeard8Warning: Using Category.add_root() is deprecated. Use Category.objects.add_root() instead.
+    self.products = Category.add_root(name="Pröducts")
+
+tests/integration/catalogue/test_category.py::TestCategory::test_has_children_method
+tests/integration/catalogue/test_category.py::TestCategory::test_includes_parents_name_in_full_name
+tests/integration/catalogue/test_category.py::TestCategory::test_slugs_were_autogenerated
+tests/integration/catalogue/test_category.py::TestCategory::test_supplied_slug_is_not_altered
+tests/integration/catalogue/test_category.py::TestCategory::test_unicode_slug
+tests/integration/catalogue/test_category.py::TestCategory::test_url_caching
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/integration/catalogue/test_category.py:16: RemovedInTreebeard8Warning: Using Category.add_child() is deprecated. Use Category.objects.add_child(target) instead.
+    self.books = self.products.add_child(name="Bücher")
+
+tests/integration/catalogue/test_category.py::TestCategory::test_supplied_slug_is_not_altered
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/integration/catalogue/test_category.py:32: RemovedInTreebeard8Warning: Using Category.add_child() is deprecated. Use Category.objects.add_child(target) instead.
+    more_books = self.products.add_child(name=self.books.name, slug=self.books.slug)
+
+tests/integration/catalogue/test_category.py::TestCategory::test_unicode_slug
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/integration/catalogue/test_category.py:37: RemovedInTreebeard8Warning: Using Category.add_root() is deprecated. Use Category.objects.add_root() instead.
+    root_category = Category.add_root(name="Vins français")
+
+tests/integration/catalogue/test_category.py::TestCategory::test_unicode_slug
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/integration/catalogue/test_category.py:38: RemovedInTreebeard8Warning: Using Category.add_child() is deprecated. Use Category.objects.add_child(target) instead.
+    child_category = root_category.add_child(name="Château d'Yquem")
+
+tests/integration/catalogue/test_category.py::TestCategory::test_url_caching
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/integration/catalogue/test_category.py:54: RemovedInTreebeard8Warning: Using Category.add_child() is deprecated. Use Category.objects.add_child(target) instead.
+    category = self.products.add_child(name="Fromages français")
+
+tests/integration/catalogue/test_category.py::TestMovingACategory::test_fix_tree
+tests/integration/catalogue/test_category.py::TestMovingACategory::test_updates_instance_name
+tests/integration/catalogue/test_category.py::TestMovingACategory::test_updates_subtree_names
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/integration/catalogue/test_category.py:81: RemovedInTreebeard8Warning: Using Category.move() is deprecated. Use Category.objects.move() instead.
+    horror.move(programming)
+
+tests/integration/catalogue/test_category.py::TestMovingACategory::test_fix_tree
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/integration/catalogue/test_category.py:105: RemovedInTreebeard8Warning: Using Category.fix_tree() is deprecated. Use Category.objects.fix_tree() instead.
+    Category.fix_tree(fix_paths=True)
+
+tests/integration/catalogue/test_category.py::TestMovingACategory::test_fix_tree
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/integration/catalogue/test_category.py:105: RemovedInTreebeard8Warning: Using Category.get_root_nodes() is deprecated. Use Category.objects.get_root_nodes() instead.
+    Category.fix_tree(fix_paths=True)
+
+tests/integration/catalogue/test_category.py::TestCategoryFactory::test_can_create_multiple_categories
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/integration/catalogue/test_category.py:138: RemovedInTreebeard8Warning: Using Category.get_parent() is deprecated. Use Category.objects.get_parent() instead.
+    self.assertEqual(category.get_parent().name, "Factual")
+
+tests/integration/catalogue/test_category.py::TestCategoryFactory::test_can_create_parent_and_child_categories
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/integration/catalogue/test_category.py:125: RemovedInTreebeard8Warning: Using Category.get_parent() is deprecated. Use Category.objects.get_parent() instead.
+    self.assertEqual(category.get_parent().name, "Books")
+
+tests/integration/catalogue/test_category.py::TestCategoryFactory::test_updating_subtree_slugs_when_moving_category_to_new_parent
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/integration/catalogue/test_category.py:164: RemovedInTreebeard8Warning: Using Category.move() is deprecated. Use Category.objects.move() instead.
+    category.move(target, pos="first-child")
+
+tests/integration/catalogue/test_category.py::TestCategoryFactory::test_updating_subtree_when_moving_category_to_new_sibling
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/integration/catalogue/test_category.py:191: RemovedInTreebeard8Warning: Using Category.move() is deprecated. Use Category.objects.move() instead.
+    category.move(target, pos="right")
+
+tests/integration/catalogue/test_category.py::TestCategoryTemplateTags::test_all_categories
+tests/integration/catalogue/test_category.py::TestCategoryTemplateTags::test_categories_depth
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/integration/catalogue/test_category.py:268: RemovedInTreebeard8Warning: Using Category.get_tree() is deprecated. Use Category.objects.get_tree() instead.
+    annotated_list = get_annotated_list(depth, parent)
+
+tests/integration/catalogue/test_category.py::TestCategoryTemplateTags::test_categories_depth_parent
+tests/integration/catalogue/test_category.py::TestCategoryTemplateTags::test_categories_parent
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/templatetags/category_tags.py:86: RemovedInTreebeard8Warning: Using Category.get_descendants() is deprecated. Use Category.objects.get_descendants() instead.
+    categories = parent.get_descendants()
+
+tests/integration/catalogue/test_category.py::TestCategoryTemplateTags::test_category_extra_info
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/integration/catalogue/test_category.py:238: RemovedInTreebeard8Warning: Using Category.get_tree() is deprecated. Use Category.objects.get_tree() instead.
+    annotated_list = get_annotated_list(depth=3)
+
+tests/integration/checkout/test_views.py: 1 warning
+tests/integration/dashboard/test_permissions.py: 1 warning
+tests/integration/order/test_models.py: 5 warnings
+tests/integration/voucher/test_models.py: 4 warnings
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/venv/lib/python3.13/site-packages/factory/django.py:182: DeprecationWarning: OrderFactory._after_postgeneration will stop saving the instance after postgeneration hooks in the next major release.
+  If the save call is extraneous, set skip_postgeneration_save=True in the OrderFactory.Meta.
+  To keep saving the instance, move the save call to your postgeneration hooks or override _after_postgeneration.
+    warnings.warn(
+
+tests/integration/communication/test_dispatcher.py::TestDispatcher::test_dispatcher_uses_email_connection
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/integration/communication/test_dispatcher.py:66: RemovedInDjango70Warning: get_connection() is deprecated. See 'Migrating email to mailers' in Django's documentation for recommended replacements.
+    connection = mail.get_connection()
+
+tests/integration/communication/test_dispatcher.py::TestDispatcher::test_dispatcher_uses_email_connection
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/integration/communication/test_dispatcher.py:66: RemovedInDjango70Warning: Django 7.0 will not have a default mailer. Configure settings.MAILERS to avoid errors when sending email.
+    connection = mail.get_connection()
+
+tests/integration/dashboard/test_permissions.py::CatalogueDashboardAccessTest::test_view_access_restrictions
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/apps/dashboard/catalogue/views.py:935: RemovedInTreebeard8Warning: Using Category.get_parent() is deprecated. Use Category.objects.get_parent() instead.
+    ctx["parent"] = self.object.get_parent()
+
+tests/integration/offer/test_range.py::TestWholeSiteRange::test_all_products_includes_child_products
+tests/integration/offer/test_range.py::TestWholeSiteRange::test_all_products_range
+tests/integration/offer/test_range.py::TestWholeSiteRange::test_blacklisting
+tests/integration/offer/test_range.py::TestWholeSiteRange::test_category_blacklisting
+tests/integration/offer/test_range.py::TestWholeSiteRange::test_category_blacklisting_materialised
+tests/integration/offer/test_range.py::TestWholeSiteRange::test_whitelisting
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/integration/offer/test_range.py:15: RemovedInTreebeard8Warning: Using Category.add_root() is deprecated. Use Category.objects.add_root() instead.
+    self.category = catalogue_models.Category.add_root(name="root")
+
+tests/integration/offer/test_range.py::TestParentRange::test_includes_all_children_when_parent_in_categories
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/integration/offer/test_range.py:98: RemovedInTreebeard8Warning: Using Category.add_root() is deprecated. Use Category.objects.add_root() instead.
+    included_category = catalogue_models.Category.add_root(name="root")
+
+tests/integration/offer/test_range.py::TestPartialRange::test_categories_in_all_products
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/integration/offer/test_range.py:170: RemovedInTreebeard8Warning: Using Category.add_root() is deprecated. Use Category.objects.add_root() instead.
+    included_category = catalogue_models.Category.add_root(name="root")
+
+tests/integration/offer/test_range.py::TestPartialRange::test_descendant_categories_in_all_products
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/integration/offer/test_range.py:191: RemovedInTreebeard8Warning: Using Category.add_root() is deprecated. Use Category.objects.add_root() instead.
+    parent_category = catalogue_models.Category.add_root(name="parent")
+
+tests/integration/offer/test_range.py::TestPartialRange::test_descendant_categories_in_all_products
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/integration/offer/test_range.py:192: RemovedInTreebeard8Warning: Using Category.add_child() is deprecated. Use Category.objects.add_child(target) instead.
+    child_category = parent_category.add_child(name="child")
+
+tests/integration/offer/test_range.py::TestPartialRange::test_descendant_categories_in_all_products
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/integration/offer/test_range.py:193: RemovedInTreebeard8Warning: Using Category.add_child() is deprecated. Use Category.objects.add_child(target) instead.
+    grand_child_category = child_category.add_child(name="grand-child")
+
+tests/integration/offer/test_range.py::TestPartialRange::test_product_duplicated_in_all_products
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/integration/offer/test_range.py:216: RemovedInTreebeard8Warning: Using Category.add_root() is deprecated. Use Category.objects.add_root() instead.
+    included_category1 = catalogue_models.Category.add_root(name="cat1")
+
+tests/integration/offer/test_range.py::TestPartialRange::test_product_duplicated_in_all_products
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/integration/offer/test_range.py:217: RemovedInTreebeard8Warning: Using Category.add_root() is deprecated. Use Category.objects.add_root() instead.
+    included_category2 = catalogue_models.Category.add_root(name="cat2")
+
+tests/integration/offer/test_range.py::TestPartialRange::test_product_remove_from_range
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/integration/offer/test_range.py:235: RemovedInTreebeard8Warning: Using Category.add_root() is deprecated. Use Category.objects.add_root() instead.
+    included_category = catalogue_models.Category.add_root(name="root")
+
+tests/integration/offer/test_range.py::TestPartialRange::test_range_is_reordable
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/integration/offer/test_range.py:263: RemovedInTreebeard8Warning: Using Category.add_root() is deprecated. Use Category.objects.add_root() instead.
+    included_category = catalogue_models.Category.add_root(name="root")
+
+tests/integration/offer/test_range.py::TestRangeQuerySet::test_category
+tests/integration/offer/test_range.py::TestRangeQuerySet::test_category_materialized
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/integration/offer/test_range.py:344: RemovedInTreebeard8Warning: Using Category.add_root() is deprecated. Use Category.objects.add_root() instead.
+    parent_category = catalogue_models.Category.add_root(name="parent")
+
+tests/integration/offer/test_range.py::TestRangeQuerySet::test_category
+tests/integration/offer/test_range.py::TestRangeQuerySet::test_category_materialized
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/integration/offer/test_range.py:345: RemovedInTreebeard8Warning: Using Category.add_child() is deprecated. Use Category.objects.add_child(target) instead.
+    child_category = parent_category.add_child(name="child")
+
+tests/integration/offer/test_range.py::TestRangeQuerySet::test_category
+tests/integration/offer/test_range.py::TestRangeQuerySet::test_category_materialized
+  /Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/integration/offer/test_range.py:346: RemovedInTreebeard8Warning: Using Category.add_child() is deprecated. Use Category.objects.add_child(target) instead.
+    grand_child_category = child_category.add_child(name="grand-child")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+1795 passed, 1 skipped, 3792 warnings, 104 subtests passed in 430.49s (0:07:10)

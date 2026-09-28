@@ -1,0 +1,8 @@
+Implemented in [conditions.py](/Users/garry/code/multi-repo-benchmark/python-api-recommended/src/oscar/apps/offer/conditions.py) with tests in [test_condition.py](/Users/garry/code/multi-repo-benchmark/python-api-recommended/tests/integration/offer/test_condition.py).
+
+- Counts distinct product categories using configurable `value`.
+- Uses Oscar’s existing `proxy_class` mechanism: `custom.create_condition(CategoryCondition, value=N)`.
+- Added below/exactly/above-minimum tests and full `ConditionalOffer` → basket → order coverage.
+- No migration needed; no schema changed.
+- Full suite: `1795 passed, 1 skipped`.
+- Added ignored `RUN_METRICS.json` entry to [.gitignore](/Users/garry/code/multi-repo-benchmark/python-api-recommended/.gitignore).

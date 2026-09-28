@@ -1,0 +1,91 @@
+You're working in this repo: django-oscar, a Django e-commerce framework
+distributed as a set of overridable Django apps under `src/oscar/apps/`, plus
+a `sandbox/` reference project and a `tests/` suite.
+
+Task: add a new offer Condition type: "minimum distinct categories in
+basket". A `ConditionalOffer` using this condition is satisfied when the
+basket contains products from at least N distinct `Category` instances
+(counting each category at most once, regardless of how many products from
+it are in the basket).
+
+Requirements:
+1. Implement the condition's logic as a proper addition to Oscar's offer
+   Condition system (`src/oscar/apps/offer/`) — it must be usable the same
+   way the existing built-in conditions (Count/Value/Coverage) are used, i.e.
+   a `ConditionalOffer` can be configured to use it and `is_satisfied(offer,
+   basket)` is called on a real basket. Match the existing mechanism this app
+   already uses for defining a condition's behavior — do not invent a
+   different one.
+2. The condition should read a configurable minimum count (an integer
+   "value") the same way the built-in conditions do, not a hardcoded number.
+3. Write a database migration if (and only if) your approach requires a
+   schema change. If your approach requires no schema change, say so
+   explicitly in your notes and don't write one.
+4. Add tests that construct a real basket with products from varying numbers
+   of distinct categories and assert `is_satisfied` returns the correct
+   boolean in at least 3 cases: below the minimum, exactly at the minimum,
+   above the minimum.
+5. Add one test that constructs a full `ConditionalOffer` using your new
+   condition against a real `Basket`+`Order` flow (not just calling
+   `is_satisfied` directly) to prove it's actually wired into the offer
+   engine, not just a standalone function.
+
+Definition of done — and how to check each one, not just assert it:
+- All 5 tests above exist and pass, run for real via
+  `venv/bin/py.test -q tests/`, not inferred from reading the code.
+- Existing tests still pass — no regressions.
+- If you added a migration, it actually applies cleanly against a real,
+  migrated-from-scratch database.
+- Your condition is reachable through the exact same mechanism another
+  developer would use to enable it in a real Oscar deployment (name that
+  mechanism explicitly in a short note, e.g. in a comment or in
+  RUN_METRICS.json's "notes" field) — not a one-off script or a change that
+  only works in your test file.
+
+Work through this yourself — explore the codebase as needed to find the
+relevant files and match its existing conventions.
+
+---
+METRICS PROTOCOL (do this regardless of the task above — it does not count as
+part of the deliverable and should not be committed):
+
+1. Immediately, before doing anything else, run `date -u +%FT%TZ` and record
+   it as `start_time`.
+2. As you work, keep a running timeline: each time you finish a distinct
+   phase (e.g. "explored repo", "read Condition model", "wrote condition
+   class", "wired into proxy mechanism", "wrote migration (or decided none
+   needed)", "wrote unit tests", "wrote integration test", "ran tests"),
+   append one line to that timeline with a timestamp (`date -u +%FT%TZ`) and
+   a short label. If any gap between two consecutive timeline events exceeds
+   5 minutes, record what you were doing/waiting on during that gap — don't
+   let it pass silently.
+3. Keep a running tally of tool calls by type as you go (file reads, file
+   edits/writes, bash commands, searches/greps) — don't reconstruct this from
+   memory at the end, increment it as you actually use each tool.
+4. Also note: the timestamp of your *first* file edit/write (as distinct from
+   read/explore actions) — this is "time to first edit," a proxy for how long
+   orientation took before you started producing the change.
+5. When the task is complete (or if you give up / hit a blocker you can't
+   resolve), run `date -u +%FT%TZ` for `end_time`, then write a single JSON
+   file to `RUN_METRICS.json` at the repo root with this shape:
+
+{
+  "repo": "python-api-recommended",
+  "start_time": "...",
+  "end_time": "...",
+  "duration_seconds": <int>,
+  "time_to_first_edit_seconds": <int>,
+  "tool_calls": {"read": <int>, "edit_or_write": <int>, "bash": <int>, "search_or_grep": <int>, "other": <int>, "total": <int>},
+  "files_read": [...],
+  "files_created_or_edited": [...],
+  "timeline": [{"time": "...", "event": "..."}, ...],
+  "definition_of_done": {"condition_class_implemented": true/false, "uses_existing_mechanism": true/false, "configurable_value": true/false, "migration_correct_or_correctly_omitted": true/false, "unit_tests_pass": true/false, "integration_test_pass": true/false, "no_regressions": true/false},
+  "docs_consulted": [],
+  "blockers_hit": ["one line per blocker, e.g. bugs you had to work around, or any >5min gap and why"],
+  "self_assessed_completion": "complete | partial | blocked",
+  "notes": "anything relevant to how easy or hard orientation was in this repo, and name the exact mechanism you used to make the condition reachable"
+}
+
+6. Add `RUN_METRICS.json` to `.gitignore` (create the entry if it's not
+   already there) before your final commit, so it stays untracked and
+   doesn't appear in the feature diff.

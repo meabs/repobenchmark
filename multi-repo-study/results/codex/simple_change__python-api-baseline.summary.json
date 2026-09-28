@@ -1,0 +1,27 @@
+{
+  "cell": "simple_change__python-api-baseline",
+  "repo": "python-api-baseline",
+  "task": "simple_change",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 1002,
+  "run_metrics_present": true,
+  "verification": {
+    "test_exit_code": 0,
+    "test_summary_line": "1792 passed, 1 skipped, 3745 warnings, 104 subtests passed in 431.55s (0:07:11)"
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/28/rollout-2026-09-28T11-54-03-01a0e7a6-7ea1-70b3-ab49-76b31bf36dc8.jsonl",
+    "cwd": "/Users/garry/code/multi-repo-benchmark/python-api-baseline",
+    "api_turns": 72,
+    "tool_calls_total": 71,
+    "file_edits": 6,
+    "shell_execs": 65,
+    "reasoning_steps": 83,
+    "input_tokens": 4620094,
+    "cached_input_tokens": 4475904,
+    "output_tokens": 22656,
+    "reasoning_output_tokens": 12869,
+    "total_tokens": 4642750
+  }
+}

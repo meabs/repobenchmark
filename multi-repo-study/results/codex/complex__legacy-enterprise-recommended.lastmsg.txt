@@ -1,0 +1,16 @@
+Implemented and verified.
+
+- Added `Pet.deceased` with default `false`, all schemas/data fixtures, and JDBC read/write mappings.
+- Added `markPetDeceased` / `markPetAlive` service methods.
+- Added owner-scoped POST endpoints and JSP status/actions.
+- Added shared service and MockMvc tests.
+- Preserved `.gitignore` and added `RUN_METRICS.json`.
+
+Verification passed:
+
+```bash
+./mvnw -q -B test -Dtest=ClinicServiceJpaTests,ClinicServiceSpringDataJpaTests,ClinicServiceJdbcTests
+./mvnw -q -B test
+```
+
+All green. Metrics are recorded in ignored [RUN_METRICS.json](/Users/garry/code/multi-repo-benchmark/legacy-enterprise-recommended/RUN_METRICS.json).

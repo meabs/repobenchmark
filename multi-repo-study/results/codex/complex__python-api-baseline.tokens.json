@@ -1,0 +1,14 @@
+{
+  "session": "/Users/garry/.codex/sessions/2026/09/28/rollout-2026-09-28T12-19-27-01a0e7bd-bf3d-78c0-b038-e101c5b3a097.jsonl",
+  "cwd": "/Users/garry/code/multi-repo-benchmark/python-api-baseline",
+  "api_turns": 63,
+  "tool_calls_total": 62,
+  "file_edits": 7,
+  "shell_execs": 55,
+  "reasoning_steps": 75,
+  "input_tokens": 5994239,
+  "cached_input_tokens": 5824768,
+  "output_tokens": 30668,
+  "reasoning_output_tokens": 16420,
+  "total_tokens": 6024907
+}

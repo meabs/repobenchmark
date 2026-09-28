@@ -1,0 +1,10 @@
+Implemented optional `Owner.email` across all three repository profiles.
+
+- Added entity mapping and accessors.
+- Updated JDBC reads/writes.
+- Updated H2 schema and fixtures.
+- Added shared round-trip test; passes under JPA, Spring Data JPA, and JDBC.
+- No JSP files touched.
+- Added ignored `RUN_METRICS.json`.
+
+Tests: full `mvn test` passed with 36 service tests and all existing tests green.

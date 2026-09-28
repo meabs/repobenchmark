@@ -1,0 +1,27 @@
+{
+  "cell": "simple_change__react-frontend-baseline",
+  "repo": "react-frontend-baseline",
+  "task": "simple_change",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 531,
+  "run_metrics_present": true,
+  "verification": {
+    "test_exit_code": 0,
+    "test_summary_line": "Test Files  13 passed (13)"
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/28/rollout-2026-09-28T14-49-38-01a0e847-40da-76a0-b508-dfc2c4a3d21f.jsonl",
+    "cwd": "/Users/garry/code/multi-repo-benchmark/react-frontend-baseline",
+    "api_turns": 44,
+    "tool_calls_total": 43,
+    "file_edits": 11,
+    "shell_execs": 32,
+    "reasoning_steps": 57,
+    "input_tokens": 2397141,
+    "cached_input_tokens": 2224128,
+    "output_tokens": 22944,
+    "reasoning_output_tokens": 12219,
+    "total_tokens": 2420085
+  }
+}

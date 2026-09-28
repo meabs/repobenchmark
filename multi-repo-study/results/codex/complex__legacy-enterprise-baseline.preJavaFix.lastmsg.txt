@@ -1,0 +1,18 @@
+Implemented Pet deceased status across all three repository profiles.
+
+- Added `Pet.deceased`, defaulting to `false`.
+- Updated JPA mapping, JDBC SQL/mappers, and database fixtures.
+- Added `markPetDeceased` / `markPetAlive` service methods.
+- Added nested owner-scoped POST endpoints:
+  - `/owners/{ownerId}/pets/{petId}/deceased`
+  - `/owners/{ownerId}/pets/{petId}/alive`
+- Updated owner JSP with Active/Deceased badges and actions.
+- Added shared service and MockMvc tests.
+
+Verification:
+
+- `mvn test`: 80 tests passed, 0 failures/errors.
+- HSQLDB profile service tests also passed.
+- `RUN_METRICS.json` created and ignored via `.gitignore`.
+
+Key files: [Pet.java](/Users/garry/code/multi-repo-benchmark/legacy-enterprise-baseline/src/main/java/org/springframework/samples/petclinic/model/Pet.java:52), [PetController.java](/Users/garry/code/multi-repo-benchmark/legacy-enterprise-baseline/src/main/java/org/springframework/samples/petclinic/web/PetController.java:111), [ownerDetails.jsp](/Users/garry/code/multi-repo-benchmark/legacy-enterprise-baseline/src/main/webapp/WEB-INF/jsp/owners/ownerDetails.jsp:60).

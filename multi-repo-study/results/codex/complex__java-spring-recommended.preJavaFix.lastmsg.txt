@@ -1,0 +1,9 @@
+Implemented deceased tracking across the entity, schemas, endpoint, templates, and tests.
+
+- Added `Pet.deceased` with SQL defaults in H2/MySQL/PostgreSQL; updated positional seed data.
+- Added owner-scoped `POST /owners/{ownerId}/pets/{petId}/deceased`.
+- Blocked direct form binding via `@InitBinder`.
+- Updated owner details UI with a deceased label and living-pet POST button.
+- Added controller, repository persistence, and template-rendering tests.
+
+Static schema/diff checks pass. Maven tests could not run because no JDK is installed in the environment. Metrics are recorded in ignored [RUN_METRICS.json](/Users/garry/code/multi-repo-benchmark/java-spring-recommended/RUN_METRICS.json).

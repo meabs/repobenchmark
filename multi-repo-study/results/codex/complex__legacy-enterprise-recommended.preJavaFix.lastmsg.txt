@@ -1,0 +1,9 @@
+Implemented deceased-pet support.
+
+- Added `Pet.isDeceased` with default `false`, JPA mapping, JDBC read/write support, schemas, and seed data.
+- Added `markPetDeceased` / `markPetAlive` service methods.
+- Added owner-scoped POST endpoints and JSP controls/status labels.
+- Added shared service tests and MockMvc endpoint tests.
+- Added ignored `RUN_METRICS.json`.
+
+Verification: full `mvn test` passed, including all three repository profiles and controller tests.

@@ -1,0 +1,8 @@
+Implemented the Ordering domain fix.
+
+- `SetNewDiscount` now rejects discounts greater than `UnitPrice * Units` using the constructor’s existing exception message.
+- Added regression coverage for negative and over-total discounts.
+- `dotnet test` passes: 44/44 tests.
+- Added ignored `RUN_METRICS.json` per protocol.
+
+Files: [OrderItem.cs](/Users/garry/code/multi-repo-benchmark/event-driven-baseline/src/Ordering.Domain/AggregatesModel/OrderAggregate/OrderItem.cs), [OrderAggregateTest.cs](/Users/garry/code/multi-repo-benchmark/event-driven-baseline/tests/Ordering.UnitTests/Domain/OrderAggregateTest.cs)

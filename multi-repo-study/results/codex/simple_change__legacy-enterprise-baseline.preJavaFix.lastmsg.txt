@@ -1,0 +1,10 @@
+Implemented the backend email field:
+
+- Added nullable `Owner.email` with JPA mapping and accessors.
+- Updated JDBC reads and updates.
+- Added `email` to the H2 schema.
+- Added one shared service test inherited by all three repository profiles.
+- No JSP files changed.
+- Added ignored [`RUN_METRICS.json`](/Users/garry/code/multi-repo-benchmark/legacy-enterprise-baseline/RUN_METRICS.json).
+
+`git diff --check` passes. Maven tests could not start because no Java runtime/JDK is installed in the environment.

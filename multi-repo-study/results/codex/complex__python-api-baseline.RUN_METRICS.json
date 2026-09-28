@@ -1,0 +1,104 @@
+{
+  "repo": "python-api-baseline",
+  "start_time": "2026-09-28T11:19:38Z",
+  "end_time": "2026-09-28T11:43:29Z",
+  "duration_seconds": 1431,
+  "time_to_first_edit_seconds": 171,
+  "tool_calls": {
+    "read": 30,
+    "edit_or_write": 6,
+    "bash": 67,
+    "search_or_grep": 10,
+    "other": 0,
+    "total": 113
+  },
+  "files_read": [
+    "/Users/garry/.agents/skills/using-superpowers/SKILL.md",
+    "/Users/garry/.agents/skills/using-superpowers/references/codex-tools.md",
+    "/Users/garry/.agents/skills/tdd/SKILL.md",
+    "/Users/garry/.agents/skills/tdd/tests.md",
+    "/Users/garry/.agents/skills/tdd/mocking.md",
+    "/Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/apps/offer/models.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/apps/offer/abstract_models.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/apps/offer/conditions.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/apps/offer/benefits.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/apps/offer/applicator.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/apps/offer/results.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/apps/offer/migrations/0013_range_excluded_categories.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/apps/basket/abstract_models.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/apps/catalogue/abstract_models.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/apps/dashboard/offers/forms.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/apps/dashboard/offers/wizard_views.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/apps/order/abstract_models.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/apps/order/utils.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/test/basket.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/test/factories/__init__.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/test/factories/basket.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/test/factories/catalogue.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/test/factories/offer.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/test/factories/order.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/integration/offer/test_condition.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/integration/offer/test_combination.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/integration/offer/test_percentage_benefit.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/integration/offer/test_applicator.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-baseline/setup.cfg",
+    "/Users/garry/code/multi-repo-benchmark/python-api-baseline/pyproject.toml",
+    "/Users/garry/code/multi-repo-benchmark/python-api-baseline/tox.ini",
+    "/Users/garry/code/multi-repo-benchmark/python-api-baseline/.gitignore"
+  ],
+  "files_created_or_edited": [
+    "/Users/garry/code/multi-repo-benchmark/python-api-baseline/.gitignore",
+    "/Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/apps/offer/abstract_models.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/apps/offer/conditions.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-baseline/src/oscar/apps/offer/migrations/0014_categorycoveragecondition_alter_condition_type.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-baseline/tests/integration/offer/test_condition.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-baseline/RUN_METRICS.json"
+  ],
+  "timeline": [
+    {
+      "time": "2026-09-28T11:19:38Z",
+      "event": "start timestamp recorded"
+    },
+    {
+      "time": "2026-09-28T11:19:57Z",
+      "event": "read applicable skills and completed initial repository orientation"
+    },
+    {
+      "time": "2026-09-28T11:22:29Z",
+      "event": "traced the Condition proxy/type mechanism and wrote the first failing tests"
+    },
+    {
+      "time": "2026-09-28T11:24:35Z",
+      "event": "implemented CategoryCoverageCondition and verified source compilation"
+    },
+    {
+      "time": "2026-09-28T11:34:40Z",
+      "event": "completed first full test run; 1794 passed and migration consistency identified required proxy/choice state"
+    },
+    {
+      "time": "2026-09-28T11:42:38Z",
+      "event": "completed final full test run successfully"
+    },
+    {
+      "time": "2026-09-28T11:43:29Z",
+      "event": "final checks passed and end timestamp recorded"
+    }
+  ],
+  "definition_of_done": {
+    "condition_class_implemented": true,
+    "uses_existing_mechanism": true,
+    "configurable_value": true,
+    "migration_correct_or_correctly_omitted": true,
+    "unit_tests_pass": true,
+    "integration_test_pass": true,
+    "no_regressions": true
+  },
+  "docs_consulted": [],
+  "blockers_hit": [
+    "The requested venv/bin/py.test was initially absent; created the local venv and installed the project's test extras.",
+    "The first full suite took about seven minutes and exposed that Django's migration consistency test requires a state-only migration for the proxy and type choices.",
+    "The final full suite took about seven minutes to complete after adding that migration."
+  ],
+  "self_assessed_completion": "complete",
+  "notes": "No physical database table or column was added. Django's migration autodetector required 0014 as a state-only migration for the new proxy model and Condition.type choices, and the migration test passed. The condition is reachable through Oscar's normal mechanism: configure a Condition with type Condition.CATEGORY_COVERAGE, a product range, and integer value N; Condition.proxy_map dispatches it to CategoryCoverageCondition, and ConditionalOffer.is_condition_satisfied invokes it. The implementation counts distinct category primary keys from eligible products in the condition range."
+}

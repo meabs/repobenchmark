@@ -1,0 +1,27 @@
+{
+  "cell": "understanding__python-api-baseline",
+  "repo": "python-api-baseline",
+  "task": "understanding",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 347,
+  "run_metrics_present": true,
+  "verification": {
+    "answer_present": true,
+    "unexpected_file_changes": 0
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/28/rollout-2026-09-28T11-02-16-01a0e777-1457-7803-ba27-8a6cd5c14907.jsonl",
+    "cwd": "/Users/garry/code/multi-repo-benchmark/python-api-baseline",
+    "api_turns": 31,
+    "tool_calls_total": 30,
+    "file_edits": 3,
+    "shell_execs": 27,
+    "reasoning_steps": 38,
+    "input_tokens": 1962064,
+    "cached_input_tokens": 1807616,
+    "output_tokens": 14292,
+    "reasoning_output_tokens": 7838,
+    "total_tokens": 1976356
+  }
+}

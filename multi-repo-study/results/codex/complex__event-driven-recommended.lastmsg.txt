@@ -1,0 +1,8 @@
+Implemented single-item removal for Ordering.
+
+- Added domain event, aggregate guards/removal logic, command handler, validator, and logging handler.
+- Added domain/application tests, including validator coverage.
+- Added idempotency wiring for the new command.
+- Added ignored `RUN_METRICS.json`.
+
+Verification: `dotnet test ...` passed exactly 50 tests — 0 failed, 0 skipped.

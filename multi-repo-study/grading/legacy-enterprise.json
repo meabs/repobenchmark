@@ -1,0 +1,20 @@
+{
+  "repo_family": "legacy-enterprise (spring-framework-petclinic)",
+  "method": "Blind A/B read (A=baseline, B=recommended, unlabelled at scoring time), each claim checked against legacy-enterprise-src source. 2=correct+precise, 1=partly/minor error, 0=wrong.",
+  "ground_truth_notes": {
+    "q1": "Default profile = SPRING_PROFILE=\"jpa\" (PetclinicInitializer.java:52), applied via setDefaultProfiles at :58; business-config.xml <beans profile> blocks 66-82 (jdbc), 84-92 (jpa), 94-96 (spring-data-jpa). Package 'springdatajpa' vs profile 'spring-data-jpa' naming differs.",
+    "q5": "Owner/Person use Bean Validation @NotEmpty; no custom Validator, mvc:annotation-driven has no validator override, messages.properties has no NotEmpty* keys. Displayed text is Hibernate Validator default ('must not be empty'). The 'required=is required' key in messages.properties is not used by this flow."
+  },
+  "scores": {
+    "q1_default_impl_trap": {"baseline": 2, "recommended": 2, "note": "Both: three packages, PetclinicInitializer.java:52/:58, jpa default, override via -Dspring.profiles.active. Baseline slightly hedged on 'would you guess'; recommended matches doc framing. Neither wrong."},
+    "q2_test_mechanism": {"baseline": 2, "recommended": 2, "note": "Both: AbstractClinicServiceTests:53, three subclasses with correct @ActiveProfiles values and line numbers."},
+    "q3_add_field": {"baseline": 2, "recommended": 2, "note": "Both: JPA no change; JDBC needs SELECT lists (72-79, 92-98) + UPDATE SET (128-134); insert via SimpleJdbcInsert/BeanPropertySqlParameterSource needs no SQL edit. All line refs verified."},
+    "q4_initializer": {"baseline": 2, "recommended": 2, "note": "Both: root ctx business-config+tools-config, servlet ctx mvc-core-config (imports mvc-view-config), CharacterEncodingFilter(UTF-8,true) for Chinese in Owner form. Baseline adds datasource-config import."},
+    "q5_validation_trace": {"baseline": 2, "recommended": 1, "note": "Baseline correct incl. HV default message 'must not be empty' (tiny nit: cites inputField.tag line 17, which tests 'valid'). Recommended flow is correct but wrongly states the error text comes from messages.properties:2 'required=is required' (key is unused/vestigial; no NotEmpty key exists) - a confident, unverified claim."}
+  },
+  "totals": {"baseline": 10, "recommended": 9, "max": 10},
+  "doc_errors_found": [],
+  "doc_review": "Checked recommended AGENTS.md, okf/index.md, okf/repositories/index.md, okf/web/index.md, okf/model/index.md, skills add-model-field and add-controller-page. All statements relevant to the 5 questions are accurate (jpa default, PetclinicInitializer location, test-profile mechanism, JDBC hand-written SQL, contexts/filter). Nothing in them mentions message keys or 'required', so the Q5 error is NOT traceable to the docs. Not read: okf/log.md, skills run-the-right-tests and add-service-method.",
+  "verdict": "Recommended used ~43% fewer tokens with near-equal accuracy: 9/10 vs 10/10. The single lost point is an agent-side unsupported claim about the message source, not a doc-induced error. The docs correctly steered the trap question (Q1). Weak evidence of an accuracy cost (n=1); the shorter path may have skipped verifying what actually produces the message text.",
+  "caveats": ["Bash classifier outage prevented a final grep confirming 'required' is unreferenced in main/webapp/test; conclusion rests on an earlier grep (no NotEmpty keys in resources), mvc-core-config.xml (no validator override), OwnerController (no validator binder), and the docs read."]
+}

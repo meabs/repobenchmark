@@ -1,0 +1,8 @@
+Waiting for main 30-cell run to complete...
+Main run complete. Archiving original failed results and re-running fixed cells.
+Archived original failed result for simple_change__java-spring-recommended as attempt1_failed.
+Archived original failed result for complex__java-spring-recommended as attempt1_failed.
+=== RERUN START 2026-09-28T15:43:03Z ===
+RERUN START simple_change / java-spring-recommended (timeout 1200s) 2026-09-28T15:43:03Z
+RERUN DONE  simple_change / java-spring-recommended (harness_exit=0) exit=0 timed_out=False wall=303s verify={"test_exit_code": 1, "tests_passed": 0, "tests_failed": 0, "tests_errored": 0} 2026-09-28T15:48:08Z
+RERUN START complex / java-spring-recommended (timeout 1800s) 2026-09-28T15:48:08Z

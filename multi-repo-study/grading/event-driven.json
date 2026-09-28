@@ -1,0 +1,32 @@
+{
+  "repo_family": "event-driven (dotnet eShop, Ordering subsystem)",
+  "method": "Blind A/B: answers read unlabeled (random mapping A=baseline, B=recommended, revealed after scoring); ground truth worked out from source at event-driven-src (b4a4087). Score 2=correct+precise, 1=partly/minor error, 0=wrong.",
+  "scores": {
+    "Q1_cancel_shipped": {
+      "baseline": {"score": 1, "why": "Outcome right (order stays Shipped, IdentifiedCommandHandler.cs:101 returns false, HTTP 500 'Cancel order failed to process.'), but step 3 says ValidatorBehavior runs CancelOrderCommandValidator on the outer IdentifiedCommand before the identified handler; that validator only matches the inner CancelOrderCommand (IdentifiedCommandValidator is for CreateOrderCommand only), so the trace order is wrong; also omits the active-transaction branch."},
+      "recommended": {"score": 2, "why": "Correct end to end: inner command hits CancelOrderCommandValidator only when sent by the identified handler, TransactionBehavior HasActiveTransaction branch (lines 27-30) skips a nested transaction, exception swallowed at line 101, 500 to client, and notes the idempotency record still commits. All line refs verified."}
+    },
+    "Q2_GetTotal": {
+      "baseline": {"score": 2, "why": "Order.cs:185 Sum(Units*UnitPrice), ignores Discount; verified."},
+      "recommended": {"score": 2, "why": "Same, correct; OrderItem.cs:15 ref verified."}
+    },
+    "Q3_identified_handler_exception": {
+      "baseline": {"score": 2, "why": "catch at line 99, 'return default;' at line 101, default(R)=false for bool; verified."},
+      "recommended": {"score": 2, "why": "Same, exception not rethrown; verified."}
+    },
+    "Q4_SetPaidStatus_guard": {
+      "baseline": {"score": 2, "why": "if (OrderStatus == StockConfirmed) at Order.cs:121 (range 119-128 given); silent no-op, no throw/log; also correctly notes the handler still saves."},
+      "recommended": {"score": 2, "why": "Same guard and silent no-op; correct."}
+    },
+    "Q5_trap_buyer_event_vs_AwaitingValidation": {
+      "baseline": {"score": 2, "why": "TRAP AVOIDED. Handler only calls SetPaymentMethodVerified (BuyerId/PaymentId); does not move to AwaitingValidation; real path is SetAwaitingValidationOrderStatusCommandHandler:27 <- GracePeriodConfirmedIntegrationEventHandler:28; Submitted-only guard correct."},
+      "recommended": {"score": 2, "why": "TRAP AVOIDED. Same conclusion and same real path; correct."}
+    }
+  },
+  "totals": {"baseline": "9/10", "recommended": "10/10"},
+  "trap_question_judgement": "Q5 is the trap (event name suggests a chained status change). Both arms answered it correctly. Q3 (exception swallowed, no rethrow) and Q4 (silent no-op unlike the throwing SetShipped/SetCancelled) are secondary traps; both correct in both arms.",
+  "extra_cost_buys_quality": "Modestly yes for this repo. Recommended used +17% tokens on understanding but was the only arm with a fully correct Q1 trace (baseline mis-ordered the validator). Difference is one minor trace error, n=1, so treat as weak evidence; the cost is not clearly wasted.",
+  "doc_errors_found": [],
+  "doc_check": "Checked AGENTS.md, okf/domain/order-aggregate.md, okf/domain/buyer-aggregate.md, okf/application/commands.md, okf/log.md and .agents/skills/add-order-command and add-order-status-transition against source. Statements relevant to Q1-Q5 (GetTotal ignores Discount; SetPaidStatus silent no-op; IdentifiedCommandHandler swallows exceptions and returns default; CancelOrderIdentifiedCommandHandler duplicate returns true; buyer-verified handler does not set AwaitingValidation; switch 'around line 56') are all accurate. okf/log.md records a self-corrected earlier doc error about the AwaitingValidation transition, fixed before use. No answer error traces to a doc.",
+  "verdict": "Both arms essentially correct (9/10 vs 10/10); no doc-induced error; recommended's slight edge is Q1 trace accuracy. Understanding-task quality is not degraded by the doc layer on this repo, so the +17% token cost was not buying correctness at risk, only a small precision gain."
+}

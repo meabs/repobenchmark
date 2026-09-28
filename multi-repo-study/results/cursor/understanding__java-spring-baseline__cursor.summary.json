@@ -1,0 +1,25 @@
+{
+  "cell": "understanding__java-spring-baseline__cursor",
+  "repo": "java-spring-baseline",
+  "task": "understanding",
+  "model": "auto",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 520,
+  "verification": {
+    "answer_present": true,
+    "unexpected_file_changes": 0
+  },
+  "real_usage": {
+    "tool_calls_total": 83,
+    "file_edits": 3,
+    "shell_execs": 80,
+    "input_tokens": 262589,
+    "cached_input_tokens": 1809408,
+    "output_tokens": 38620,
+    "total_tokens": 301209,
+    "duration_ms": 454532,
+    "is_error": false,
+    "session_id": "0436d23a-0893-48d7-a589-ed6d363db75f"
+  }
+}

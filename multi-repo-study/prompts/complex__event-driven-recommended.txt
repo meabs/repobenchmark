@@ -1,0 +1,103 @@
+You're working in this repo: the eShop reference app (.NET, Aspire-orchestrated
+microservices). This task is scoped to ONE subsystem: Ordering
+(`src/Ordering.Domain/`, `src/Ordering.Infrastructure/`, `src/Ordering.API/`).
+Ignore the rest of the repo — it exists but is out of scope.
+
+You do NOT need Docker or Aspire for this task. The only command you'll need is:
+export DOTNET_ROOT="$HOME/.dotnet"; export PATH="$DOTNET_ROOT:$PATH"
+dotnet test tests/Ordering.UnitTests/Ordering.UnitTests.csproj
+
+Task: add the ability to remove a single line item from an order before it's paid.
+
+Requirements:
+1. Add a domain event `OrderItemRemovedDomainEvent` in `src/Ordering.Domain/Events/`,
+   carrying at least the order's id and the removed item's `ProductId`, following the
+   existing domain event classes' shape and constructor style in that folder.
+2. Add a method `Order.RemoveOrderItem(int productId)` to
+   `src/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs`:
+   - Throws `OrderingDomainException` if `OrderStatus` is `Paid`, `Shipped`, or
+     `Cancelled` (an order in any of those states can't have its items changed).
+   - Throws `OrderingDomainException` if no item with that `productId` exists on the
+     order.
+   - Throws `OrderingDomainException` if the order only has one item (an order
+     can't be left with zero items via this method — cancel the whole order for
+     that case instead).
+   - Otherwise removes the matching `OrderItem` from the order's items and raises
+     `OrderItemRemovedDomainEvent`.
+3. Add `RemoveOrderItemCommand(int OrderNumber, int ProductId) : IRequest<bool>` and
+   `RemoveOrderItemCommandHandler` in `src/Ordering.API/Application/Commands/`,
+   following the same shape as `CancelOrderCommand`/`CancelOrderCommandHandler`:
+   load the order via `IOrderRepository`, return `false` if not found, call
+   `Order.RemoveOrderItem`, persist via `_orderRepository.UnitOfWork.SaveEntitiesAsync`.
+4. Add `RemoveOrderItemCommandValidator` in
+   `src/Ordering.API/Application/Validations/`, following
+   `CancelOrderCommandValidator`'s shape — validate both `OrderNumber` and
+   `ProductId` are present/non-empty.
+5. Add a domain event handler for `OrderItemRemovedDomainEvent` in
+   `src/Ordering.API/Application/DomainEventHandlers/` that at minimum logs the
+   removal (matching the logging style of the existing handlers in that folder,
+   e.g. via `ILogger`) — it does not need to publish an integration event.
+6. Add tests to `tests/Ordering.UnitTests/`:
+   - In `Domain/OrderAggregateTest.cs` (or similar): removing an existing item
+     succeeds and raises the domain event; removing a nonexistent product throws;
+     removing the last remaining item throws; removing from a `Paid` order throws.
+   - In `Application/` (new file, following `NewOrderCommandHandlerTest.cs`'s
+     NSubstitute-mocking style): the command handler returns `false` for a
+     nonexistent order, and calls `Order.RemoveOrderItem` + saves for a valid one.
+
+Definition of done — and how to check each one, not just assert it:
+- `dotnet test tests/Ordering.UnitTests/Ordering.UnitTests.csproj` passes: run it
+  and confirm the exact pass count, including all your new tests — don't infer this
+  from the code looking right.
+- Every new/changed file listed above actually exists and matches the required
+  behavior — re-read your own diff against the requirements before calling this
+  done.
+- No changes outside `src/Ordering.Domain/`, `src/Ordering.API/Application/`, and
+  `tests/Ordering.UnitTests/`.
+
+Work through this yourself — explore the codebase as needed to find the relevant
+files and match its existing conventions.
+
+---
+METRICS PROTOCOL (do this regardless of the task above — it does not count as part of
+the deliverable and should not be committed):
+
+1. Immediately, before doing anything else, run `date -u +%FT%TZ` and record it as
+   `start_time`.
+2. As you work, keep a running timeline: each time you finish a distinct phase
+   (e.g. "explored repo", "added domain event", "added RemoveOrderItem method",
+   "added command", "added handler", "added validator", "added domain event
+   handler", "wrote domain tests", "wrote application tests", "ran tests"), append
+   one line to that timeline with a timestamp (`date -u +%FT%TZ`) and a short label.
+   If any gap between two consecutive timeline events exceeds 5 minutes, record what
+   you were doing/waiting on during that gap — don't let it pass silently.
+3. Keep a running tally of tool calls by type as you go (file reads, file
+   edits/writes, bash commands, searches/greps) — don't reconstruct this from memory
+   at the end, increment it as you actually use each tool.
+4. Also note: the timestamp of your *first* file edit/write (as distinct from
+   read/explore actions) — this is "time to first edit," a proxy for how long
+   orientation took before you started producing the change.
+5. When the task is complete (or if you give up / hit a blocker you can't resolve),
+   run `date -u +%FT%TZ` for `end_time`, then write a single JSON file to
+   `RUN_METRICS.json` at the repo root with this shape:
+
+{
+  "repo": "event-driven-recommended",
+  "start_time": "...",
+  "end_time": "...",
+  "duration_seconds": <int>,
+  "time_to_first_edit_seconds": <int>,
+  "tool_calls": {"read": <int>, "edit_or_write": <int>, "bash": <int>, "search_or_grep": <int>, "other": <int>, "total": <int>},
+  "files_read": [...],
+  "files_created_or_edited": [...],
+  "timeline": [{"time": "...", "event": "..."}, ...],
+  "definition_of_done": {"domain_event_added": true/false, "remove_order_item_method_added": true/false, "guard_paid_shipped_cancelled": true/false, "guard_missing_item": true/false, "guard_last_item": true/false, "command_and_handler_added": true/false, "validator_added": true/false, "domain_event_handler_added": true/false, "domain_tests_added_and_pass": true/false, "application_tests_added_and_pass": true/false, "all_tests_pass": true/false},
+  "docs_consulted": [],
+  "blockers_hit": ["one line per blocker, e.g. bugs you had to work around, or any >5min gap and why"],
+  "self_assessed_completion": "complete | partial | blocked",
+  "notes": "anything relevant to how easy or hard orientation was in this repo"
+}
+
+6. Add `RUN_METRICS.json` to `.gitignore` (create the entry if it's not already there)
+   before your final commit, so it stays untracked and doesn't appear in the feature
+   diff.

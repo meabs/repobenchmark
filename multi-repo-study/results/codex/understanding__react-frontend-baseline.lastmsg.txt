@@ -1,0 +1,6 @@
+Completed.
+
+- [ANSWER.md](/Users/garry/code/multi-repo-benchmark/react-frontend-baseline/ANSWER.md) contains all five answers.
+- `npx vitest run` passes all 12 suites when `VITE_APP_API_URL` is supplied.
+- Metrics recorded in ignored `RUN_METRICS.json`.
+- Added `RUN_METRICS.json` to `.gitignore`.

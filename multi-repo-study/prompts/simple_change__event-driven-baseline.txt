@@ -1,0 +1,73 @@
+You're working in this repo: the eShop reference app (.NET, Aspire-orchestrated
+microservices). This task is scoped to ONE subsystem: Ordering
+(`src/Ordering.Domain/`, `src/Ordering.Infrastructure/`, `src/Ordering.API/`).
+Ignore the rest of the repo — it exists but is out of scope.
+
+You do NOT need Docker or Aspire for this task. The only command you'll need is:
+export DOTNET_ROOT="$HOME/.dotnet"; export PATH="$DOTNET_ROOT:$PATH"
+dotnet test tests/Ordering.UnitTests/Ordering.UnitTests.csproj
+
+Task: close a validation gap on `OrderItem`.
+
+Context: `OrderItem`'s constructor already rejects an item whose `Discount` exceeds
+its total (`unitPrice * units < discount` throws `OrderingDomainException`). But
+`OrderItem.SetNewDiscount(decimal discount)` — called later, e.g. when
+`Order.AddOrderItem` bumps an existing line's discount — only rejects a negative
+discount. It does not re-check the discount against that item's total, so an
+existing order item can end up with a discount larger than its own total via this
+path even though the same thing is blocked at construction time.
+
+Requirements:
+1. In `src/Ordering.Domain/AggregatesModel/OrderAggregate/OrderItem.cs`, add a check
+   to `SetNewDiscount` so that it also throws `OrderingDomainException` (matching
+   the message style already used in the constructor) when the new discount would
+   exceed `UnitPrice * Units`.
+2. Keep the existing negative-discount check working unchanged.
+3. Add a test (in `tests/Ordering.UnitTests/Domain/OrderAggregateTest.cs`, or a new
+   file in that same folder if you prefer) that verifies: (a) `SetNewDiscount` still
+   rejects a negative discount, and (b) `SetNewDiscount` now rejects a discount
+   greater than the item's total.
+4. No API, command, or frontend changes — this is a Domain-layer-only fix.
+
+Definition of done:
+- `dotnet test tests/Ordering.UnitTests/Ordering.UnitTests.csproj` passes, including
+  your new test(s), and the existing 43 tests still pass.
+- The fix is in `OrderItem.SetNewDiscount` only — no unrelated files touched.
+
+Work through this yourself — explore the codebase as needed and match its existing
+conventions (see how the constructor's own discount check is written and worded).
+
+---
+METRICS PROTOCOL (do this regardless of the task above — it does not count as part of
+the deliverable and should not be committed):
+
+1. Immediately, before doing anything else, run `date -u +%FT%TZ` and record it as
+   `start_time`.
+2. As you work, keep a running timeline with timestamps (`date -u +%FT%TZ`) for each
+   distinct phase (explored repo, first edit, wrote test, ran tests, done). If any
+   gap between two consecutive events exceeds 5 minutes, record what you were doing.
+3. Keep a running tally of tool calls by type as you go — don't reconstruct this
+   from memory at the end.
+4. Note the timestamp of your first file edit/write (distinct from read/explore).
+5. When done, run `date -u +%FT%TZ` for `end_time`, then write a single JSON file to
+   `RUN_METRICS.json` at the repo root with this shape:
+
+{
+  "repo": "event-driven-baseline",
+  "task": "simple_change",
+  "start_time": "...",
+  "end_time": "...",
+  "duration_seconds": <int>,
+  "time_to_first_edit_seconds": <int>,
+  "tool_calls": {"read": <int>, "edit_or_write": <int>, "bash": <int>, "search_or_grep": <int>, "other": <int>, "total": <int>},
+  "files_read": [...],
+  "files_created_or_edited": [...],
+  "timeline": [{"time": "...", "event": "..."}, ...],
+  "definition_of_done": {"over_discount_rejected": true/false, "negative_discount_still_rejected": true/false, "new_test_added_and_passes": true/false, "existing_tests_still_pass": true/false, "no_unrelated_files_touched": true/false},
+  "docs_consulted": [],
+  "blockers_hit": ["one line per blocker, or any >5min gap and why"],
+  "self_assessed_completion": "complete | partial | blocked",
+  "notes": "anything relevant to how easy or hard orientation was for a small, scoped change in this repo"
+}
+
+6. Add `RUN_METRICS.json` to `.gitignore` (create the entry if it's not already there).

@@ -1,0 +1,12 @@
+{
+  "tool_calls_total": 84,
+  "file_edits": 3,
+  "shell_execs": 81,
+  "input_tokens": 167279,
+  "cached_input_tokens": 926720,
+  "output_tokens": 36955,
+  "total_tokens": 204234,
+  "duration_ms": 715615,
+  "is_error": false,
+  "session_id": "792e5985-27eb-4233-aea5-fe79f6cb350b"
+}

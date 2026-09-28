@@ -1,0 +1,5 @@
+Completed:
+
+- [ANSWER.md](/Users/garry/code/multi-repo-benchmark/react-frontend-recommended/ANSWER.md)
+- Added `RUN_METRICS.json` and ignored it via `.gitignore`.
+- Verified JSON validity and diff formatting.

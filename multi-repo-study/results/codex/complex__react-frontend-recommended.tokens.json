@@ -1,0 +1,14 @@
+{
+  "session": "/Users/garry/.codex/sessions/2026/09/28/rollout-2026-09-28T15-24-43-01a0e867-5e78-7fe3-9a4e-8c70d6c3a044.jsonl",
+  "cwd": "/Users/garry/code/multi-repo-benchmark/react-frontend-recommended",
+  "api_turns": 51,
+  "tool_calls_total": 50,
+  "file_edits": 5,
+  "shell_execs": 45,
+  "reasoning_steps": 61,
+  "input_tokens": 3372712,
+  "cached_input_tokens": 3190016,
+  "output_tokens": 22769,
+  "reasoning_output_tokens": 11865,
+  "total_tokens": 3395481
+}

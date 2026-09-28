@@ -1,0 +1,14 @@
+{
+  "session": "/Users/garry/.codex/sessions/2026/09/28/rollout-2026-09-28T14-25-50-01a0e831-730d-7171-b8c7-37ee389cf8a2.jsonl",
+  "cwd": "/Users/garry/code/multi-repo-benchmark/java-spring-recommended",
+  "api_turns": 24,
+  "tool_calls_total": 23,
+  "file_edits": 5,
+  "shell_execs": 18,
+  "reasoning_steps": 36,
+  "input_tokens": 1193801,
+  "cached_input_tokens": 1118208,
+  "output_tokens": 19199,
+  "reasoning_output_tokens": 11240,
+  "total_tokens": 1213000
+}

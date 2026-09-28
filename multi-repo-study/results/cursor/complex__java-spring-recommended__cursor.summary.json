@@ -1,0 +1,27 @@
+{
+  "cell": "complex__java-spring-recommended__cursor",
+  "repo": "java-spring-recommended",
+  "task": "complex",
+  "model": "auto",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 727,
+  "verification": {
+    "test_exit_code": 0,
+    "tests_passed": 58,
+    "tests_failed": 0,
+    "tests_errored": 0
+  },
+  "real_usage": {
+    "tool_calls_total": 170,
+    "file_edits": 36,
+    "shell_execs": 134,
+    "input_tokens": 285331,
+    "cached_input_tokens": 6741376,
+    "output_tokens": 56020,
+    "total_tokens": 341351,
+    "duration_ms": 661629,
+    "is_error": false,
+    "session_id": "b29d7984-811b-4155-a0cd-78bbdbbaa1bf"
+  }
+}

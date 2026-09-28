@@ -1,0 +1,8 @@
+Implemented the `OrderItem.SetNewDiscount` validation gap.
+
+- Added total-vs-discount guard using the constructor’s existing exception message.
+- Preserved negative-discount validation.
+- Added regression test.
+- Added ignored `RUN_METRICS.json`.
+
+Tests: `44 passed, 0 failed` via the prescribed `dotnet test` command.

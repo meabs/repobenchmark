@@ -1,0 +1,27 @@
+{
+  "cell": "understanding__java-spring-baseline",
+  "repo": "java-spring-baseline",
+  "task": "understanding",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 321,
+  "run_metrics_present": true,
+  "verification": {
+    "answer_present": true,
+    "unexpected_file_changes": 0
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/28/rollout-2026-09-28T13-55-40-01a0e815-d6ee-7521-9c76-cf736aa86458.jsonl",
+    "cwd": "/Users/garry/code/multi-repo-benchmark/java-spring-baseline",
+    "api_turns": 23,
+    "tool_calls_total": 22,
+    "file_edits": 4,
+    "shell_execs": 18,
+    "reasoning_steps": 34,
+    "input_tokens": 1134694,
+    "cached_input_tokens": 1014016,
+    "output_tokens": 15609,
+    "reasoning_output_tokens": 9264,
+    "total_tokens": 1150303
+  }
+}

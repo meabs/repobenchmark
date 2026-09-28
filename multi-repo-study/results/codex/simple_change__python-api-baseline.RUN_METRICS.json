@@ -1,0 +1,105 @@
+{
+  "repo": "python-api-baseline",
+  "task": "simple_change",
+  "start_time": "2026-09-28T10:54:13Z",
+  "end_time": "2026-09-28T11:10:05Z",
+  "duration_seconds": 952,
+  "time_to_first_edit_seconds": 37,
+  "tool_calls": {
+    "read": 7,
+    "edit_or_write": 6,
+    "bash": 23,
+    "search_or_grep": 5,
+    "other": 32,
+    "total": 73
+  },
+  "files_read": [
+    "/Users/garry/.agents/skills/using-superpowers/SKILL.md",
+    "/Users/garry/.agents/skills/tdd/SKILL.md",
+    "pyproject.toml",
+    "tox.ini",
+    "setup.cfg",
+    "Makefile",
+    "tests/conftest.py",
+    "tests/settings.py",
+    "sandbox/settings.py",
+    "sandbox/settings_postgres.py",
+    "sandbox/test_migrations.sh",
+    "requirements_migrations.txt",
+    "src/oscar/apps/catalogue/abstract_models.py",
+    "src/oscar/apps/catalogue/managers.py",
+    "src/oscar/apps/catalogue/models.py",
+    "src/oscar/apps/catalogue/migrations/0028_product_priority.py",
+    "src/oscar/apps/catalogue/migrations/0031_productcategoryhierarchy.py",
+    "src/oscar/apps/catalogue/migrations/0032_category_exclude_from_menu_category_long_description.py",
+    "tests/unit/catalogue/test_managers.py",
+    "tests/_site/apps/catalogue/apps.py",
+    "tests/_site/apps/catalogue/models.py",
+    ".gitignore",
+    "RUN_METRICS.json"
+  ],
+  "files_created_or_edited": [
+    ".gitignore",
+    "src/oscar/apps/catalogue/abstract_models.py",
+    "src/oscar/apps/catalogue/managers.py",
+    "src/oscar/apps/catalogue/migrations/0033_product_is_featured.py",
+    "tests/_site/apps/catalogue/migrations/0033_product_is_featured.py",
+    "tests/unit/catalogue/test_managers.py",
+    "RUN_METRICS.json"
+  ],
+  "timeline": [
+    {
+      "time": "2026-09-28T10:54:13Z",
+      "event": "start_time recorded"
+    },
+    {
+      "time": "2026-09-28T10:54:50Z",
+      "event": "explored repository and identified model, queryset, tests, migration chain, and test-app override"
+    },
+    {
+      "time": "2026-09-28T10:54:50Z",
+      "event": "first file edit: added the featured queryset test"
+    },
+    {
+      "time": "2026-09-28T10:54:50Z",
+      "event": "wrote the new behavior test"
+    },
+    {
+      "time": "2026-09-28T10:56:55Z",
+      "event": "generated catalogue migration 0033_product_is_featured"
+    },
+    {
+      "time": "2026-09-28T10:59:18Z",
+      "event": "catalogue unit tests passed"
+    },
+    {
+      "time": "2026-09-28T11:07:53Z",
+      "event": "full PostgreSQL test suite passed; final checks complete"
+    },
+    {
+      "time": "2026-09-28T11:10:05Z",
+      "event": "fresh PostgreSQL database migrated from zero through catalogue.0033 and was removed"
+    },
+    {
+      "time": "2026-09-28T11:10:05Z",
+      "event": "done and end_time recorded"
+    }
+  ],
+  "definition_of_done": {
+    "field_added": true,
+    "migration_written_and_applies": true,
+    "featured_method_correct": true,
+    "excludes_nonfeatured_and_nonpublic": true,
+    "new_test_added_and_passes": true,
+    "no_ui_touched": true
+  },
+  "docs_consulted": [],
+  "blockers_hit": [
+    "The initial pytest command was unavailable; the repository test extra was installed into a local .venv with Django 5.2.4.",
+    "A SQLite full-suite run had four unrelated failures caused by SQLite locking and existing Treebeard category state; the intended PostgreSQL run passed all tests.",
+    "The direct test-settings makemigrations check reports pre-existing admin/URL system-check errors and an unrelated pending migration; the sandbox migration check passed with no changes.",
+    "2026-09-28T10:59:18Z to 2026-09-28T11:10:05Z: ran the full SQLite and PostgreSQL suites, fresh PostgreSQL migration check, migration checks, and final formatting/diff verification."
+  ],
+  "self_assessed_completion": "complete",
+  "notes": "Small scoped model/query change was straightforward. The test suite uses a catalogue app override with a mirrored migration chain, so the new generated migration was mirrored under tests/_site as required for migrated test databases. The canonical migration was also applied successfully to a fresh PostgreSQL database."
+}

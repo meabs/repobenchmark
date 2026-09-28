@@ -1,0 +1,9 @@
+Implemented and verified.
+
+- Added `CategoryCoverageCondition` via Oscar’s existing `Condition.TYPE_CHOICES` → `proxy_map` mechanism.
+- Uses configurable `Condition.value` and counts distinct category IDs within the condition range.
+- Added threshold tests and a real `ConditionalOffer` → `Basket` → `Order` integration test.
+- Added state-only migration `0014...`; no physical database schema change.
+- Added ignored `RUN_METRICS.json`.
+
+Verification: `venv/bin/py.test -q tests/` → **1795 passed, 1 skipped**.

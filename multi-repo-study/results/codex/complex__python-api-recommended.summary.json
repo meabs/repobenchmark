@@ -1,0 +1,27 @@
+{
+  "cell": "complex__python-api-recommended",
+  "repo": "python-api-recommended",
+  "task": "complex",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 1650,
+  "run_metrics_present": true,
+  "verification": {
+    "test_exit_code": 0,
+    "test_summary_line": "1795 passed, 1 skipped, 3745 warnings, 104 subtests passed in 430.16s (0:07:10)"
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/28/rollout-2026-09-28T13-20-49-01a0e7f5-f013-7c10-bd55-d99b04182f1a.jsonl",
+    "cwd": "/Users/garry/code/multi-repo-benchmark/python-api-recommended",
+    "api_turns": 115,
+    "tool_calls_total": 114,
+    "file_edits": 7,
+    "shell_execs": 107,
+    "reasoning_steps": 130,
+    "input_tokens": 11199122,
+    "cached_input_tokens": 10980608,
+    "output_tokens": 31600,
+    "reasoning_output_tokens": 17759,
+    "total_tokens": 11230722
+  }
+}

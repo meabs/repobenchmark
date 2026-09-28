@@ -1,0 +1,76 @@
+You're working in this repo: django-oscar, a Django e-commerce framework
+distributed as a set of overridable Django apps under `src/oscar/apps/`, plus
+a `sandbox/` reference project and a `tests/` suite.
+
+Task: answer the following five questions about this codebase by writing your
+answers to a new file, ANSWER.md, at the repo root. Do not edit any other file
+— this task is comprehension only, not a code change. Be precise: name exact
+files, functions, and line-level behavior where relevant, not general
+descriptions.
+
+1. Trace how `get_class("catalogue.forms", "ProductForm")` (in
+   `src/oscar/core/loading.py`) decides whether to return Oscar's own
+   `ProductForm` or a project-specific override: name every function involved
+   and the exact registry check that determines which app "owns" a given
+   module label.
+2. `src/oscar/apps/catalogue/models.py` defines `Product` as
+   `class Product(AbstractProduct): pass` inside an `if not
+   is_model_registered(...)` block. What does `is_model_registered` actually
+   check, and what would happen at runtime if two different apps in
+   `INSTALLED_APPS` both tried to define a concrete `Product` model?
+3. Does `sandbox/` (the repo's reference Django project) override/fork any
+   Oscar apps in its `INSTALLED_APPS`? Answer precisely — if you claim yes,
+   name which app(s) and where; if no, name the one place elsewhere in this
+   repo that actually does fork Oscar apps in a live `INSTALLED_APPS` list,
+   and how many apps it forks.
+4. In `src/oscar/apps/offer/abstract_models.py`, `AbstractCondition` has both
+   a `type` field (with `TYPE_CHOICES`) and a separate `proxy_class` field.
+   Explain what each is for and, concretely, what happens if someone defines
+   `class MyCondition(AbstractCondition): ...` as a plain Django subclass and
+   expects Oscar's offer engine to use its `is_satisfied` method — will it
+   work? Why or why not?
+5. Name the exact database engine and connection defaults `tests/settings.py`
+   uses when running the test suite, and name the specific environment
+   variable that would let you point it at a different database name.
+
+Work through this yourself — explore the codebase as needed.
+
+---
+METRICS PROTOCOL (do this regardless of the task above — it does not count as
+part of the deliverable and should not be committed):
+
+1. Immediately, before doing anything else, run `date -u +%FT%TZ` and record
+   it as `start_time`.
+2. As you work, keep a running timeline: each time you finish answering one
+   question, append one line with a timestamp (`date -u +%FT%TZ`) and which
+   question number you just answered. If any gap between two consecutive
+   timeline events exceeds 5 minutes, record what you were doing during that
+   gap.
+3. Keep a running tally of tool calls by type as you go (file reads, bash
+   commands, searches/greps) — don't reconstruct this from memory at the end.
+4. Note the timestamp of your first write to ANSWER.md — this is "time to
+   first edit" for this task (should be late, since you're meant to research
+   before writing here).
+5. When done, run `date -u +%FT%TZ` for `end_time`, then write a single JSON
+   file to `RUN_METRICS.json` at the repo root with this shape:
+
+{
+  "repo": "python-api-recommended",
+  "task": "understanding",
+  "start_time": "...",
+  "end_time": "...",
+  "duration_seconds": <int>,
+  "time_to_first_edit_seconds": <int>,
+  "tool_calls": {"read": <int>, "edit_or_write": <int>, "bash": <int>, "search_or_grep": <int>, "other": <int>, "total": <int>},
+  "files_read": [...],
+  "files_created_or_edited": ["ANSWER.md"],
+  "timeline": [{"time": "...", "event": "..."}, ...],
+  "questions_answered": <int, out of 5>,
+  "docs_consulted": [],
+  "blockers_hit": ["one line per blocker, or any >5min gap and why"],
+  "self_assessed_completion": "complete | partial | blocked",
+  "notes": "how confident are you in each answer, and why"
+}
+
+6. Add `RUN_METRICS.json` to `.gitignore` (create the entry if it's not
+   already there).

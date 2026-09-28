@@ -1,0 +1,10 @@
+Implemented client-side discussion sorting:
+
+- Added labeled select: “Newest first” (default) / “Oldest first”.
+- Sorts only the fetched page by `createdAt`.
+- Pagination and hover prefetch behavior unchanged.
+- Added colocated test verifying row reordering.
+
+Validation: `npx vitest run` passes — 13 files, 22 tests. TypeScript, ESLint, Prettier, and UI detector also pass.
+
+Updated [discussions-list.tsx](/Users/garry/code/multi-repo-benchmark/react-frontend-baseline/apps/react-vite/src/features/discussions/components/discussions-list.tsx) and [discussions-list.test.tsx](/Users/garry/code/multi-repo-benchmark/react-frontend-baseline/apps/react-vite/src/features/discussions/components/__tests__/discussions-list.test.tsx). Metrics recorded in ignored `RUN_METRICS.json`.

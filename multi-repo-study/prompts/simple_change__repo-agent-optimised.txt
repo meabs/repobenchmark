@@ -1,0 +1,62 @@
+You're working in this repo: a FastAPI + SQLModel + PostgreSQL backend with a
+React/TypeScript frontend (TanStack Router, generated API client).
+
+This repo has an agent-oriented documentation layer on top of the application code.
+Start by reading AGENTS.md at the repo root — it's the entry point and links to:
+- docs/ard/ (Architecture Decision Records — why things are built the way they are)
+- docs/api/openapi.json (the real, current API schema)
+- okf/ (Open Knowledge Format docs — what each service, DB table, and router does,
+  cross-linked)
+Use these as your primary source of truth before reading raw source.
+
+Task: add optional sorting to the item listing endpoint.
+
+Requirements:
+1. Add an `order_by: Literal["created_at", "title"] = "created_at"` query parameter
+   to `read_items` in `backend/app/api/routes/items.py`.
+2. When `order_by="title"`, order results by `Item.title` ascending. When omitted or
+   `"created_at"`, keep the existing behavior unchanged (ordered by `created_at`
+   descending).
+3. No migration needed — no schema change. No frontend change needed; do not
+   regenerate the frontend client for this task, it's out of scope.
+4. Add a backend test verifying both orderings return items in the correct order.
+
+Definition of done:
+- Existing backend tests still pass; the new test passes.
+- No migration file created. No frontend files touched.
+
+---
+METRICS PROTOCOL (do this regardless of the task above — it does not count as part of
+the deliverable and should not be committed):
+
+1. Immediately, before doing anything else, run `date -u +%FT%TZ` and record it as
+   `start_time`.
+2. As you work, keep a running timeline with timestamps (`date -u +%FT%TZ`) for each
+   distinct phase (read docs, explored repo, first edit, wrote test, ran tests,
+   done). If any gap between two consecutive events exceeds 5 minutes, record what
+   you were doing.
+3. Keep a running tally of tool calls by type as you go — don't reconstruct this
+   from memory at the end.
+4. Note the timestamp of your first file edit/write (distinct from read/explore).
+5. When done, run `date -u +%FT%TZ` for `end_time`, then write a single JSON file to
+   `RUN_METRICS.json` at the repo root with this shape:
+
+{
+  "repo": "repo-agent-optimised",
+  "task": "simple_change",
+  "start_time": "...",
+  "end_time": "...",
+  "duration_seconds": <int>,
+  "time_to_first_edit_seconds": <int>,
+  "tool_calls": {"read": <int>, "edit_or_write": <int>, "bash": <int>, "search_or_grep": <int>, "other": <int>, "total": <int>},
+  "files_read": [...],
+  "files_created_or_edited": [...],
+  "timeline": [{"time": "...", "event": "..."}, ...],
+  "definition_of_done": {"order_by_param_added": true/false, "title_ordering_correct": true/false, "default_ordering_unchanged": true/false, "new_test_added_and_passes": true/false, "no_migration_created": true/false, "no_frontend_touched": true/false},
+  "docs_consulted": ["which of AGENTS.md / docs/ard/* / docs/api/openapi.json / okf/* you actually opened, and roughly how you used each"],
+  "blockers_hit": ["one line per blocker, or any >5min gap and why"],
+  "self_assessed_completion": "complete | partial | blocked",
+  "notes": "how much the docs helped for a small, scoped change specifically — did reading AGENTS.md/ARD cost more than it saved for a change this size?"
+}
+
+6. Add `RUN_METRICS.json` to `.gitignore` (create the entry if it's not already there).

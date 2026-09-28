@@ -1,0 +1,58 @@
+{
+  "repo": "java-spring (spring-petclinic, Boot 4.1)",
+  "method": "Blind: answers read as unlabeled A-D (A=cursor-recommended, B=codex-baseline, C=codex-recommended, D=cursor-baseline; key revealed only after scoring). Ground truth from java-spring-src source. 2=correct+precise, 1=partly/vague/minor error, 0=wrong. Files used: post-JavaFix codex ANSWER.md, cursor ANSWER.md.",
+  "ground_truth": {
+    "q1": "OwnerController.findOwner (@ModelAttribute) -> OwnerRepository.findById; showOwner then calls findById a 2nd time -> owners/ownerDetails.html. Missing id: IllegalArgumentException thrown in findOwner (showOwner never runs), unhandled -> HTTP 500 via error.html.",
+    "q2": "Not reachable on normal submit: (1) findOwner @ModelAttribute preloads entity by path id; (2) setAllowedFields @InitBinder setDisallowedFields(\"id\",\"*.id\").",
+    "q3": "Not a bug: VetRepository extends Repository<Vet,Integer> and exposes only two read-only cached findAll overloads; no mutator to evict on.",
+    "q4": "spring.jpa.hibernate.ddl-auto=none, schema from db/<database>/schema.sql; mapped column some_field missing -> SQL error (SELECT and INSERT/UPDATE). Must edit h2/mysql/postgres schema.sql AND h2 + mysql data.sql (positional 'INSERT ... VALUES (...)' with 6 values breaks once owners has 7 columns; postgres data.sql names columns so is safe).",
+    "q5": "MySqlIntegrationTests, @Testcontainers(disabledWithoutDocker = true), 2 @Test methods. Trap: PostgresIntegrationTests has 2 tests but gates via assumeTrue in @BeforeAll (class abort, 0 run), not an annotation, not part of the 2 skips."
+  },
+  "scores": {
+    "codex-baseline":    {"q1": 1, "q2": 2, "q3": 2, "q4": 1, "q5": 2, "total": 8},
+    "codex-recommended": {"q1": 2, "q2": 2, "q3": 2, "q4": 1, "q5": 2, "total": 9},
+    "cursor-baseline":   {"q1": 2, "q2": 2, "q3": 2, "q4": 2, "q5": 2, "total": 10},
+    "cursor-recommended":{"q1": 2, "q2": 2, "q3": 2, "q4": 1, "q5": 2, "total": 9}
+  },
+  "justifications": {
+    "codex-baseline": {
+      "q1": "Correct chain and double findById, but never states the outcome of a missing id beyond 'exception' (no 500 / error.html) and omits the locale interceptor.",
+      "q2": "Both mechanisms named correctly with line refs.",
+      "q3": "Correct: Repository<Vet,Integer>, two read-only findAll methods, no mutators.",
+      "q4": "Correct property and schema files, but omits the positional data.sql inserts (h2/mysql) that break startup once the column is added.",
+      "q5": "Correct class, annotation, 2 tests; concise, does not address the Postgres near-miss."
+    },
+    "codex-recommended": {
+      "q1": "Correct chain, double findById, missing-id -> IllegalArgumentException in findOwner -> error.html 500. Omits locale interceptor (minor).",
+      "q2": "Both mechanisms correct.",
+      "q3": "Correct with exact method list.",
+      "q4": "Correct property, all three schema files, notes SELECT also fails; omits data.sql positional-insert breakage.",
+      "q5": "Correct class, annotation, and test names."
+    },
+    "cursor-baseline": {
+      "q1": "Most complete: interceptor, findOwner branch, eager fetch, double lookup, 500 via BasicErrorController/error.html.",
+      "q2": "Both mechanisms, plus the flashAttr test route to reach the branch.",
+      "q3": "Correct, adds that vets come from SQL seed only.",
+      "q4": "Only answer that correctly says h2/mysql data.sql use positional inserts and must be updated, postgres does not. Fully matches ground truth.",
+      "q5": "Correct, and correctly explains PostgresIntegrationTests uses assumeTrue (trap handled)."
+    },
+    "cursor-recommended": {
+      "q1": "Very thorough and correct; includes 500 status, error.html, single vs double findById.",
+      "q2": "Both mechanisms correct, plus test-only route.",
+      "q3": "Correct.",
+      "q4": "Correct property and schema files, but states 'A nullable @Column String does not require data.sql changes', which is wrong for h2/mysql positional inserts once the schema column is added.",
+      "q5": "Correct, and handles the Postgres assumeTrue trap explicitly."
+    }
+  },
+  "trap_question": "Q5 (Postgres vs MySQL skip source) - all four answered the asked question correctly; only cursor-baseline and cursor-recommended also called out the Postgres assumeTrue distinction. Q2 (check looks live but is not) - all four got it. Q4 hidden trap (data.sql positional inserts) - only cursor-baseline caught it.",
+  "doc_errors_found": [
+    {
+      "file": "java-spring-recommended/.agents/skills/add-entity-field/SKILL.md step 2",
+      "issue": "Says data.sql needs updating only 'if existing seed rows need a value for the new column' and ties the failure to a NOT NULL column. In fact h2 and mysql data.sql use positional 'INSERT ... VALUES' with no column list, so ANY added column (nullable or not) breaks seed loading unless data.sql is edited. The doc understates and misattributes the hazard.",
+      "traced_answer_error": "Plausibly contributed to cursor-recommended's false claim that a nullable column needs no data.sql change (cursor-baseline, with no doc, got this right). Cannot prove the agent read this skill for the comprehension task; codex-recommended and codex-baseline also omitted data.sql, so the omission is not doc-specific."
+    }
+  ],
+  "no_doc_errors_on": ["Q2 (okf/web/controllers.md correct)", "Q5 (okf/testing/profiles.md correct incl. Postgres nuance)", "Q1", "Q3"],
+  "verdict": "All four answers are broadly correct (8-10 of 10). No wrong answers (no 0s). Recommended docs did not reduce accuracy; codex-recommended scored one point above codex-baseline (better Q1 outcome detail), cursor-recommended one below cursor-baseline (Q4 data.sql claim), both within n=1 noise. One real doc defect (add-entity-field data.sql wording) is a candidate cause of the single confident-but-wrong statement, consistent with the 'docs can create overconfidence' theme. Strictness note: Q4 scoring counts the data.sql omission as a partial; if the grader treats data.sql as out of scope, totals become 9/10/10/10 with no doc-attributable error.",
+  "caveat": "Bash was temporarily unavailable at the end; docs review used Read on AGENTS.md, okf/index.md, okf/web/controllers.md, okf/testing/profiles.md, add-entity-field/SKILL.md. Other skills (verify-work, add-repository-query, add-read-view, run-full-profile-suite) and okf/domain were not read."
+}

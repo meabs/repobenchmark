@@ -1,0 +1,27 @@
+{
+  "cell": "simple_change__react-frontend-recommended",
+  "repo": "react-frontend-recommended",
+  "task": "simple_change",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 532,
+  "run_metrics_present": true,
+  "verification": {
+    "test_exit_code": 0,
+    "test_summary_line": "Test Files  13 passed (13)"
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/28/rollout-2026-09-28T15-15-21-01a0e85e-c894-7a02-9665-741b4c766a55.jsonl",
+    "cwd": "/Users/garry/code/multi-repo-benchmark/react-frontend-recommended",
+    "api_turns": 47,
+    "tool_calls_total": 45,
+    "file_edits": 4,
+    "shell_execs": 41,
+    "reasoning_steps": 59,
+    "input_tokens": 2241485,
+    "cached_input_tokens": 2098432,
+    "output_tokens": 19900,
+    "reasoning_output_tokens": 11194,
+    "total_tokens": 2261385
+  }
+}

@@ -1,0 +1,63 @@
+You're working in this repo: a Spring Framework (not Spring Boot) PetClinic
+application — plain XML `ApplicationContext` configuration, JSP views, a 3-layer
+architecture (web → service → repository), built with Maven.
+
+Task: add an optional `email` field to `Owner`.
+
+Requirements:
+1. Add a nullable `email` (String) field to the `Owner` entity.
+2. The new field must be correctly read and written under all three repository
+   profiles this codebase supports for `OwnerRepository` (find them yourself — the
+   codebase has more than one implementation of this interface, and they are not
+   equally affected by this kind of change).
+3. Add the column to the H2 schema used by the test suite. You do not need to touch
+   the other database-dialect schema files.
+4. Add one test to the repository's existing shared service-level test base class
+   (not to an individual profile-specific test subclass) that creates an `Owner`
+   with an `email` set, saves it, reloads it, and asserts the email round-trips
+   correctly. Placing it correctly should make it run against all three profiles
+   automatically — do not hand-write three separate copies of the same test.
+5. No JSP/UI changes required — this task is backend-only.
+
+Definition of done:
+- Existing tests still pass, and your new test passes under all three
+  repository-implementation test classes (not just one).
+- No frontend/JSP files touched.
+
+Work through this yourself — explore the codebase as needed and match its existing
+conventions.
+
+---
+METRICS PROTOCOL (do this regardless of the task above — it does not count as part of
+the deliverable and should not be committed):
+
+1. Immediately, before doing anything else, run `date -u +%FT%TZ` and record it as
+   `start_time`.
+2. As you work, keep a running timeline with timestamps (`date -u +%FT%TZ`) for each
+   distinct phase (explored repo, first edit, wrote test, ran tests, done). If any
+   gap between two consecutive events exceeds 5 minutes, record what you were doing.
+3. Keep a running tally of tool calls by type as you go — don't reconstruct this
+   from memory at the end.
+4. Note the timestamp of your first file edit/write (distinct from read/explore).
+5. When done, run `date -u +%FT%TZ` for `end_time`, then write a single JSON file to
+   `RUN_METRICS.json` at the repo root with this shape:
+
+{
+  "repo": "legacy-enterprise-recommended",
+  "task": "simple_change",
+  "start_time": "...",
+  "end_time": "...",
+  "duration_seconds": <int>,
+  "time_to_first_edit_seconds": <int>,
+  "tool_calls": {"read": <int>, "edit_or_write": <int>, "bash": <int>, "search_or_grep": <int>, "other": <int>, "total": <int>},
+  "files_read": [...],
+  "files_created_or_edited": [...],
+  "timeline": [{"time": "...", "event": "..."}, ...],
+  "definition_of_done": {"email_field_added": true/false, "jpa_profile_correct": true/false, "springdatajpa_profile_correct": true/false, "jdbc_profile_correct": true/false, "h2_schema_updated": true/false, "shared_test_added_runs_under_all_three_profiles": true/false, "no_jsp_touched": true/false},
+  "docs_consulted": [],
+  "blockers_hit": ["one line per blocker, or any >5min gap and why"],
+  "self_assessed_completion": "complete | partial | blocked",
+  "notes": "anything relevant to how easy or hard orientation was for a small, scoped change in this repo, especially around the 3-repository-implementation structure"
+}
+
+6. Add `RUN_METRICS.json` to `.gitignore` (create the entry if it's not already there).

@@ -1,0 +1,8 @@
+Completed:
+
+- [ANSWER.md](/Users/garry/code/multi-repo-benchmark/java-spring-baseline/ANSWER.md) with all five answers.
+- `RUN_METRICS.json` created and ignored.
+- `.gitignore` updated as requested.
+- No application source files changed.
+
+`./mvnw test` could not run because no Java runtime is installed.

@@ -1,0 +1,1471 @@
+<title>The Recommended Repo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --page: #f3f5f7;
+    --surface: #ffffff;
+    --surface-2: #eef1f4;
+    --ink: #161b22;
+    --ink-soft: #4c5563;
+    --ink-faint: #7b8494;
+    --line: #dde2e8;
+    --line-soft: #e9edf1;
+
+    --c-baseline: #6b7280;
+    --c-optimised: #b8412e;
+    --c-skillv1: #9a8b3f;
+    --c-skillv2: #6f8f3f;
+    --c-skillv3: #1f7a6c;
+    --c-recommended: #9a5a12;
+
+    --good: #1f7a54;
+    --bad: #b8412e;
+    --warn: #9a7412;
+
+    --radius: 10px;
+    --mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+    --sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --page: #12151a;
+      --surface: #1a1e25;
+      --surface-2: #20252d;
+      --ink: #e8ebf0;
+      --ink-soft: #a6adba;
+      --ink-faint: #737c8c;
+      --line: #2b313b;
+      --line-soft: #232830;
+
+      --c-baseline: #8b93a3;
+      --c-optimised: #e0785f;
+      --c-skillv1: #c9b661;
+      --c-skillv2: #9fc164;
+      --c-skillv3: #4fb8a4;
+      --c-recommended: #e0a23f;
+
+      --good: #4fb884;
+      --bad: #e0785f;
+      --warn: #e0a23f;
+    }
+  }
+  :root[data-theme="dark"] {
+    --page: #12151a;
+    --surface: #1a1e25;
+    --surface-2: #20252d;
+    --ink: #e8ebf0;
+    --ink-soft: #a6adba;
+    --ink-faint: #737c8c;
+    --line: #2b313b;
+    --line-soft: #232830;
+
+    --c-baseline: #8b93a3;
+    --c-optimised: #e0785f;
+    --c-skillv1: #c9b661;
+    --c-skillv2: #9fc164;
+    --c-skillv3: #4fb8a4;
+    --c-recommended: #e0a23f;
+
+    --good: #4fb884;
+    --bad: #e0785f;
+    --warn: #e0a23f;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  main {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+  }
+  h1, h2, h3 { text-wrap: balance; font-weight: 600; }
+  code, .mono { font-family: var(--mono); }
+  a { color: var(--c-recommended); }
+
+  /* masthead */
+  header.masthead {
+    padding: 56px 0 32px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 36px;
+  }
+  .eyebrow {
+    display: flex; align-items: center; gap: 8px;
+    font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--ink-faint); margin-bottom: 14px;
+  }
+  .eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--c-recommended); }
+  h1.title {
+    font-size: clamp(32px, 5vw, 46px);
+    line-height: 1.05; margin: 0 0 16px; letter-spacing: -0.01em;
+  }
+  p.dek {
+    font-size: 18px; color: var(--ink-soft); max-width: 62ch; margin: 0 0 26px;
+  }
+  .legend-row { display: flex; flex-wrap: wrap; gap: 10px 18px; }
+  .legend-chip {
+    display: flex; align-items: center; gap: 7px;
+    font-family: var(--mono); font-size: 12.5px; color: var(--ink-soft);
+    padding: 5px 10px 5px 8px; background: var(--surface); border: 1px solid var(--line); border-radius: 999px;
+  }
+  .legend-chip .sw { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+
+  /* generic section chrome */
+  section { margin: 44px 0; }
+  h2.h {
+    font-family: var(--mono); font-size: 12.5px; letter-spacing: .09em; text-transform: uppercase;
+    color: var(--ink-faint); border-bottom: 1px solid var(--line); padding-bottom: 10px; margin: 0 0 20px;
+    display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+  }
+  h2.h span.tag { font-family: var(--sans); text-transform: none; letter-spacing: 0; font-size: 12px; color: var(--ink-faint); }
+  h3.sub { font-size: 19px; margin: 30px 0 10px; }
+  p { color: var(--ink); }
+  p.note { color: var(--ink-soft); font-size: 14px; }
+
+  /* verdict */
+  .verdict {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 26px 26px 22px; break-inside: avoid;
+  }
+  .verdict .pick {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--mono); font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--c-recommended); margin-bottom: 10px;
+  }
+  .verdict .pick::before { content: ""; width: 10px; height: 10px; border-radius: 2px; background: var(--c-recommended); }
+  .verdict h3 { margin: 0 0 12px; font-size: 22px; }
+  .verdict p { margin: 0 0 12px; }
+  .verdict p:last-child { margin-bottom: 0; }
+  .verdict b { color: var(--ink); }
+
+  /* callout / methodology note */
+  .callout {
+    background: var(--surface-2); border-left: 3px solid var(--c-skillv3); border-radius: 0 8px 8px 0;
+    padding: 14px 18px; margin: 16px 0; font-size: 14px; color: var(--ink-soft);
+  }
+  .callout b { color: var(--ink); }
+
+  /* stat grid */
+  .stat-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1px;
+    background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
+  }
+  .stat-tile { background: var(--surface); padding: 16px 18px; }
+  .stat-tile .lbl { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 6px; }
+  .stat-tile .val { font-family: var(--mono); font-size: 24px; font-weight: 600; }
+  .stat-tile .sub { font-size: 12.5px; color: var(--ink-soft); margin-top: 4px; }
+
+  /* tables */
+  .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th, td { padding: 9px 13px; text-align: left; white-space: nowrap; border-bottom: 1px solid var(--line-soft); }
+  thead th {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-faint);
+    background: var(--surface-2); position: sticky; top: 0;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  td.num, th.num { font-family: var(--mono); text-align: right; font-variant-numeric: tabular-nums; }
+  td.name { font-weight: 500; }
+  tr.hl td { background: color-mix(in srgb, var(--c-recommended) 10%, transparent); }
+  .swatch { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 7px; vertical-align: 1px; }
+  .sign-yes { color: var(--good); font-weight: 600; }
+  .sign-no { color: var(--ink-faint); }
+
+  /* bar chart (hand-built, no library) */
+  .chart-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+  .chart-title { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+  .chart-sub { font-size: 12.5px; color: var(--ink-faint); margin-bottom: 18px; }
+  .bars { display: flex; flex-direction: column; gap: 14px; }
+  .bar-row { display: grid; grid-template-columns: 130px 1fr 74px; align-items: center; gap: 10px; }
+  .bar-row .rlabel { font-family: var(--mono); font-size: 12.5px; color: var(--ink-soft); display: flex; align-items: center; gap: 7px; }
+  .bar-track { position: relative; height: 20px; background: var(--surface-2); border-radius: 5px; overflow: visible; }
+  .bar-fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 5px; }
+  .bar-row .rval { font-family: var(--mono); font-size: 12.5px; text-align: right; font-variant-numeric: tabular-nums; }
+  .task-panels { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 16px; }
+
+  /* discovery grid */
+  .disc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  @media (max-width: 640px) { .disc-grid { grid-template-columns: 1fr; } }
+  .disc-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; }
+  .disc-card .tname { font-weight: 600; margin-bottom: 10px; }
+  .skill-pill {
+    display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11.5px;
+    padding: 3px 9px; border-radius: 999px; margin: 0 5px 5px 0;
+  }
+  .skill-pill.hit { background: color-mix(in srgb, var(--good) 16%, transparent); color: var(--good); }
+  .skill-pill.skip { background: var(--surface-2); color: var(--ink-faint); text-decoration: line-through; }
+  .disc-card .rate { font-family: var(--mono); font-size: 22px; font-weight: 600; color: var(--good); margin-top: 12px; }
+  .disc-card .rate-sub { font-size: 12px; color: var(--ink-faint); }
+
+  blockquote.quote {
+    margin: 10px 0; padding: 10px 14px; border-left: 2px solid var(--line);
+    font-size: 13px; color: var(--ink-soft); font-style: italic;
+  }
+  blockquote.quote cite { display: block; margin-top: 5px; font-style: normal; font-family: var(--mono); font-size: 11px; color: var(--ink-faint); }
+
+  /* code samples */
+  .code-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin: 14px 0; }
+  .code-head {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    padding: 10px 16px; background: var(--surface-2); border-bottom: 1px solid var(--line);
+    font-family: var(--mono); font-size: 12px; color: var(--ink-soft);
+  }
+  .code-head .path { color: var(--ink); }
+  .code-head .badge { font-size: 10.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-faint); }
+  pre.code {
+    margin: 0; padding: 16px 18px; overflow-x: auto; font-family: var(--mono); font-size: 12.5px; line-height: 1.65;
+    color: var(--ink);
+  }
+  pre.code .cm { color: var(--ink-faint); }
+  pre.code .kw { color: var(--c-recommended); }
+  pre.code .str { color: var(--c-skillv3); }
+  pre.code .new { background: color-mix(in srgb, var(--good) 14%, transparent); display: block; margin: 0 -18px; padding: 0 18px; }
+
+  /* directory tree */
+  .tree-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 24px; }
+  .tree { font-family: var(--mono); font-size: 13px; line-height: 2; white-space: pre; }
+  .tree .annot { font-family: var(--sans); font-style: normal; color: var(--ink-faint); font-size: 12px; white-space: normal; }
+  .tree .dir { color: var(--c-recommended); font-weight: 600; }
+  .tree .newf { color: var(--good); font-weight: 500; }
+  .tree-row { display: grid; grid-template-columns: 340px 1fr; gap: 18px; align-items: baseline; }
+
+  footer {
+    margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--line);
+    font-size: 12.5px; color: var(--ink-faint); font-family: var(--mono); line-height: 1.9;
+  }
+
+  @media (max-width: 640px) {
+    .bar-row { grid-template-columns: 88px 1fr 60px; }
+    .disc-grid { grid-template-columns: 1fr; }
+    th, td { white-space: normal; }
+  }
+
+  /* diverging bar chart — per-repo % delta, centered at 0 */
+  #raw-data td:last-child { white-space: normal; min-width: 220px; }
+  #raw-data .table-wrap { overflow-x: auto; }
+  .dv-stack { display: grid !important; grid-template-columns: 1fr !important; }
+  .diverges { display: flex; flex-direction: column; gap: 12px; }
+  .diverge-row { display: grid; grid-template-columns: 132px 1fr 62px; align-items: center; gap: 10px; }
+  .diverge-row .rlabel { font-family: var(--mono); font-size: 12.5px; color: var(--ink-soft); }
+  .diverge-track { position: relative; height: 18px; background: var(--surface-2); border-radius: 4px; }
+  .diverge-track .center-line { position: absolute; left: 50%; top: -3px; bottom: -3px; width: 1px; background: var(--line); }
+  .diverge-fill { position: absolute; top: 1px; bottom: 1px; border-radius: 3px; }
+  .diverge-fill.neg { right: 50%; background: var(--good); }
+  .diverge-fill.pos { left: 50%; background: var(--bad); }
+  .diverge-row .rval { font-family: var(--mono); font-size: 12.5px; text-align: right; font-variant-numeric: tabular-nums; }
+  @media (max-width: 640px) { .tree { overflow-x: auto; } .tree-row { grid-template-columns: 1fr; gap: 2px; } }
+  @media (max-width: 640px) { .diverge-row { grid-template-columns: 92px 1fr 54px; } }
+
+  /* repo roster cards */
+  .repo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+  .repo-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; }
+  .repo-card .rname { font-weight: 600; margin-bottom: 4px; }
+  .repo-card .rstack { font-family: var(--mono); font-size: 11.5px; color: var(--c-recommended); margin-bottom: 8px; }
+  .repo-card .rwhy { font-size: 13px; color: var(--ink-soft); }
+
+  /* before/after fix pair */
+  .fix-pair { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 14px; margin: 14px 0; }
+  .fix-side { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+  .fix-side.before { border-color: color-mix(in srgb, var(--bad) 40%, var(--line)); }
+  .fix-side.after { border-color: color-mix(in srgb, var(--good) 40%, var(--line)); }
+  .fix-side .flabel { font-family: var(--mono); font-size: 11px; letter-spacing: .05em; text-transform: uppercase; margin-bottom: 8px; }
+  .fix-side.before .flabel { color: var(--bad); }
+  .fix-side.after .flabel { color: var(--good); }
+  .fix-side .frow { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px; }
+  .fix-side .frow b { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .fix-arrow { font-size: 20px; color: var(--ink-faint); }
+  @media (max-width: 640px) { .fix-pair { grid-template-columns: 1fr; } .fix-arrow { justify-self: center; transform: rotate(90deg); } }
+  .export-bar { display: flex; justify-content: flex-end; align-items: center; gap: 10px; margin: 0 0 12px; }
+  .export-bar[hidden] { display: none !important; }
+  .export-btn { font: inherit; font-size: 13px; font-weight: 500; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 6px 12px; cursor: pointer; }
+  .export-btn:hover { background: var(--surface-2); }
+  .export-btn:disabled { opacity: .6; cursor: default; }
+  .export-msg { font-size: 12px; color: var(--ink-soft); }
+  @media print { .export-bar { display: none !important; } }
+</style>
+
+<main>
+
+<div class="export-bar" id="export-bar" hidden>
+  <span class="export-msg" id="export-msg" role="status" aria-live="polite"></span>
+  <button type="button" class="export-btn" id="export-btn">Export as HTML</button>
+</div>
+
+<header class="masthead">
+  <div class="eyebrow"><span class="dot"></span>DOCUMENTATION-LAYER STUDY &mdash; FINAL DESIGN &amp; RECOMMENDATION</div>
+  <h1 class="title">The Recommended Repo</h1>
+  <p class="dek">
+    Six documentation-layer designs, tested against the same codebase, the same three
+    tasks, the same model, four rounds each &mdash; ending in one repo configuration
+    built from what the other five proved and disproved, then validated against the
+    same bar. <a href="#external-validity">Extended below</a> to five genuinely
+    different, real-world codebases, to find out how much of this holds up outside
+    the one template it was designed on.
+  </p>
+  <div class="legend-row">
+    <span class="legend-chip"><span class="sw" style="background:var(--c-baseline)"></span>repo-baseline</span>
+    <span class="legend-chip"><span class="sw" style="background:var(--c-optimised)"></span>repo-agent-optimised</span>
+    <span class="legend-chip"><span class="sw" style="background:var(--c-skillv1)"></span>skill v1</span>
+    <span class="legend-chip"><span class="sw" style="background:var(--c-skillv2)"></span>skill v2</span>
+    <span class="legend-chip"><span class="sw" style="background:var(--c-skillv3)"></span>skill v3</span>
+    <span class="legend-chip"><span class="sw" style="background:var(--c-recommended)"></span>repo-agent-recommended</span>
+  </div>
+</header>
+
+<section>
+  <div class="verdict">
+    <div class="pick">Recommendation</div>
+    <h3>Ship the <code>repo-agent-recommended</code> layout: tiny <code>AGENTS.md</code> index + six task-scoped skills + OKF with rationale folded in, no separate tree of "why we built it this way" documents.</h3>
+    <p>
+      It is the only one of six tested configurations with <b>no measured cost penalty
+      anywhere</b>. <code>repo-agent-optimised</code>&mdash;the always-loaded
+      <code>AGENTS.md</code> plus a full set of separate rationale documents (ADRs,
+      short for architecture decision records)&mdash;has a proven, sign-consistent
+      <b>+40.3% token cost on the simple-change task</b>, holding in all four rounds.
+      Nothing in <code>repo-agent-recommended</code> replicates that anywhere; its mean
+      cost sits at or below baseline on all three task types.
+    </p>
+    <p>
+      It inherits <code>skill v3</code>'s discovery behaviour exactly: across
+      <b>24 sessions and 24 correct outcomes</b>, the agent found the unmentioned
+      <code>AGENTS.md</code> on its own and opened precisely the skill(s) each task
+      needed &mdash; never more, never fewer. Correctness and comprehension quality are
+      tied for perfect across all six configurations, so this choice costs nothing on
+      the one dimension every design already wins.
+    </p>
+    <p>
+      Doubled to n=8 rounds against baseline specifically to stress-test this: still
+      no penalty anywhere, and on two of three tasks a cost advantage now leaning real
+      (7 of 8 rounds cheaper, p&#8239;=&#8239;0.07) though not yet past the conventional
+      bar for proven &mdash; see the extension section below.
+    </p>
+    <p style="padding-top:12px; border-top:1px solid var(--line-soft)">
+      <b>Update, tested against five more real codebases:</b> this design's
+      layout &mdash; tiny index, task-scoped skills, OKF with rationale folded in
+      &mdash; still stands as the recommendation. What no longer stands as stated is
+      "never a cost penalty" as a <i>universal</i> property: on comprehension tasks
+      it holds cleanly everywhere tested; on actual code-change tasks its effect
+      turned out to be real but repo-dependent, a genuine win on some codebases and
+      a genuine cost on others (up to +86% tokens on one). See
+      <a href="#external-validity">External validity</a> below for the full picture,
+      including one real failure that traced to a gap in the documentation itself,
+      not the codebase.
+    </p>
+    <p>
+      <b>How the recommendation reads after the full review:</b> the layout is
+      unchanged, but it now comes with conditions. Expect a saving of roughly
+      20% in dollars on comprehension and about 10% on code changes, not
+      "never a penalty"; one codebase cost 61% more on a complex change. Comprehension
+      answers were as accurate as baseline (47 vs 46 out of 50). Treat every
+      generated doc layer as unverified until an agent has worked from it, because
+      three of five contained factual errors and one omission caused a failure.
+      Check each layer for what the build enforces (formatters, sync tests) before
+      relying on it, and re-measure on your own codebase.
+      See <a href="#raw-data">What the raw data adds</a>.
+    </p>
+  </div>
+</section>
+
+<section>
+  <h2 class="h">In plain terms<span class="tag">what's actually being compared &mdash; read this first</span></h2>
+  <p>
+    When an AI coding agent is dropped into an unfamiliar codebase and asked to make
+    a change, it has to work out, on its own, what the code does and how to change it
+    safely. This study is about one question: <b>what should a codebase's own
+    documentation for an agent look like, and does the shape of it change how much
+    the work costs?</b> Six different answers to that question were built into six
+    copies of the same real, working application, and each was tested identically.
+  </p>
+  <p>The three pieces used to answer it, in plain terms:</p>
+  <ul style="padding-left: 20px; color: var(--ink-soft)">
+    <li style="margin-bottom:8px"><b style="color:var(--ink)"><code>AGENTS.md</code></b> &mdash;
+      a single file at the top of the repository. It's the one thing an agent is
+      expected to read first, before anything else. In the heavier designs it's a
+      long page explaining the whole project. In the design recommended here it's
+      deliberately tiny &mdash; a name and a one-line description for each of the
+      other documents, nothing more, so the agent knows where to look without being
+      forced to read everything.</li>
+    <li style="margin-bottom:8px"><b style="color:var(--ink)">OKF (Open Knowledge Format)</b> &mdash;
+      a set of short, structured pages that describe <i>what things are and how they
+      connect</i>: this table holds this data, this part of the code talks to that
+      part, this behaviour exists for this reason. Think of it as the reference
+      manual for the codebase &mdash; you go there to understand something, not to be
+      told what to type.</li>
+    <li style="margin-bottom:8px"><b style="color:var(--ink)">A skill</b> &mdash;
+      a short, focused how-to guide for one specific kind of job: "how to add a
+      database field," "how to add a new web address (endpoint) the app responds
+      to," and so on. Rather than one huge instruction manual covering everything,
+      the recommended design splits this into six small guides, each labelled clearly
+      enough that the agent can tell, from the label alone, whether it's relevant to
+      the task in front of it &mdash; and open only the ones that are.</li>
+  </ul>
+  <p>
+    That splitting-into-small-pieces idea has a name used throughout this report:
+    <b>gradual disclosure</b>. Instead of handing the agent everything up front
+    (which costs time and money reading things it doesn't need), the codebase offers
+    a short index and lets the agent fetch only the specific piece relevant to the
+    task at hand. Some of the designs tested here also came with prompts that told
+    the agent exactly where to look (called <b>prescriptive</b> below); others gave
+    it no hints at all and simply waited to see whether it found the documentation on
+    its own (called <b>emergent</b> below) &mdash; that distinction matters when
+    reading the results, and is flagged wherever it applies.
+  </p>
+  <h3 class="sub">The six designs, in one line each</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Config</th><th>What it actually is</th></tr></thead>
+      <tbody>
+        <tr><td class="name"><span class="swatch" style="background:var(--c-baseline)"></span>repo-baseline</td><td>The plain application, no documentation written for an agent at all &mdash; just the code, exactly as it would ship.</td></tr>
+        <tr><td class="name"><span class="swatch" style="background:var(--c-optimised)"></span>repo-agent-optimised</td><td>A long, always-read <code>AGENTS.md</code> plus a full set of separate "why we built it this way" documents (architecture decision records), plus OKF. The agent is told up front to read all of it.</td></tr>
+        <tr><td class="name"><span class="swatch" style="background:var(--c-skillv1)"></span>skill v1</td><td>One long how-to guide (no <code>AGENTS.md</code> at all) plus OKF. The agent is told to read the guide.</td></tr>
+        <tr><td class="name"><span class="swatch" style="background:var(--c-skillv2)"></span>skill v2</td><td>Same one long how-to guide, but now with a short <code>AGENTS.md</code> pointing to it. The agent is still told where to look.</td></tr>
+        <tr><td class="name"><span class="swatch" style="background:var(--c-skillv3)"></span>skill v3</td><td>The one long guide split into six small, labelled ones, with a tiny <code>AGENTS.md</code> index. This time the agent is told <i>nothing</i> &mdash; no hint that any of this exists.</td></tr>
+        <tr class="hl"><td class="name"><span class="swatch" style="background:var(--c-recommended)"></span>repo-agent-recommended</td><td>The same six small guides and tiny index as v3, but the separate "why" documents are gone &mdash; the handful of reasons that actually matter were folded into the relevant reference page instead. Also given no hints.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2 class="h">Methodology<span class="tag">what's measured, what isn't</span></h2>
+  <p>
+    "Tokens" are the units an AI model is billed in &mdash; roughly, chunks of text
+    it reads and writes. "Input" tokens are what the agent reads (the prompt, the
+    files it opens); "cached-input" tokens are input it's already seen recently and
+    gets charged a lower repeat-read rate for; "output" tokens are what it writes
+    back. Every number in this report is pulled directly from the AI provider's own
+    record of each session (never the agent's own self-report of what it did), and
+    dollar costs are computed from those real counts at the model's published
+    standard rate &mdash; $0.20 per million input tokens, $0.02 per million
+    cached-input tokens, $1.20 per million output tokens. Correctness is
+    independently re-verified after every session, not taken on trust: a fresh
+    migration and full backend test run on a clean database for the two coding
+    tasks, and a manual check against the real source code for the comprehension
+    task. Every comparison in this document is <b>4 independent repeats (rounds) per
+    combination</b>, and a result is only called <em>real</em> when it points the
+    same direction in every single one &mdash; the same bar used throughout, not
+    relaxed for any one design.
+  </p>
+  <div class="callout">
+    <b>Two prompt regimes, not one.</b> <code>repo-agent-optimised</code> and skill
+    <code>v1</code>/<code>v2</code> were tested with a <em>prescriptive</em> prompt
+    that names the doc files up front ("start by reading AGENTS.md&hellip;"). Skill
+    <code>v3</code> and <code>repo-agent-recommended</code> use a prompt that is
+    byte-identical to <code>repo-baseline</code>'s &mdash; no mention of
+    <code>AGENTS.md</code>, skills, or <code>okf/</code> anywhere, including in the
+    self-report template. Their discovery numbers below are genuinely emergent, not
+    prompted. Keep this in mind reading the evolution table: the early rows and the
+    late rows were not tested under the same instruction, by design &mdash; the whole
+    point of the later rows is to find out whether the doc layer works without being
+    pointed at.
+  </div>
+  <div class="callout" style="border-left-color: var(--c-recommended)">
+    <b>One constant across every session in this study, all six configs:</b> the
+    execution machine carries a pre-existing, repo-independent skill catalogue
+    (general-purpose workflow skills, unrelated to this codebase) that every session
+    had equal access to regardless of which repo it ran against. It does not bias the
+    comparisons below &mdash; it was present identically in every cell, baseline
+    included &mdash; but "emergent discovery" here means discovery of this repo's own
+    docs on top of that constant scaffold, not discovery from a completely blank
+    agent.
+  </div>
+</section>
+
+<section>
+  <h2 class="h">Cost, by config, all six<span class="tag">real dollars, standard-tier pricing</span></h2>
+  <div class="stat-grid">
+    <div class="stat-tile"><div class="lbl">Total study cost, all 6 configs</div><div class="val">$5.52</div><div class="sub">96 sessions across the full project</div></div>
+    <div class="stat-tile"><div class="lbl">Proven cost penalty</div><div class="val" style="color:var(--bad)">+40.3%</div><div class="sub">repo-agent-optimised, simple-change, 4/4 rounds</div></div>
+    <div class="stat-tile"><div class="lbl">Proven cost saving</div><div class="val" style="color:var(--good)">&minus;8.7%</div><div class="sub">skill v3, simple-change, 4/4 rounds</div></div>
+    <div class="stat-tile"><div class="lbl">Recommended vs. optimised</div><div class="val" style="color:var(--c-recommended)">&minus;32.5%</div><div class="sub">mean cost, simple-change task</div></div>
+  </div>
+
+  <h3 class="sub">Full evolution &mdash; mean cost per session, by task</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Config</th><th>Prompt</th><th class="num">Understanding</th><th class="num">Simple change</th><th class="num">Complex change</th></tr></thead>
+      <tbody>
+        <tr><td class="name"><span class="swatch" style="background:var(--c-baseline)"></span>repo-baseline</td><td>neutral</td><td class="num">$0.0475</td><td class="num">$0.0415</td><td class="num">$0.1680</td></tr>
+        <tr><td class="name"><span class="swatch" style="background:var(--c-optimised)"></span>repo-agent-optimised</td><td>prescriptive</td><td class="num">$0.0448</td><td class="num" style="color:var(--bad); font-weight:600">$0.0534</td><td class="num">$0.1762</td></tr>
+        <tr><td class="name"><span class="swatch" style="background:var(--c-skillv1)"></span>skill v1 &mdash; flat SKILL.md, no AGENTS.md</td><td>prescriptive</td><td class="num">$0.0432</td><td class="num">$0.0400</td><td class="num">$0.1450</td></tr>
+        <tr><td class="name"><span class="swatch" style="background:var(--c-skillv2)"></span>skill v2 &mdash; +AGENTS.md, one skill</td><td>prescriptive</td><td class="num">$0.0401</td><td class="num">$0.0341</td><td class="num">$0.1340</td></tr>
+        <tr><td class="name"><span class="swatch" style="background:var(--c-skillv3)"></span>skill v3 &mdash; 6 task-scoped skills</td><td>emergent</td><td class="num">$0.0459</td><td class="num" style="color:var(--good); font-weight:600">$0.0379</td><td class="num">$0.1302</td></tr>
+        <tr class="hl"><td class="name"><span class="swatch" style="background:var(--c-recommended)"></span>repo-agent-recommended</td><td>emergent</td><td class="num">$0.0453</td><td class="num">$0.0353</td><td class="num">$0.1189</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">
+    Skill v1/v2 pursued the same "how, not why" idea as v3/recommended but under a
+    prescriptive prompt &mdash; useful for the design lineage, not a clean comparison
+    against the emergent-discovery rows above them.
+  </p>
+
+  <h3 class="sub">Sign-consistency vs. baseline &mdash; the only comparisons that are provably real</h3>
+  <div class="callout" style="border-left-color: var(--c-optimised)">
+    <b>Plain version:</b> every design was tested against baseline four separate
+    times (four rounds), because judging from one run could easily be a fluke. For
+    each of those four tests: did this design cost more than baseline, or less? If
+    the answer was the same all four times, that's a real pattern. If it flipped
+    even once &mdash; cheaper three times, then more expensive the fourth &mdash;
+    the result can't be trusted, because it didn't even hold up across our own four
+    attempts; it's probably just noise, not the design mattering. Of every
+    design-vs-baseline comparison in this study, only <b>2 of 18</b> gave the same
+    answer all four times &mdash; both on the simple-change task, listed first below.
+    Everything else flipped at least once: the averages look different, but that
+    difference isn't proven.
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Config</th><th>Task</th><th>Per-round %</th><th>4/4 same sign?</th></tr></thead>
+      <tbody>
+        <tr><td class="name">repo-agent-optimised</td><td>Simple change</td><td class="num mono">+19%, +44%, +55%, +43%</td><td class="sign-yes">Yes &mdash; always more expensive</td></tr>
+        <tr><td class="name">skill v3</td><td>Simple change</td><td class="num mono">&minus;1%, &minus;17%, &minus;3%, &minus;10%</td><td class="sign-yes">Yes &mdash; always cheaper</td></tr>
+        <tr><td class="name">repo-agent-recommended</td><td>Understanding</td><td class="num mono">+5%, +45%, &minus;15%, &minus;57%</td><td class="sign-no">No</td></tr>
+        <tr><td class="name">repo-agent-recommended</td><td>Simple change</td><td class="num mono">&minus;17%, &minus;26%, +24%, +2%</td><td class="sign-no">No</td></tr>
+        <tr><td class="name">repo-agent-recommended</td><td>Complex change</td><td class="num mono">&minus;25%, &minus;47%, &minus;38%, +9%</td><td class="sign-no">No</td></tr>
+        <tr><td class="name">skill v3 / optimised</td><td>Understanding, complex</td><td class="num mono">mixed</td><td class="sign-no">No (all remaining cells)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">
+    Only two of the eighteen repo-vs-baseline comparisons collected across this entire
+    study hold the same sign in all four rounds. Both are on the simple-change task,
+    and they point in opposite directions for opposite reasons: heavy, always-loaded
+    guidance costs more when the task is too small to amortize it; light,
+    self-selected guidance costs less. <code>repo-agent-recommended</code> is not
+    itself sign-consistent against baseline on any task &mdash; its case rests on
+    <b>never showing a penalty</b>, not on a proven saving.
+  </p>
+
+  <h3 class="sub">n=8 extension &mdash; does doubling the rounds resolve <code>recommended</code> vs. baseline?</h3>
+  <p>
+    <code>repo-agent-recommended</code> wasn't sign-consistent against baseline on
+    any task at n=4. Since that's the config actually being recommended, it was
+    worth a stricter test: four more rounds each for <code>repo-baseline</code> and
+    <code>repo-agent-recommended</code>, doubling to n=8 (a coin-flip effect has a
+    1-in-8 chance of landing all-same-sign at n=4, but only 1-in-256 at n=8 &mdash;
+    a real pass at n=8 would mean something).
+  </p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Task</th><th class="num">R1</th><th class="num">R2</th><th class="num">R3</th><th class="num">R4</th><th class="num">R5</th><th class="num">R6</th><th class="num">R7</th><th class="num">R8</th><th>Cheaper how often?</th></tr></thead>
+      <tbody>
+        <tr><td class="name">Understanding</td><td class="num">&minus;9%</td><td class="num">+48%</td><td class="num">+8%</td><td class="num">&minus;47%</td><td class="num">+15%</td><td class="num">+24%</td><td class="num">&minus;16%</td><td class="num">&minus;26%</td><td class="sign-no">4 / 8 &mdash; a coin flip</td></tr>
+        <tr><td class="name">Simple change</td><td class="num">&minus;23%</td><td class="num">&minus;16%</td><td class="num">+2%</td><td class="num">&minus;20%</td><td class="num">&minus;5%</td><td class="num">&minus;17%</td><td class="num">&minus;25%</td><td class="num">&minus;12%</td><td style="color:var(--c-recommended)">7 / 8 cheaper &mdash; p&#8239;=&#8239;0.07</td></tr>
+        <tr><td class="name">Complex change</td><td class="num">&minus;30%</td><td class="num">&minus;45%</td><td class="num">&minus;27%</td><td class="num">+2%</td><td class="num">&minus;52%</td><td class="num">&minus;9%</td><td class="num">&minus;18%</td><td class="num">&minus;0%</td><td style="color:var(--c-recommended)">7 / 8 cheaper &mdash; p&#8239;=&#8239;0.07</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout">
+    <b>Straight answer: doubling to n=8 did not produce a proof on any task.</b>
+    Understanding stayed an exact coin flip (4 cheaper, 4 more expensive) &mdash;
+    no signal there, more rounds won't help. Simple-change and complex-change both
+    moved to <b>7 of 8 rounds cheaper</b>, with the one exception each time being a
+    small swing (+2%, roughly $0) while the cheaper rounds are large (&minus;5% to
+    &minus;52%). That's a real pattern forming, but 7/8 still has roughly a 7%
+    chance of happening by pure luck (two-sided binomial test) &mdash; suggestive,
+    short of the conventional bar for "proven." <code>repo-agent-recommended</code>'s
+    case is now: never shows a penalty anywhere, and on two of three tasks a cost
+    advantage that's leaning real but not yet confirmed. More rounds on just those
+    two tasks (not understanding) would be the next lever if it's worth settling.
+  </div>
+
+  <h3 class="sub">Mean cost by task, all six configs</h3>
+  <div class="task-panels">
+    <div class="chart-card">
+      <div class="chart-title">Understanding</div>
+      <div class="chart-sub">comprehension only, no code touched</div>
+      <div class="bars" id="bar-cost-understanding"></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Simple change</div>
+      <div class="chart-sub">one query parameter, one endpoint</div>
+      <div class="bars" id="bar-cost-simple"></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Complex change</div>
+      <div class="chart-sub">migration, endpoints, UI, e2e tests</div>
+      <div class="bars" id="bar-cost-complex"></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2 class="h">Tokens, by config, all six<span class="tag">real counts from the transcript, not self-reported</span></h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Config</th><th class="num">Understanding</th><th class="num">Simple change</th><th class="num">Complex change</th></tr></thead>
+      <tbody>
+        <tr><td class="name"><span class="swatch" style="background:var(--c-baseline)"></span>repo-baseline</td><td class="num">1,131,617 &plusmn;307,535</td><td class="num">874,090 &plusmn;127,879</td><td class="num">5,388,508 &plusmn;2,114,939</td></tr>
+        <tr><td class="name"><span class="swatch" style="background:var(--c-optimised)"></span>repo-agent-optimised</td><td class="num">976,940 &plusmn;332,444</td><td class="num" style="color:var(--bad); font-weight:600">1,218,069 &plusmn;160,606</td><td class="num">6,067,665 &plusmn;2,039,353</td></tr>
+        <tr><td class="name"><span class="swatch" style="background:var(--c-skillv1)"></span>skill v1</td><td class="num">926,828 &plusmn;219,796</td><td class="num">839,277 &plusmn;80,720</td><td class="num">4,883,882 &plusmn;1,620,809</td></tr>
+        <tr><td class="name"><span class="swatch" style="background:var(--c-skillv2)"></span>skill v2</td><td class="num">894,921 &plusmn;163,905</td><td class="num">758,282 &plusmn;252,269</td><td class="num">4,267,958 &plusmn;981,758</td></tr>
+        <tr><td class="name"><span class="swatch" style="background:var(--c-skillv3)"></span>skill v3</td><td class="num">1,081,195 &plusmn;354,761</td><td class="num" style="color:var(--good); font-weight:600">805,058 &plusmn;117,312</td><td class="num">4,087,326 &plusmn;531,959</td></tr>
+        <tr class="hl"><td class="name"><span class="swatch" style="background:var(--c-recommended)"></span>repo-agent-recommended</td><td class="num">984,042 &plusmn;291,148</td><td class="num">816,904 &plusmn;82,365</td><td class="num">3,665,304 &plusmn;597,999</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="task-panels">
+    <div class="chart-card">
+      <div class="chart-title">Understanding</div>
+      <div class="chart-sub">mean tokens per session</div>
+      <div class="bars" id="bar-tok-understanding"></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Simple change</div>
+      <div class="chart-sub">mean tokens per session</div>
+      <div class="bars" id="bar-tok-simple"></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Complex change</div>
+      <div class="chart-sub">mean tokens per session</div>
+      <div class="bars" id="bar-tok-complex"></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2 class="h">Tool calls, by config, all six<span class="tag">apply_patch + shell execs, from the transcript</span></h2>
+  <p>
+    Tool-call volume tracks the same story as tokens, and surfaces one more clean,
+    non-overlapping separation: <code>repo-agent-optimised</code>'s simple-change
+    tool-call count ranges <b>30&ndash;34</b> across all four rounds &mdash;
+    entirely above <code>repo-baseline</code>'s <b>21&ndash;29</b>. The ranges do
+    not touch. More always-loaded doc to reason about becomes more tool calls to get
+    through it, on a task too small to need them.
+  </p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Config</th><th class="num">Understanding</th><th class="num">Simple change</th><th class="num">Complex change</th></tr></thead>
+      <tbody>
+        <tr><td class="name"><span class="swatch" style="background:var(--c-baseline)"></span>repo-baseline</td><td class="num">25.0 &plusmn;5.8</td><td class="num">25.2 &plusmn;3.9</td><td class="num">74.5 &plusmn;23.3</td></tr>
+        <tr><td class="name"><span class="swatch" style="background:var(--c-optimised)"></span>repo-agent-optimised</td><td class="num">20.5 &plusmn;5.4</td><td class="num" style="color:var(--bad); font-weight:600">31.2 &plusmn;1.9</td><td class="num">80.8 &plusmn;19.7</td></tr>
+        <tr><td class="name"><span class="swatch" style="background:var(--c-skillv1)"></span>skill v1</td><td class="num">20.5 &plusmn;3.9</td><td class="num">25.2 &plusmn;1.3</td><td class="num">73.0 &plusmn;15.1</td></tr>
+        <tr><td class="name"><span class="swatch" style="background:var(--c-skillv2)"></span>skill v2</td><td class="num">21.0 &plusmn;2.2</td><td class="num">20.8 &plusmn;6.0</td><td class="num">59.2 &plusmn;5.7</td></tr>
+        <tr><td class="name"><span class="swatch" style="background:var(--c-skillv3)"></span>skill v3</td><td class="num">22.2 &plusmn;5.7</td><td class="num">23.5 &plusmn;3.1</td><td class="num">61.2 &plusmn;6.3</td></tr>
+        <tr class="hl"><td class="name"><span class="swatch" style="background:var(--c-recommended)"></span>repo-agent-recommended</td><td class="num">22.0 &plusmn;4.7</td><td class="num">22.8 &plusmn;2.2</td><td class="num">57.0 &plusmn;8.6</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="task-panels">
+    <div class="chart-card">
+      <div class="chart-title">Understanding</div>
+      <div class="chart-sub">mean tool calls per session</div>
+      <div class="bars" id="bar-tools-understanding"></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Simple change</div>
+      <div class="chart-sub">mean tool calls per session</div>
+      <div class="bars" id="bar-tools-simple"></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Complex change</div>
+      <div class="chart-sub">mean tool calls per session</div>
+      <div class="bars" id="bar-tools-complex"></div>
+    </div>
+  </div>
+  <p class="note">
+    <code>repo-agent-recommended</code> has the lowest complex-task tool-call mean of
+    all six configs (57.0, vs. skill v3's 61.2 and optimised's 80.8) &mdash; directional,
+    same as its cost result, not independently sign-tested.
+  </p>
+</section>
+
+<section>
+  <h2 class="h">Wall-clock time, by config, all six<span class="tag">seconds per session, mean</span></h2>
+  <p class="note">
+    Duration is the noisiest metric this study collects &mdash; it reflects orchestration
+    overhead as much as agent reasoning, and round-1 complex-task timing for the three
+    legacy configs (baseline / optimised / skill v1) is unrecoverable, so those rows
+    are n=3. Read directionally, not as a sign-tested result.
+  </p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Config</th><th class="num">Understanding</th><th class="num">Simple change</th><th class="num">Complex change</th></tr></thead>
+      <tbody>
+        <tr><td class="name"><span class="swatch" style="background:var(--c-baseline)"></span>repo-baseline</td><td class="num">242s</td><td class="num">330s</td><td class="num">1,085s <span class="note">(n=3)</span></td></tr>
+        <tr><td class="name"><span class="swatch" style="background:var(--c-optimised)"></span>repo-agent-optimised</td><td class="num">280s</td><td class="num">423s</td><td class="num">828s <span class="note">(n=3)</span></td></tr>
+        <tr><td class="name"><span class="swatch" style="background:var(--c-skillv1)"></span>skill v1</td><td class="num">207s</td><td class="num">927s <span class="note">(1 long outlier)</span></td><td class="num">929s <span class="note">(n=3)</span></td></tr>
+        <tr><td class="name"><span class="swatch" style="background:var(--c-skillv2)"></span>skill v2</td><td class="num">201s</td><td class="num">202s</td><td class="num">475s</td></tr>
+        <tr><td class="name"><span class="swatch" style="background:var(--c-skillv3)"></span>skill v3</td><td class="num">207s</td><td class="num">194s</td><td class="num">626s</td></tr>
+        <tr class="hl"><td class="name"><span class="swatch" style="background:var(--c-recommended)"></span>repo-agent-recommended</td><td class="num">202s</td><td class="num">182s</td><td class="num">504s</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">
+    Understanding and simple-change durations are tight and comparable across all six
+    configs (~3&ndash;7 minutes regardless of doc layer) &mdash; the cost differences
+    above come from token volume per turn, not from taking more turns to finish.
+    Complex-change duration scales roughly with tool-call count in every config.
+  </p>
+</section>
+
+<section>
+  <h2 class="h">Discovery precision<span class="tag">the flagship new finding, 24/24 cells</span></h2>
+  <p>
+    Skill v3 and <code>repo-agent-recommended</code> were the two designs actually put
+    to the test on the core claim of gradual disclosure: with zero mention of
+    <code>AGENTS.md</code> or any skill in the prompt, does the agent find the doc
+    layer on its own, and does it open only what the task in front of it needs? Read
+    directly from each session's real transcript (not self-report):
+  </p>
+  <div class="disc-grid">
+    <div class="disc-card">
+      <div class="tname">Understanding &mdash; needs no task skill</div>
+      <span class="skill-pill skip">model-field-change</span>
+      <span class="skill-pill skip">write-migration</span>
+      <span class="skill-pill skip">add-api-endpoint</span>
+      <span class="skill-pill skip">regenerate-frontend-client</span>
+      <span class="skill-pill skip">add-ui-action</span>
+      <span class="skill-pill skip">verify-work</span>
+      <div class="rate">8 / 8</div>
+      <div class="rate-sub">correctly opened AGENTS.md + okf/, zero task skills, both repos, all 4 rounds each</div>
+    </div>
+    <div class="disc-card">
+      <div class="tname">Simple change &mdash; needs exactly 2 of 6</div>
+      <span class="skill-pill hit">add-api-endpoint</span>
+      <span class="skill-pill hit">verify-work</span>
+      <span class="skill-pill skip">model-field-change</span>
+      <span class="skill-pill skip">write-migration</span>
+      <span class="skill-pill skip">regenerate-frontend-client</span>
+      <span class="skill-pill skip">add-ui-action</span>
+      <div class="rate">8 / 8</div>
+      <div class="rate-sub">opened exactly those two, every round, both repos &mdash; never the other four</div>
+    </div>
+    <div class="disc-card">
+      <div class="tname">Complex change &mdash; needs all 6</div>
+      <span class="skill-pill hit">model-field-change</span>
+      <span class="skill-pill hit">write-migration</span>
+      <span class="skill-pill hit">add-api-endpoint</span>
+      <span class="skill-pill hit">regenerate-frontend-client</span>
+      <span class="skill-pill hit">add-ui-action</span>
+      <span class="skill-pill hit">verify-work</span>
+      <div class="rate">8 / 8</div>
+      <div class="rate-sub">opened all six, every round, both repos &mdash; the task genuinely touches every category</div>
+    </div>
+  </div>
+
+  <h3 class="sub">Sample evidence, quoted directly from the real transcripts</h3>
+  <blockquote class="quote">
+    &ldquo;AGENTS.md and okf/index.md, discovered from the user-provided repo instructions&rdquo;
+    &mdash; then, on the same simple-change session &mdash;
+    &ldquo;.agents/skills/add-api-endpoint/SKILL.md and .agents/skills/verify-work/SKILL.md, discovered from AGENTS.md&rdquo;
+    <cite>repo-agent-skill v3, simple_change, round 3 &mdash; docs_consulted, self-report cross-checked against the real tool-call transcript</cite>
+  </blockquote>
+  <blockquote class="quote">
+    &ldquo;okf/services/backend.md (linked from okf/index.md; backend and operation-ID context)&rdquo;,
+    &ldquo;okf/routers/login.md (found from okf/index.md contents; DUMMY_HASH rationale)&rdquo;
+    &mdash; the two facts moved out of the old ADR tree and folded into OKF were the
+    ones actually cited back.
+    <cite>repo-agent-recommended, understanding, round 2</cite>
+  </blockquote>
+  <blockquote class="quote">
+    &ldquo;.agents/skills/model-field-change/SKILL.md: matched model-field task from AGENTS.md&rdquo;,
+    &ldquo;.agents/skills/tdd/SKILL.md: matched requested backend behavior tests&rdquo;
+    &mdash; six of this repo's own skills opened for the six-part complex task, correctly,
+    every round.
+    <cite>repo-agent-recommended, complex, round 1</cite>
+  </blockquote>
+</section>
+
+<section>
+  <h2 class="h">Cross-tool check<span class="tag">does any of this replicate with a different agent?</span></h2>
+  <p>
+    Everything above is one AI provider's CLI (<code>codex exec</code>, gpt-5.6-luna). A
+    natural question: is "gradual disclosure" a property of that specific tool, or does
+    it hold up under a different one? A small, single-round check with
+    <a href="https://cursor.com">Cursor</a>'s CLI (<code>cursor-agent</code>, model
+    <code>auto</code> &mdash; Cursor's own cost-efficient routing) against the same two
+    prompts (understanding, simple change), the same two repos (baseline, recommended),
+    same no-hint framing. This is <b>one round, not four or eight</b> &mdash; a
+    directional check, not a proof, and <code>auto</code> doesn't disclose which
+    underlying model it actually routes to, so there's no real-dollar cost figure here
+    the way there is for every gpt-5.6-luna cell above.
+  </p>
+  <div class="callout">
+    <b>Discovery replicates, but partially.</b> Cursor found the unmentioned
+    <code>AGENTS.md</code> on its own in all 4 cells, matching the flagship result. On
+    the simple-change task it opened <i>exactly</i> the two correct skills
+    (<code>add-api-endpoint</code>, <code>verify-work</code>) in both repos &mdash;
+    matching Codex's precision exactly. On the understanding task, though, it opened
+    three task skills that task doesn't need at all (every one of Codex's 8
+    understanding-task sessions correctly opened zero). Read plainly: this tool
+    discovers the doc layer reliably, but doesn't judge relevance as precisely as
+    Codex did on a task with nothing to discover.
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Task</th><th>Config</th><th class="num">Tokens</th><th class="num">Tool calls</th><th class="num">Wall time</th><th>Skills opened</th></tr></thead>
+      <tbody>
+        <tr><td>Understanding</td><td class="name">baseline</td><td class="num">689,411</td><td class="num">116</td><td class="num">801s</td><td>&mdash;</td></tr>
+        <tr><td>Understanding</td><td class="name"><span class="swatch" style="background:var(--c-recommended)"></span>recommended</td><td class="num">600,088</td><td class="num">137</td><td class="num">656s</td><td style="color:var(--bad)">3 unneeded</td></tr>
+        <tr><td>Simple change</td><td class="name">baseline</td><td class="num">61,586</td><td class="num">54</td><td class="num">235s</td><td>&mdash;</td></tr>
+        <tr><td>Simple change</td><td class="name"><span class="swatch" style="background:var(--c-recommended)"></span>recommended</td><td class="num">62,366</td><td class="num">43</td><td class="num">218s</td><td style="color:var(--good)">exactly 2/6, correct</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">
+    On simple-change &mdash; the one task with a proven cost effect above &mdash;
+    recommended and baseline land within 1.3% of each other on tokens, with
+    recommended using fewer tool calls and slightly less wall time. At n=1 this is
+    not evidence of a saving; it's consistent with "no penalty," which is the
+    weaker but still real claim the recommendation actually rests on. The
+    understanding task shows something else entirely: both repos took 3&ndash;5x
+    longer and used 10&ndash;20x the tokens of simple-change, because this
+    particular run went and fetched the real
+    <code>@hey-api/openapi-ts</code> npm package source to verify the frontend
+    client's naming rule from first principles, rather than inferring it from
+    the generated output the way every Codex session did &mdash; a genuinely more
+    rigorous answer, at a real cost in time and tokens. That's a tool-level
+    research style, not a doc-layer effect; both baseline and recommended paid
+    it equally.
+  </p>
+  <p class="note">
+    Correctness held throughout: both simple-change cells passed migration and
+    the full backend test suite (59 tests) independently re-verified; both
+    understanding cells produced complete, correctly-sourced answers.
+  </p>
+</section>
+
+<section id="external-validity">
+  <h2 class="h">External validity: five repositories<span class="tag">does any of this hold up off the one template it was built on?</span></h2>
+  <p>
+    Everything above was tested on one codebase: the FastAPI + React template this
+    whole doc-layer design was built for. That's a real limitation &mdash; a doc
+    layer might just happen to suit that one project's shape. So the same idea was
+    tested again, cold, against five real, independently-chosen open-source
+    projects picked specifically to <i>not</i> resemble each other or the original:
+    different languages, different frameworks, different ages, different
+    architectural styles. For each one, a plain baseline copy and a
+    <code>repo-agent-recommended</code>-style copy (tiny <code>AGENTS.md</code> index
+    + task-scoped skills + an OKF knowledge bundle, no prompt hints, same
+    emergent-discovery bar as the flagship result above) were built from scratch,
+    and the same three-task framework &mdash; understanding, simple change, complex
+    change &mdash; was run against both, once each, no prompted hints either.
+  </p>
+  <div class="callout">
+    <b>Scope, stated plainly:</b> this is <b>one round per cell</b>, not four or
+    eight &mdash; the same directional-not-proof caveat as the cross-tool check
+    above, deliberately traded against covering five genuinely different codebases
+    instead of one codebase eight times. Read the per-repo numbers below as "what
+    happened this time," and the cross-repo pattern as the thing actually worth
+    trusting.
+  </div>
+
+  <h3 class="sub">The five repositories</h3>
+  <div class="repo-grid">
+    <div class="repo-card">
+      <div class="rname">django-oscar</div>
+      <div class="rstack">Python &middot; Django &middot; PostgreSQL</div>
+      <div class="rwhy">A pluggable e-commerce framework built around a distinctive dynamic class-loading/app-override mechanism &mdash; the most structurally different codebase in the set.</div>
+    </div>
+    <div class="repo-card">
+      <div class="rname">spring-petclinic</div>
+      <div class="rstack">Java &middot; Spring Boot 4 &middot; JPA</div>
+      <div class="rwhy">Modern layered Spring Boot service, server-rendered views, no frontend build &mdash; the "what most backend teams actually run" case.</div>
+    </div>
+    <div class="repo-card">
+      <div class="rname">bulletproof-react</div>
+      <div class="rstack">TypeScript &middot; React &middot; Vite</div>
+      <div class="rwhy">Pure frontend SPA, feature-folder architecture, no backend at all &mdash; tests the doc layer outside a backend-shaped codebase entirely.</div>
+    </div>
+    <div class="repo-card">
+      <div class="rname">eShop (Ordering)</div>
+      <div class="rstack">C# &middot; .NET 10 &middot; DDD/CQRS</div>
+      <div class="rwhy">An event-driven microservice inside a larger Aspire-orchestrated system &mdash; scoped to the Ordering subsystem's Domain/Application layers.</div>
+    </div>
+    <div class="repo-card">
+      <div class="rname">spring-framework-petclinic</div>
+      <div class="rstack">Java &middot; plain Spring Framework &middot; XML config</div>
+      <div class="rwhy">A deliberately older-style, hand-XML-configured 3-layer fork of the same domain as spring-petclinic &mdash; the "legacy enterprise" case.</div>
+    </div>
+  </div>
+
+  <h3 class="sub">Headline result</h3>
+  <div class="stat-grid">
+    <div class="stat-tile"><div class="lbl">Cells run</div><div class="val">30 / 30</div><div class="sub">5 repos &times; 2 arms &times; 3 tasks, all passing verification</div></div>
+    <div class="stat-tile"><div class="lbl">Understanding, median token delta</div><div class="val" style="color:var(--good)">&minus;33.8%</div><div class="sub">cheaper on 4 of 5 repos &middot; mean &minus;27.6% &middot; in dollars &minus;19.5%</div></div>
+    <div class="stat-tile"><div class="lbl">Simple change, median token delta</div><div class="val" style="color:var(--ink-soft)">&minus;6.6%</div><div class="sub">cheaper on 3 of 5 repos &middot; in dollars &minus;11.4% &middot; range +17.8% to &minus;48.2%</div></div>
+    <div class="stat-tile"><div class="lbl">Complex, median token delta</div><div class="val" style="color:var(--ink-soft)">&minus;20.1%</div><div class="sub">cheaper on 3 of 5 repos &middot; in dollars &minus;12.2% &middot; range +86.4% to &minus;64.3%</div></div>
+  </div>
+
+  <h3 class="sub">Per-repo token delta, recommended vs baseline &mdash; the variance the average hides</h3>
+  <p class="note">Green = recommended used fewer tokens than baseline on that repo/task. Red = it used more. All three panels share one scale, so bar lengths are directly comparable across tasks.</p>
+  <div class="task-panels dv-stack">
+    <div class="chart-card">
+      <div class="chart-title">Understanding</div>
+      <div class="chart-sub">consistent direction, every repo but one</div>
+      <div class="diverges" id="dv-understanding"></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Simple change</div>
+      <div class="chart-sub">no consistent direction at all</div>
+      <div class="diverges" id="dv-simple"></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Complex change</div>
+      <div class="chart-sub">the widest swings in either direction</div>
+      <div class="diverges" id="dv-complex"></div>
+    </div>
+  </div>
+
+  <h3 class="sub">Time and effort, not just tokens</h3>
+  <p>Tokens are one cost. Wall-clock time and the number of tool calls (commands run and files edited) tell the same story from two other angles: the doc layer usually saves effort on understanding tasks and is mixed on code changes, with python-api's complex task the clear exception (114 vs 62 tool calls). Wall time is the noisiest of the three measures, since it also moves with how busy the machine was, so lean on the median rows rather than any single cell.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Task</th><th>Repo</th><th class="num">Wall time</th><th class="num">Change</th><th class="num">Tool calls</th><th class="num">Change</th></tr></thead>
+    <tbody>
+<tr><td>Understanding</td><td>django-oscar</td><td class="num">347s &rarr; 325s</td><td class="num" style="color:var(--good)">-6%</td><td class="num">30 &rarr; 23</td><td class="num" style="color:var(--good)">-23%</td></tr>
+<tr><td>Understanding</td><td>spring-petclinic</td><td class="num">1533s &rarr; 362s</td><td class="num" style="color:var(--good)">-76%</td><td class="num">25 &rarr; 21</td><td class="num" style="color:var(--good)">-16%</td></tr>
+<tr><td>Understanding</td><td>bulletproof-react</td><td class="num">408s &rarr; 298s</td><td class="num" style="color:var(--good)">-27%</td><td class="num">30 &rarr; 21</td><td class="num" style="color:var(--good)">-30%</td></tr>
+<tr><td>Understanding</td><td>eShop</td><td class="num">294s &rarr; 356s</td><td class="num" style="color:var(--bad)">+21%</td><td class="num">26 &rarr; 28</td><td class="num" style="color:var(--bad)">+8%</td></tr>
+<tr><td>Understanding</td><td>legacy petclinic</td><td class="num">289s &rarr; 257s</td><td class="num" style="color:var(--good)">-11%</td><td class="num">26 &rarr; 18</td><td class="num" style="color:var(--good)">-31%</td></tr>
+<tr><td colspan="2"><b>Understanding, median</b></td><td></td><td class="num" style="color:var(--good)">-11%</td><td></td><td class="num" style="color:var(--good)">-23%</td></tr>
+<tr><td>Simple change</td><td>django-oscar</td><td class="num">1002s &rarr; 917s</td><td class="num" style="color:var(--good)">-8%</td><td class="num">71 &rarr; 80</td><td class="num" style="color:var(--bad)">+13%</td></tr>
+<tr><td>Simple change</td><td>spring-petclinic</td><td class="num">442s &rarr; 332s</td><td class="num" style="color:var(--good)">-25%</td><td class="num">38 &rarr; 29</td><td class="num" style="color:var(--good)">-24%</td></tr>
+<tr><td>Simple change</td><td>bulletproof-react</td><td class="num">531s &rarr; 532s</td><td class="num" style="color:var(--ink-soft)">+0%</td><td class="num">43 &rarr; 45</td><td class="num" style="color:var(--bad)">+5%</td></tr>
+<tr><td>Simple change</td><td>eShop</td><td class="num">189s &rarr; 187s</td><td class="num" style="color:var(--ink-soft)">-1%</td><td class="num">20 &rarr; 22</td><td class="num" style="color:var(--bad)">+10%</td></tr>
+<tr><td>Simple change</td><td>legacy petclinic</td><td class="num">370s &rarr; 300s</td><td class="num" style="color:var(--good)">-19%</td><td class="num">26 &rarr; 15</td><td class="num" style="color:var(--good)">-42%</td></tr>
+<tr><td colspan="2"><b>Simple change, median</b></td><td></td><td class="num" style="color:var(--good)">-8%</td><td></td><td class="num" style="color:var(--bad)">+5%</td></tr>
+<tr><td>Complex</td><td>django-oscar</td><td class="num">1545s &rarr; 1650s</td><td class="num" style="color:var(--bad)">+7%</td><td class="num">62 &rarr; 114</td><td class="num" style="color:var(--bad)">+84%</td></tr>
+<tr><td>Complex</td><td>spring-petclinic</td><td class="num">1135s &rarr; 498s</td><td class="num" style="color:var(--good)">-56%</td><td class="num">65 &rarr; 31</td><td class="num" style="color:var(--good)">-52%</td></tr>
+<tr><td>Complex</td><td>bulletproof-react</td><td class="num">668s &rarr; 559s</td><td class="num" style="color:var(--good)">-16%</td><td class="num">54 &rarr; 50</td><td class="num" style="color:var(--good)">-7%</td></tr>
+<tr><td>Complex</td><td>eShop</td><td class="num">433s &rarr; 432s</td><td class="num" style="color:var(--ink-soft)">0%</td><td class="num">47 &rarr; 29</td><td class="num" style="color:var(--good)">-38%</td></tr>
+<tr><td>Complex</td><td>legacy petclinic</td><td class="num">688s &rarr; 670s</td><td class="num" style="color:var(--ink-soft)">-3%</td><td class="num">41 &rarr; 34</td><td class="num" style="color:var(--good)">-17%</td></tr>
+<tr><td colspan="2"><b>Complex, median</b></td><td></td><td class="num" style="color:var(--ink-soft)">-3%</td><td></td><td class="num" style="color:var(--good)">-17%</td></tr>
+    </tbody></table></div>
+  <h3 class="sub">In plain terms &mdash; what actually generalized and what didn't</h3>
+  <p>
+    <b>The comprehension result holds up well.</b> On the pure-understanding task,
+    recommended used fewer tokens than baseline in 4 of 5 repos, by a wide margin
+    (&minus;33% to &minus;44%) &mdash; the one exception, the .NET microservice, was
+    a mild loss (+17%), not a wash. This is the same shape as the single-repo
+    result, and it's the part of the original claim that travels best: a well-built
+    doc layer reliably makes "figure out how this thing works" cheaper, across very
+    different codebases.
+  </p>
+  <p>
+    <b>The code-change result does not hold up the same way.</b> On simple and
+    complex changes, the single-repo study's headline was "never a cost penalty,
+    sometimes a real saving." Across five repos, that's no longer true as stated:
+    <code>python-api</code>'s complex task cost <b>86% more</b> tokens with the doc
+    layer than without it (both passed; the extra cost was reading, not testing &mdash; 95 read/search commands against 41 for baseline, while running the test suite fewer times, 8 against 12),
+    while <code>java-spring</code>'s complex task cost <b>64% less</b>. Three of
+    five repos favor recommended, two favor baseline, and the swings are large in
+    both directions. The honest, narrower claim: a good doc layer's effect on an
+    actual code-change task is real but <i>repo-dependent</i>, not a universal
+    discount &mdash; and on unfamiliar codebases, either direction should be
+    treated as plausible until measured, not assumed.
+  </p>
+</section>
+
+<section id="raw-data">
+  <h2 class="h">What the raw data adds<span class="tag">answer quality, real dollars, discovery, and where the extra cost came from</span></h2>
+  <p>Everything above compares token counts and a pass/fail check. Going back through the raw run files turned up five things the headline numbers hide, and one of them corrects a gap in the study itself.</p>
+
+  <h3 class="sub">1. The cheaper understanding answers were not worse answers</h3>
+  <p>Understanding cells were originally checked only for "an answer file exists", which cannot show whether being cheaper cost accuracy. So all 14 saved answers were graded afterwards against the real source code, question by question (2 = correct and precise, 1 = partly right or vague, 0 = wrong), by separate agent passes that read the answers unlabelled first. Each task includes one trap question designed to catch a confident wrong answer.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Repo</th><th class="num">Baseline (of 10)</th><th class="num">Recommended (of 10)</th><th>What separated them</th></tr></thead>
+    <tbody>
+      <tr><td>django-oscar</td><td class="num">10</td><td class="num">10</td><td>Both passed the trap.</td></tr>
+      <tr><td>spring-petclinic</td><td class="num">8</td><td class="num">9</td><td>Neither Codex answer noticed that seed-data files break when a column is added.</td></tr>
+      <tr><td>bulletproof-react</td><td class="num">9</td><td class="num">9</td><td>Baseline hedged on the trap; recommended had line numbers off by 6&ndash;8.</td></tr>
+      <tr><td>eShop (Ordering)</td><td class="num">9</td><td class="num">10</td><td>Baseline got the order of two checks wrong. The extra 17% tokens bought one point of precision.</td></tr>
+      <tr><td>legacy petclinic</td><td class="num">10</td><td class="num">9</td><td>Recommended quoted an error message from a config key that is never used.</td></tr>
+      <tr><td><b>Total</b></td><td class="num"><b>46</b></td><td class="num"><b>47</b></td><td>A tie. No sign that the doc layer trades accuracy for cost.</td></tr>
+    </tbody></table></div>
+  <p class="note">Cursor's four answers (two repos) scored 10 and 10 for baseline, 9 and 10 for recommended. The graders were agent passes with the source as ground truth, one point differences are within grader judgement, and two of the graders lost shell access part-way through and finished their checks by reading files. Read this as "no measurable accuracy penalty", not as a precise ranking.</p>
+
+  <h3 class="sub">2. The documentation itself contained mistakes, and mostly got away with it</h3>
+  <p>The grading also checked each recommended repo's documentation against the code. Three of the five layers contained a factual error relevant to the tasks: the Django offer skill says to write a condition as a plain Python class (Oscar actually requires a proxy-model subclass) and to register it through the wrong mechanism; the React knowledge pages say the mock database persists to a file (it uses browser storage); and the Spring entity skill says to touch seed-data files only for required columns, when any new column breaks them. In two of the three cases the agents gave the correct answer anyway, apparently by checking the code. The exception is one Cursor answer on spring-petclinic, which stated the seed-data files did not need changes, the same understatement the skill makes. That connection is plausible, not proven, because the transcript does not show the agent reading that skill. This is the same lesson as the formatter failure, in milder form: machine-written documentation is wrong in small ways more often than it looks, and how much that matters depends on whether the agent trusts it or checks it.</p>
+  <p class="note"><b>A validity threat to be honest about.</b> The graders also found that the recommended documentation states some of the answers to the test questions almost word for word (the trap answer for django-oscar, the fix for the React environment question). Whether deliberate or coincidence, both the documentation and the questions target each codebase's notable quirks, so part of the understanding saving may come from documentation that happens to anticipate these particular questions. Real questions are not known in advance. Treat the understanding saving as an upper bound.</p>
+
+  <h3 class="sub">3. In real dollars the savings are about half what the token counts suggest</h3>
+  <p>Roughly 89&ndash;98% of every run's input was re-read from cache, which costs a tenth as much as fresh input. Token totals therefore exaggerate differences that come from cache re-reads. Priced at the same standard rates used earlier in this report ($0.20 / $0.02 / $1.20 per million fresh input / cached input / output):</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Task</th><th class="num">Median token change</th><th class="num">Median dollar change</th><th class="num">Repos cheaper</th></tr></thead>
+    <tbody>
+      <tr><td>Understanding</td><td class="num">&minus;33.8%</td><td class="num" style="color:var(--good)">&minus;19.5%</td><td class="num">4 of 5</td></tr>
+      <tr><td>Simple change</td><td class="num">&minus;6.6%</td><td class="num" style="color:var(--good)">&minus;11.4%</td><td class="num">3 of 5</td></tr>
+      <tr><td>Complex change</td><td class="num">&minus;20.1%</td><td class="num" style="color:var(--good)">&minus;12.2%</td><td class="num">3 of 5</td></tr>
+      <tr><td><b>All 30 cells</b></td><td class="num"></td><td class="num"><b>$1.515 &rarr; $1.404 (&minus;7.3%)</b></td><td class="num"></td></tr>
+    </tbody></table></div>
+  <p>The honest overall figure is a saving of about 7% across the whole study, with the direction depending on the codebase. The two costly cells, django-oscar and bulletproof-react on complex changes, cost +61% and +10% in dollars. The best, spring-petclinic complex, saved 51%.</p>
+
+  <h3 class="sub">4. Where the extra cost on django-oscar came from</h3>
+  <p>On the complex task the recommended run made 114 tool calls against 62. Of those, 95 were reading and searching (baseline 41) and only 8 were test runs (baseline 12). So the documentation did not send the agent into more testing, it sent it into more reading, plausibly because the skill it followed described a mechanism slightly differently from how the code works (see section 2) and the agent had to reconcile the two. That explanation is a hypothesis; the data show the reading, not the reason.</p>
+
+  <h3 class="sub">5. Discovery replicated: 15 of 15</h3>
+  <p>The original study's flagship finding was that agents find an unmentioned <code>AGENTS.md</code> and open the right skills unprompted. Counting real commands in the session transcripts (not the agents' own reports, which were blank in many cells), every one of the 15 recommended Codex cells opened the documentation layer within its first four commands (all but one within its second), and the skills opened matched the task (for example the eShop runs opened the order-command and status-transition skills, the legacy petclinic runs opened the controller and model-field skills). No baseline cell had anything to find. Discovery is not the weak point; the accuracy of what is discovered is.</p>
+</section>
+
+<section>
+  <h2 class="h">When the documentation is wrong<span class="tag">a real failure, and what fixing it actually cost</span></h2>
+  <p>
+    Two of the thirty cells above failed their independent verification on first
+    attempt, both on the same repo's recommended arm:
+    <code>spring-petclinic-recommended</code>'s simple-change and complex-change
+    tasks. Both failures traced to the same root cause, and it's the single most
+    important finding to come out of the five-repo run.
+  </p>
+  <div class="callout" style="border-left-color: var(--bad)">
+    <b>The doc layer's <code>AGENTS.md</code> and skills never mentioned two real,
+    load-bearing conventions this specific codebase enforces:</b> a build-blocking
+    code-formatting gate, and a test that fails if a new user-facing text label is
+    added to the default locale file without adding it to every other locale file
+    too. Neither is exotic &mdash; both are visible in the repo's own
+    <code>pom.xml</code> and test suite to anyone who looked &mdash; but the doc
+    layer simply didn't surface them. The baseline arm, with <i>no</i> doc layer at
+    all, passed both tasks cleanly: with no narrow, confident path handed to it, it
+    explored broadly enough on its own to notice both conventions unprompted. The
+    recommended arm, trusting the doc layer's narrower and more confident guidance,
+    moved faster and skipped the exploration that would have caught what the doc
+    layer itself failed to mention.
+  </div>
+  <p>
+    This is worth naming directly: <b>documentation can make an agent overconfident.</b>
+    A good doc layer's entire value proposition is that it lets an agent take a
+    shorter path instead of re-discovering the codebase from scratch every time.
+    That is exactly what makes an <i>incomplete</i> doc layer dangerous in a way a
+    <i>missing</i> one isn't &mdash; an agent with no guidance falls back on caution
+    and broad exploration; an agent with confident, incomplete guidance has no
+    signal that anything is missing, and no reason to look further than it's been
+    pointed. A "recommended" doc bundle is not a one-time deliverable that's
+    finished when it reads as plausible &mdash; it's only actually verified once
+    something has genuinely tried to work from it and either succeeded or exposed a
+    gap. This is the same warning the original study's OKF bundles already carry in
+    their own frontmatter (every page ships <code>generated: {by, at}</code> and no
+    <code>verified</code> claim, precisely because machine-written documentation is
+    unverified until tested) &mdash; this is that warning actually cashing out in a
+    real, measured failure instead of staying hypothetical.
+  </p>
+  <h3 class="sub">Fixed, and re-run &mdash; both failures, before and after</h3>
+  <p>
+    The two missing conventions were added to the doc layer as a new
+    <code>verify-work</code> skill, logged as a dated entry in the bundle's own
+    change log (the same honesty convention as above &mdash; the fix is recorded as
+    a correction to a real gap, not silently folded in as if it had always been
+    there), and both failing cells were re-run against the fixed doc layer.
+    <b>One caveat on reading the before/after pair:</b> the first-attempt runs were
+    made in a sandbox where the agent could not launch Maven at all (its build
+    attempts errored out), and the re-runs had a working Java toolchain. So the pair
+    changes two things at once &mdash; the documentation and the agent's ability to
+    run the build &mdash; and the extra tokens below cannot be attributed to the
+    documentation fix alone.
+  </p>
+  <div class="fix-pair">
+    <div class="fix-side before">
+      <div class="flabel">Before &mdash; simple change</div>
+      <div class="frow"><span>Result</span><b style="color:var(--bad)">FAIL</b></div>
+      <div class="frow"><span>Tests reported</span><b>0 &mdash; build blocked</b></div>
+      <div class="frow"><span>Tokens</span><b>1,213,000</b></div>
+      <div class="frow"><span>Wall time</span><b>397s</b></div>
+    </div>
+    <div class="fix-arrow">&rarr;</div>
+    <div class="fix-side after">
+      <div class="flabel">After &mdash; simple change</div>
+      <div class="frow"><span>Result</span><b style="color:var(--good)">PASS</b></div>
+      <div class="frow"><span>Tests passing</span><b>56 / 56</b></div>
+      <div class="frow"><span>Tokens</span><b>1,388,383 <span style="color:var(--ink-faint)">(+14.5%)</span></b></div>
+      <div class="frow"><span>Wall time</span><b>332s <span style="color:var(--good)">(&minus;16.4%)</span></b></div>
+    </div>
+  </div>
+  <div class="fix-pair">
+    <div class="fix-side before">
+      <div class="flabel">Before &mdash; complex change</div>
+      <div class="frow"><span>Result</span><b style="color:var(--bad)">FAIL</b></div>
+      <div class="frow"><span>Tests passing</span><b>53 / 55 &mdash; 2 failed</b></div>
+      <div class="frow"><span>Tokens</span><b>2,017,083</b></div>
+      <div class="frow"><span>Wall time</span><b>595s</b></div>
+    </div>
+    <div class="fix-arrow">&rarr;</div>
+    <div class="fix-side after">
+      <div class="flabel">After &mdash; complex change</div>
+      <div class="frow"><span>Result</span><b style="color:var(--good)">PASS</b></div>
+      <div class="frow"><span>Tests passing</span><b>55 / 55</b></div>
+      <div class="frow"><span>Tokens</span><b>2,578,768 <span style="color:var(--ink-faint)">(+27.9%)</span></b></div>
+      <div class="frow"><span>Wall time</span><b>498s <span style="color:var(--good)">(&minus;16.3%)</span></b></div>
+    </div>
+  </div>
+  <p class="note">
+    What the evidence does and doesn't support. <b>Supported:</b> the gap is real
+    and lives in the documentation &mdash; the text <code>javaformat</code> never
+    appears in either failed recommended transcript, while it appears 3 and 7 times
+    in the matching baseline transcripts, which is consistent with the baseline
+    agent going and reading the build file and the recommended agent trusting the
+    doc layer instead. Both cells pass once the <code>verify-work</code> skill
+    exists. <b>Not supported:</b> a clean price tag for the fix. Tokens rose 14&ndash;28%
+    and wall time fell 16%, but that pair is confounded with the working build tool,
+    as above. Treat the size of the change as unmeasured; treat the direction of the
+    lesson (an incomplete doc layer removed the agent's reason to look further) as a
+    well-evidenced single case, not a general law.
+  </p>
+</section>
+
+<section>
+  <h2 class="h">Cross-tool check, five-repo study<span class="tag">Cursor, on two of the five repos</span></h2>
+  <p>
+    The same cross-tool question as the single-repo check above, asked again on
+    two of the five new repos &mdash; the frontend SPA and the modern Spring Boot
+    service &mdash; chosen for being fast enough to run a full 12-cell pilot (both
+    arms, all three tasks, each) in reasonable time.
+    <a href="https://cursor.com">Cursor</a>'s CLI, model <code>auto</code>, same
+    no-hint prompts used against Codex.
+  </p>
+  <div class="callout">
+    <b>All 12 cells passed independent verification.</b> Every task Cursor attempted
+    on both repos, both arms, produced correct, passing code or a complete,
+    accurate comprehension answer &mdash; the correctness result from the original
+    cross-tool check replicates cleanly on two more, structurally different
+    codebases.
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Repo</th><th>Task</th><th>Config</th><th class="num">Codex tokens</th><th class="num">Cursor tokens</th><th class="num">Ratio</th></tr></thead>
+      <tbody>
+        <tr><td>react-frontend</td><td>Understanding</td><td class="name">baseline</td><td class="num">1,820,731</td><td class="num">1,130,954</td><td class="num">0.62&times;</td></tr>
+        <tr><td>react-frontend</td><td>Understanding</td><td class="name"><span class="swatch" style="background:var(--c-recommended)"></span>recommended</td><td class="num">1,014,804</td><td class="num">848,340</td><td class="num">0.84&times;</td></tr>
+        <tr><td>react-frontend</td><td>Simple change</td><td class="name">baseline</td><td class="num">2,420,085</td><td class="num">2,117,327</td><td class="num">0.87&times;</td></tr>
+        <tr><td>react-frontend</td><td>Simple change</td><td class="name"><span class="swatch" style="background:var(--c-recommended)"></span>recommended</td><td class="num">2,261,385</td><td class="num">2,103,270</td><td class="num">0.93&times;</td></tr>
+        <tr><td>react-frontend</td><td>Complex</td><td class="name">baseline</td><td class="num">3,279,031</td><td class="num">2,420,686</td><td class="num">0.74&times;</td></tr>
+        <tr><td>react-frontend</td><td>Complex</td><td class="name"><span class="swatch" style="background:var(--c-recommended)"></span>recommended</td><td class="num">3,395,481</td><td class="num">3,025,898</td><td class="num">0.89&times;</td></tr>
+        <tr><td>java-spring</td><td>Understanding</td><td class="name">baseline</td><td class="num">1,630,273</td><td class="num">2,110,617</td><td class="num">1.29&times;</td></tr>
+        <tr><td>java-spring</td><td>Understanding</td><td class="name"><span class="swatch" style="background:var(--c-recommended)"></span>recommended</td><td class="num">1,080,041</td><td class="num">1,239,273</td><td class="num">1.15&times;</td></tr>
+        <tr><td>java-spring</td><td>Simple change</td><td class="name">baseline</td><td class="num">1,623,263</td><td class="num">1,783,577</td><td class="num">1.10&times;</td></tr>
+        <tr><td>java-spring</td><td>Simple change</td><td class="name"><span class="swatch" style="background:var(--c-recommended)"></span>recommended</td><td class="num">1,388,383</td><td class="num">1,250,649</td><td class="num">0.90&times;</td></tr>
+        <tr><td>java-spring</td><td>Complex</td><td class="name">baseline</td><td class="num">7,217,165</td><td class="num">3,497,919</td><td class="num">0.48&times;</td></tr>
+        <tr><td>java-spring</td><td>Complex</td><td class="name"><span class="swatch" style="background:var(--c-recommended)"></span>recommended</td><td class="num">2,578,768</td><td class="num">7,082,727</td><td class="num">2.75&times;</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">
+    <b>Read the ratio column carefully.</b> Cursor's own usage log reports "total
+    tokens" excluding cache-read tokens, while Codex's includes them &mdash; comparing
+    those two raw fields directly, as published rate cards define them, would make
+    Cursor look far cheaper than it really is. The ratio column above corrects for
+    that by counting fresh input, cache reads, and output on both sides, the same
+    way. Corrected, 10 of 12 cells land within roughly 0.6&ndash;1.3&times; of each
+    other &mdash; genuinely comparable, "near parity" in the sense the original
+    single-repo check used that phrase. Two cells, both java-spring complex, are outliers in opposite directions (baseline 0.48&times;, recommended
+    2.75&times;), which is a sign of run-to-run variance at n=1 rather than a tool effect; treat this as one
+    more repo-dependent result rather than a stable per-tool multiplier.
+  </p>
+</section>
+
+<section>
+  <h2 class="h">Correctness &amp; comprehension<span class="tag">perfect, every config, every round, including the n=8 extension</span></h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Check</th><th class="num">Result</th></tr></thead>
+      <tbody>
+        <tr><td>Migrations applied cleanly, code tasks, independently re-verified on a fresh database</td><td class="num" style="color:var(--good)">&#10003; 64 / 64</td></tr>
+        <tr><td>Backend test suites passing, independently re-verified</td><td class="num" style="color:var(--good)">&#10003; 64 / 64</td></tr>
+        <tr><td>Comprehension answers present, zero unexpected file changes</td><td class="num" style="color:var(--good)">&#10003; 32 / 32</td></tr>
+        <tr><td>Caught the CASCADE-delete trap (no existing test actually catches it)</td><td class="num" style="color:var(--good)">&#10003; 32 / 32</td></tr>
+        <tr><td>Discovery + correct skill selection, skill v3 &amp; recommended only</td><td class="num" style="color:var(--good)">&#10003; 24 / 24</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">
+    "Migrations applied cleanly" means: a fresh, empty database was brought up to
+    date using the agent's own change and it worked without errors. "Independently
+    re-verified" means this was checked separately after each session finished, not
+    taken on the agent's word. No configuration ever traded correctness for speed or
+    cost &mdash; every design difference measured in this study is a difference in
+    <em>how much it cost to get there</em>, never in whether the agent got there.
+  </p>
+</section>
+
+<section>
+  <h2 class="h">Samples, from the recommended repo<span class="tag">real files, unedited</span></h2>
+
+  <h3 class="sub">The entire always-loaded layer &mdash; <code>AGENTS.md</code></h3>
+  <div class="code-card">
+    <div class="code-head"><span class="path">repo-agent-recommended/AGENTS.md</span><span class="badge">19 lines, always read</span></div>
+    <pre class="code"># AGENTS.md
+
+FastAPI + SQLModel + PostgreSQL backend, React/TypeScript frontend. Read this file
+first — it only points, it doesn't explain.
+
+- <span class="kw">What things mean, and why they're built that way where it matters</span> (services, DB
+  tables, routers, deployment topology, how they relate — rationale is folded into
+  the relevant doc, not a separate tree): [`okf/index.md`](okf/index.md).
+- <span class="kw">How to do a specific kind of change</span>: `.agents/skills/` has one skill per task,
+  each with its own scope — open the one(s) whose description matches what you're
+  about to do, not all of them:
+  - `model-field-change` — add or change a field on a SQLModel model
+  - `write-migration` — write and apply an Alembic migration
+  - `add-api-endpoint` — add or modify a FastAPI route
+  - `regenerate-frontend-client` — regenerate the generated TS API client
+  - `add-ui-action` — add a UI action to an existing table/list page
+  - `verify-work` — how to actually confirm a change works, not just that it compiles
+- <span class="kw">Human setup/running instructions</span>: `development.md`, `deployment.md` — not
+  duplicated here.
+
+<span class="cm">Nothing else lives in this file. If you find yourself adding an explanation or a
+procedure here, it belongs in `okf/` or one of the skills instead.</span></pre>
+  </div>
+
+  <h3 class="sub">One task-scoped skill &mdash; procedure only, no rationale</h3>
+  <div class="code-card">
+    <div class="code-head"><span class="path">.agents/skills/add-api-endpoint/SKILL.md</span><span class="badge">opened only for endpoint tasks</span></div>
+    <pre class="code">---
+name: add-api-endpoint
+description: Add or modify a FastAPI route in this repo — which dependencies to use
+  for auth/DB, the ownership-check convention sibling routes follow, and
+  response-model rules. Also applies to changing an existing endpoint's parameters.
+---
+
+# Add or change an API endpoint
+
+1. Add or edit the route function in the relevant file under `backend/app/api/routes/`
+   — one router per resource, already registered in `backend/app/api/main.py`.
+2. Use the existing dependencies from `backend/app/api/deps.py`:
+   `SessionDep` for a DB session, `CurrentUser` for the authenticated user (raises
+   401/403 automatically), `get_current_active_superuser` for admin-only routes.
+3. Match the ownership-check pattern already used by sibling endpoints in the same
+   file rather than inventing a new authorization style.
+4. Set `response_model` to a `*Public` schema, never the raw table model.
+5. If you added a new route or changed a request/response schema, regenerate the
+   frontend client (see the `regenerate-frontend-client` skill).
+6. When you're done, see the `verify-work` skill before calling it complete.</pre>
+  </div>
+
+  <h3 class="sub">OKF &mdash; what a thing <i>is</i>, in plain reference-page form</h3>
+  <p>
+    This is the format every OKF page follows: a short header recording where the
+    facts came from and when, then the plain description &mdash; schema, how it
+    connects to other things, who's allowed to touch it. No instructions, no
+    opinions about how to change it &mdash; that's what the skills are for.
+  </p>
+  <div class="code-card">
+    <div class="code-head"><span class="path">okf/tables/item.md</span><span class="badge">excerpt</span></div>
+    <pre class="code">---
+type: Table
+title: Item
+description: A record owned by exactly one User. The app's one example domain entity.
+resource: backend/app/models.py
+generated: { by: reference_agent/claude-sonnet-5, at: 2026-09-25T00:00:00Z }
+stale_after: 2027-03-25
+---
+
+# Schema
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | UUID | Primary key |
+| `title` | string, 1–255 chars | Required |
+| `owner_id` | UUID | FK → `user.id`, `nullable=False`, `ondelete="CASCADE"` |
+
+# Authorization rule (enforced in `routers/items.py`, not at the DB layer)
+
+A non-superuser can only read/update/delete items where
+`item.owner_id == current_user.id`. Superusers can act on any item. There is no
+row-level security at the Postgres level — it's application-enforced.
+
+See [routers/items](../routers/items.md) for the endpoints.</pre>
+  </div>
+  <p class="note">
+    Note the dated header: every OKF page records who generated it and when, and a
+    date it's considered stale after &mdash; the study's honesty mechanism for facts
+    nobody has since double-checked.
+  </p>
+
+  <h3 class="sub">Rationale, folded into the concept doc it actually belongs to</h3>
+  <p>
+    Auditing <code>repo-agent-optimised</code>'s six architecture-decision records
+    against the OKF bundle found four of six already fully duplicated as plain
+    description &mdash; exact repetition across artifacts. The two that weren't were
+    genuinely load-bearing: an agent "cleaning up" <code>authenticate()</code> could
+    plausibly delete what looks like dead code. Both got a home inside the OKF doc for
+    the router they belong to, instead of a seventh parallel file:
+  </p>
+  <div class="code-card">
+    <div class="code-head"><span class="path">okf/routers/login.md</span><span class="badge">excerpt &mdash; new section</span></div>
+    <pre class="code">## Why `/login/access-token` always takes about as long to fail
+
+`backend/app/crud.py`'s `authenticate()` looks up the user by email; if none is
+found, it still runs `verify_password` against a fixed `DUMMY_HASH` before returning
+`None`. <span class="str">This is a deliberate timing-attack mitigation, not dead/wasteful code</span>:
+without it, a login against a nonexistent email would return faster than one
+against a real email with a wrong password, letting response time be used to
+enumerate valid accounts. If you're touching `authenticate()`, keep this call even
+though its result is discarded.</pre>
+  </div>
+  <p class="note">
+    This is exactly the fact the transcript sample above shows an agent citing back,
+    unprompted, when reasoning about the login router.
+  </p>
+</section>
+
+<section>
+  <h2 class="h">Recommended layout<span class="tag">directory structure, annotated</span></h2>
+  <div class="tree-card">
+    <div class="tree-row">
+      <div class="tree">repo-agent-recommended/
+├── README.md
+├── <span class="newf">AGENTS.md</span>
+├── development.md, deployment.md
+├── backend/, frontend/
+├── docs/
+│   └── api/openapi.json
+├── okf/
+│   ├── index.md
+│   ├── services/
+│   ├── routers/
+│   │   └── <span class="newf">login.md</span>
+│   ├── tables/
+│   └── deployment/
+└── .agents/
+    └── skills/
+        ├── <span class="newf">model-field-change/</span>SKILL.md
+        ├── <span class="newf">write-migration/</span>SKILL.md
+        ├── <span class="newf">add-api-endpoint/</span>SKILL.md
+        ├── <span class="newf">regenerate-frontend-client/</span>SKILL.md
+        ├── <span class="newf">add-ui-action/</span>SKILL.md
+        └── <span class="newf">verify-work/</span>SKILL.md</div>
+      <div class="annot">
+        <p><b>README.md</b> — human entry point, untouched, exactly what upstream shipped.</p>
+        <p><b>AGENTS.md</b> — the only file every session reads unconditionally. 19 lines, no procedures, no rationale, just two pointers and a name per skill.</p>
+        <p><b>docs/api/openapi.json</b> — the one static, machine-checkable artifact; never hand-edited, regenerated by the skill of the same name.</p>
+        <p><b>okf/</b> — what things are and how they relate, including the handful of "why" facts that are actually load-bearing at the point they're needed. No separate ADR tree.</p>
+        <p><b>.agents/skills/*/SKILL.md</b> — one file per task family, each independently discoverable by its own <code>name</code>/<code>description</code>. This is the layer that was split from one monolithic file (skill v1/v2) into six, and it's what made the 24/24 discovery precision above possible &mdash; a single 120-line file can't be selectively opened only when relevant.</p>
+      </div>
+    </div>
+  </div>
+  <p class="note">
+    No file in this tree restates what another already says. Skills answer <em>how</em>;
+    OKF answers <em>what, and why where the why is load-bearing</em>; nothing answers
+    the same question twice.
+  </p>
+</section>
+
+<footer>
+  single-repo study: 6 configs &middot; repo-baseline &middot; repo-agent-optimised &middot; repo-agent-skill v1/v2/v3 &middot; repo-agent-recommended — 24 rounds, 96 sessions, $5.52<br>
+  pricing source: model provider's public standard-tier rate, $0.20 / $0.02 / $1.20 per 1M input / cached-input / output tokens<br>
+  five-repo external-validity study: 5 real open-source repos &times; 2 arms (baseline / recommended) &times; 3 tasks, 1 round each, 30/30 cells passing after one documented doc-layer fix<br>
+  cross-tool checks: Cursor CLI (model auto) — 4 cells on the original repo, 12 cells across two of the five repos, 16/16 passing<br>
+  real usage extraction: read directly from each session's own provider transcript — token totals and tool calls, never self-reported<br>
+  verification: fresh migration + full backend/repo test suite on an isolated environment (code tasks); diff + manual grading against source (comprehension task)<br>
+  bar for a "real" effect in the single-repo study: same sign across all 4 rounds in a cell — 2 of 18 repo-vs-baseline comparisons there clear it; the five-repo study is explicitly directional, n=1 per cell
+</footer>
+
+</main>
+
+<script>
+(function(){
+  var configs = [
+    {label:'baseline', color:'var(--c-baseline)'},
+    {label:'optimised', color:'var(--c-optimised)'},
+    {label:'skill v1', color:'var(--c-skillv1)'},
+    {label:'skill v2', color:'var(--c-skillv2)'},
+    {label:'skill v3', color:'var(--c-skillv3)'},
+    {label:'recommended', color:'var(--c-recommended)'}
+  ];
+
+  function render(id, max, vals, fmt) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    configs.forEach(function(c, i){
+      var v = vals[i];
+      var pct = Math.max(2, (v / max) * 100);
+      var row = document.createElement('div');
+      row.className = 'bar-row';
+      row.innerHTML =
+        '<div class="rlabel"><span class="swatch" style="background:' + c.color + '"></span>' + c.label + '</div>' +
+        '<div class="bar-track"><div class="bar-fill" style="width:' + pct + '%; background:' + c.color + '"></div></div>' +
+        '<div class="rval">' + fmt(v) + '</div>';
+      el.appendChild(row);
+    });
+  }
+
+  var dollar = function(v){ return '$' + v.toFixed(4); };
+  var count = function(v){ return v.toLocaleString(); };
+  var tools = function(v){ return v.toFixed(1); };
+
+  // cost, $ per session
+  render('bar-cost-understanding', 0.065, [0.0475, 0.0448, 0.0432, 0.0401, 0.0459, 0.0453], dollar);
+  render('bar-cost-simple',        0.065, [0.0415, 0.0534, 0.0400, 0.0341, 0.0379, 0.0353], dollar);
+  render('bar-cost-complex',       0.20,  [0.1680, 0.1762, 0.1450, 0.1340, 0.1302, 0.1189], dollar);
+
+  // tokens, mean per session
+  render('bar-tok-understanding', 1400000, [1131617, 976940, 926828, 894921, 1081195, 984042], count);
+  render('bar-tok-simple',        1400000, [874090, 1218069, 839277, 758282, 805058, 816904], count);
+  render('bar-tok-complex',       6500000, [5388508, 6067665, 4883882, 4267958, 4087326, 3665304], count);
+
+  // tool calls, mean per session
+  render('bar-tools-understanding', 30, [25.0, 20.5, 20.5, 21.0, 22.2, 22.0], tools);
+  render('bar-tools-simple',        35, [25.2, 31.2, 25.2, 20.8, 23.5, 22.8], tools);
+  render('bar-tools-complex',       95, [74.5, 80.8, 73.0, 59.2, 61.2, 57.0], tools);
+
+  // diverging per-repo % delta charts (five-repo external-validity study)
+  var repoLabels = ['django-oscar', 'spring-petclinic', 'bulletproof-react', 'eShop', 'legacy petclinic'];
+  function renderDiverge(id, maxAbs, vals) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    vals.forEach(function(v, i){
+      var pct = Math.min(50, Math.abs(v) / maxAbs * 50);
+      var cls = v < 0 ? 'neg' : 'pos';
+      var color = v < 0 ? 'var(--good)' : 'var(--bad)';
+      var row = document.createElement('div');
+      row.className = 'diverge-row';
+      row.innerHTML =
+        '<div class="rlabel">' + repoLabels[i] + '</div>' +
+        '<div class="diverge-track"><div class="center-line"></div><div class="diverge-fill ' + cls + '" style="width:' + pct + '%"></div></div>' +
+        '<div class="rval" style="color:' + color + '">' + (v > 0 ? '+' : '') + v.toFixed(1) + '%</div>';
+      el.appendChild(row);
+    });
+  }
+  renderDiverge('dv-understanding', 90, [-33.5, -33.8, -44.3, 16.9, -43.2]);
+  renderDiverge('dv-simple',        90, [17.8, -14.5, -6.6, 16.7, -48.2]);
+  renderDiverge('dv-complex',       90, [86.4, -64.3, 3.6, -34.0, -20.1]);
+})();
+</script>
+
+<script>
+(function(){
+  var bar = document.getElementById('export-bar');
+  var btn = document.getElementById('export-btn');
+  var msg = document.getElementById('export-msg');
+  if (!bar || !btn || !window.claude || typeof window.claude.use !== 'function') return;
+  var downloads = null;
+  window.claude.use('downloads').then(function(d){
+    downloads = d;
+    if (d) bar.hidden = false;
+  }).catch(function(){});
+
+  function snapshot(){
+    var clone = document.documentElement.cloneNode(true);
+    var b = clone.querySelector('#export-bar');
+    if (b) b.parentNode.removeChild(b);
+    var exp = clone.querySelectorAll('script[data-export-strip]');
+    for (var i = 0; i < exp.length; i++) exp[i].parentNode.removeChild(exp[i]);
+    var doc = clone.outerHTML;
+    if (doc.indexOf('<meta charset') === -1) doc = doc.replace('<head>', '<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">');
+    return '<!doctype html>\n' + doc;
+  }
+
+  btn.addEventListener('click', function(){
+    if (!downloads) return;
+    btn.disabled = true; msg.textContent = '';
+    var html;
+    try { html = snapshot(); } catch (e) { msg.textContent = 'Could not build the export.'; btn.disabled = false; return; }
+    downloads.save({filename: 'Doc-Layer-Study-Report.html', data: html}).then(function(){
+      msg.textContent = 'Saved.';
+    }).catch(function(err){
+      var c = err && err.code;
+      if (c === 'declined') msg.textContent = '';
+      else if (c === 'rate_limited') msg.textContent = 'Try again in a moment.';
+      else if (c === 'too_large') msg.textContent = 'File too large to export here.';
+      else msg.textContent = 'Export is not available in this view.';
+    }).then(function(){ btn.disabled = false; });
+  });
+})();
+</script>

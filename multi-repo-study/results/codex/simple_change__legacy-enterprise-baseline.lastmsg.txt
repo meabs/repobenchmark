@@ -1,0 +1,8 @@
+Implemented optional `Owner.email` across all three profiles.
+
+- Updated entity, JDBC reads/updates, H2 schema and seed data.
+- Added one shared round-trip test inherited by all profiles.
+- Added `RUN_METRICS.json` and ignored it.
+- No JSP/UI files changed.
+
+Validation: full Maven suite passed — 78 tests, 0 failures/errors. Targeted profile tests passed — 36 tests, 0 failures/errors.

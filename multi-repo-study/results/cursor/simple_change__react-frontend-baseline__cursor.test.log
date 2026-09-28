@@ -1,0 +1,28 @@
+
+ RUN  v2.1.4 /Users/garry/code/multi-repo-benchmark/react-frontend-baseline/apps/react-vite
+
+ ✓ src/hooks/__tests__/use-disclosure.test.ts  (4 tests) 13ms
+ ✓ src/components/ui/drawer/__tests__/drawer.test.tsx  (1 test) 73ms
+ ✓ src/components/ui/dialog/confirmation-dialog/__tests__/confirmation-dialog.test.tsx  (1 test) 76ms
+ ✓ src/components/ui/dialog/__tests__/dialog.test.tsx  (1 test) 83ms
+ ✓ src/components/ui/form/__tests__/form.test.tsx  (2 tests) 107ms
+ ✓ src/features/discussions/components/__tests__/discussions-list.test.tsx  (1 test) 506ms
+   ✓ sorts the current page of discussions by created date 504ms
+ ✓ src/lib/__tests__/authorization.test.tsx  (4 tests) 891ms
+ ✓ src/components/ui/notifications/__tests__/notifications.test.ts  (1 test) 7ms
+ ✓ src/components/seo/__tests__/head.test.tsx  (1 test) 25ms
+ ✓ src/features/auth/components/__tests__/login-form.test.tsx  (1 test) 556ms
+   ✓ should login new user and call onSuccess cb which should navigate the user to the app 555ms
+ ✓ src/features/auth/components/__tests__/register-form.test.tsx  (1 test) 640ms
+   ✓ should register new user and call onSuccess cb which should navigate the user to the app 639ms
+ ✓ src/app/routes/app/discussions/__tests__/discussions.test.tsx  (1 test) 1492ms
+   ✓ should create, render and delete discussions 1491ms
+ ✓ src/app/routes/app/discussions/__tests__/discussion.test.tsx  (3 tests) 3621ms
+   ✓ should render discussion 689ms
+   ✓ should update discussion 1231ms
+   ✓ should create and delete a comment on the discussion 1699ms
+
+ Test Files  13 passed (13)
+      Tests  22 passed (22)
+   Start at  20:02:04
+   Duration  5.46s (transform 494ms, setup 6.86s, collect 4.64s, tests 8.09s, environment 5.01s, prepare 787ms)

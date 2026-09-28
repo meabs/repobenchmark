@@ -1,0 +1,27 @@
+{
+  "cell": "understanding__event-driven-recommended",
+  "repo": "event-driven-recommended",
+  "task": "understanding",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 356,
+  "run_metrics_present": true,
+  "verification": {
+    "answer_present": true,
+    "unexpected_file_changes": 0
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/28/rollout-2026-09-28T15-49-46-01a0e87e-4e8e-7810-b3ce-cb8429251e32.jsonl",
+    "cwd": "/Users/garry/code/multi-repo-benchmark/event-driven-recommended",
+    "api_turns": 29,
+    "tool_calls_total": 28,
+    "file_edits": 4,
+    "shell_execs": 24,
+    "reasoning_steps": 36,
+    "input_tokens": 1553570,
+    "cached_input_tokens": 1463040,
+    "output_tokens": 15898,
+    "reasoning_output_tokens": 8053,
+    "total_tokens": 1569468
+  }
+}

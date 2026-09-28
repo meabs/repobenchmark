@@ -1,0 +1,9 @@
+Implemented and verified.
+
+- Added distinct, ordered pet-type/last-name owner query.
+- Added optional `petType` filtering to `GET /owners`.
+- Preserved existing behavior when absent or blank.
+- Added JPA and MVC tests.
+- No schema, data, or template changes.
+- Full `./mvnw -q test` passed.
+- Metrics written to ignored [RUN_METRICS.json](/Users/garry/code/multi-repo-benchmark/java-spring-baseline/RUN_METRICS.json).

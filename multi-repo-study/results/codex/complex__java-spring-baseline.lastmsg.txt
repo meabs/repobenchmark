@@ -1,0 +1,10 @@
+Implemented deceased-pet tracking.
+
+- Added persisted `Pet.deceased` with H2/MySQL/PostgreSQL schema and seed updates.
+- Added owner-scoped `POST /owners/{ownerId}/pets/{petId}/deceased`.
+- Protected create/edit forms with disallowed binding fields.
+- Updated owner details UI with deceased styling and living-pet POST controls.
+- Added controller, persistence, endpoint, and rendered HTML tests.
+- Added `RUN_METRICS.json` and ignored it in `.gitignore`.
+
+Verification: `mvn -q test` passes. Docker-backed PostgreSQL/MySQL tests were skipped because Docker is unavailable; H2 integration tests passed, including fresh-read persistence.

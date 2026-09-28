@@ -1,0 +1,15 @@
+Implemented discussion pinning.
+
+- Added `isPinned` model field with default `false`.
+- Added admin-only MSW toggle endpoint and persistence.
+- Added mutation hook with list invalidation.
+- Added admin-only pin/unpin control, pinned sorting, and visual indicator.
+- Added end-to-end MSW-backed tests, including non-admin visibility.
+
+Validation passed:
+
+- `npx vitest run`: 12 files, 22 tests
+- TypeScript check
+- ESLint
+
+Metrics were written to ignored [RUN_METRICS.json](/Users/garry/code/multi-repo-benchmark/react-frontend-recommended/RUN_METRICS.json).

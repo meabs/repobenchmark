@@ -1,0 +1,14 @@
+Implemented the featured product query layer.
+
+- Added `Product.is_featured`, defaulting to `False`.
+- Added `ProductQuerySet.featured()`.
+- Added generated migration `0033_product_is_featured.py` plus test-app mirror.
+- Added coverage for public/featured filtering.
+- Added ignored `RUN_METRICS.json`.
+
+Validation:
+
+- Fresh PostgreSQL migration from zero passed through `0033`.
+- Full PostgreSQL suite: `1792 passed, 1 skipped`.
+- Formatting and diff checks passed.
+- No UI/dashboard changes.

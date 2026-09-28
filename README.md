@@ -6,6 +6,8 @@ Six documentation-layer designs, built on top of the identical real-world applic
 
 This repository is the complete, reproducible artefact: the four test-fixture repositories with their documentation layers, the orchestration scripts that ran every session, and the raw + consolidated results data behind every number in the analysis below.
 
+> **Update, 28 Sep 2026 — external validity.** The recommended layout was re-tested on **five real open-source codebases** (Python/Django, Spring Boot, React, .NET event-driven, legacy XML Spring), 30 Codex cells plus a 12-cell Cursor cross-tool pilot, with every saved comprehension answer graded against the source. The layout is unchanged, but the claim is narrower: it is **cheaper for understanding a codebase, mixed for changing one**, and generated doc layers contained factual errors that must be verified. Details: [External-validity study](#external-validity-study-five-real-codebases). Everything is under [`multi-repo-study/`](multi-repo-study/).
+
 ---
 
 ## Contents
@@ -15,6 +17,7 @@ This repository is the complete, reproducible artefact: the four test-fixture re
 - [The six designs](#the-six-designs)
 - [Methodology](#methodology)
 - [Findings](#findings)
+- [External-validity study: five real codebases](#external-validity-study-five-real-codebases)
 - [The recommendation](#the-recommendation)
 - [Repository layout](#repository-layout)
 - [Reproducing this study](#reproducing-this-study)
@@ -132,6 +135,100 @@ No design ever traded correctness for speed or cost. Every difference measured i
 
 **Straight answer: doubling did not produce proof on any task.** The recommendation below does not depend on it doing so.
 
+## External-validity study: five real codebases
+
+The six-design study used one codebase (the FastAPI template) that the documentation layers were designed on. To find out how much of the result travels, the **recommended** layout was generated for five unrelated, real open-source repositories and compared against a plain baseline of each. This part of the study is **n = 1 per cell** — directional, not proof.
+
+**Design:** 5 repos × 2 arms (baseline / recommended) × 3 tasks (understanding / simple change / complex change) = **30 Codex cells** (`gpt-5.6-luna`), plus a **12-cell Cursor pilot** (`cursor-agent`, model `auto`) on two of the repos. All 30 Codex cells and all 12 Cursor cells pass their independent verification (after one documented doc-layer fix, below).
+
+| Family | Repo (upstream) | Stack | Pinned upstream commit |
+|---|---|---|---|
+| python-api | [django-oscar](https://github.com/django-oscar/django-oscar) | Python · Django · dynamic class-loading | `0ae2005bad81254db837101e1977526ebe29cc1e` |
+| java-spring | [spring-petclinic](https://github.com/spring-projects/spring-petclinic) | Java · Spring Boot 4 · JPA | `818c4136ea971c21674525f9053de0d9c7ad8cfe` |
+| react-frontend | [bulletproof-react](https://github.com/alan2207/bulletproof-react) (`apps/react-vite`) | TypeScript · React · Vite | `9506629ed003a561c6627735480cce4994244bb4` |
+| event-driven | [dotnet/eShop](https://github.com/dotnet/eShop) (Ordering) | C# · .NET · DDD/CQRS | `b4a40872005d4bb29e5b1fa1ff7e244143d39215` |
+| legacy-enterprise | [spring-framework-petclinic](https://github.com/spring-petclinic/spring-framework-petclinic) | Java · plain Spring · XML config | `cd43fc08e272b778e1196d0754ab86d1d42f1d5a` |
+
+The upstream codebases themselves are not vendored here; only the documentation layers, prompts, harness and results are (see [layout](#repository-layout)).
+
+### Headline result — recommended vs baseline
+
+| Task | Median token change | Repos cheaper | Mean token change | Median **dollar** change |
+|---|---:|:---:|---:|---:|
+| Understanding | **−33.8%** | 4 of 5 | −27.6% | −19.5% |
+| Simple change | −6.6% | 3 of 5 | | −11.4% |
+| Complex change | −20.1% | 3 of 5 | | −12.2% |
+| **All 30 cells (dollars)** | | | | **$1.515 → $1.404 (−7.3%)** |
+
+Per-repo token change (negative = recommended used fewer tokens):
+
+| Repo | Understanding | Simple change | Complex change |
+|---|---:|---:|---:|
+| django-oscar | −33.5% | +17.8% | **+86.4%** |
+| spring-petclinic | −33.8% | −14.5% | −64.3% |
+| bulletproof-react | −44.3% | −6.6% | +3.6% |
+| eShop (Ordering) | +16.9% | +16.7% | −34.0% |
+| legacy petclinic | −43.2% | −48.2% | −20.1% |
+
+**What generalized:** on comprehension the doc layer was cheaper on 4 of 5 codebases by a wide margin. **What did not:** the single-repo claim "never a cost penalty" does not hold as a universal. On code-change tasks the effect is real but repo-dependent; the worst cell cost +86% tokens (+61% dollars), the best −64% tokens.
+
+**Token counts overstate dollar savings.** 89–98% of every run's input was served from cache (a tenth of the price), so priced at $0.20 / $0.02 / $1.20 per 1M fresh / cached / output tokens the honest overall saving is about **7%**, with direction depending on the codebase.
+
+### Answer quality: the cheaper answers were not worse
+
+The understanding tasks were originally checked only for "an answer file exists". All 14 saved answers were graded afterwards, blind and question by question against the real source (2 = correct and precise, 1 = partial, 0 = wrong), each set including a trap question.
+
+| Repo | Baseline (of 10) | Recommended (of 10) |
+|---|---:|---:|
+| django-oscar | 10 | 10 |
+| spring-petclinic | 8 | 9 |
+| bulletproof-react | 9 | 9 |
+| eShop | 9 | 10 |
+| legacy petclinic | 10 | 9 |
+| **Total** | **46** | **47** |
+
+A tie: no sign the doc layer trades accuracy for cost. Cursor's four answers scored 10/10 (baseline) vs 9/10 (recommended). Grading was done by agent passes, so one-point differences are within grader judgement. Grader output, justifications and the doc errors found are in [`multi-repo-study/grading/`](multi-repo-study/grading/).
+
+### Time and effort, not just tokens
+
+Medians across the five repos, recommended vs baseline:
+
+| Task | Wall time | Tool calls |
+|---|---:|---:|
+| Understanding | −11% | −23% |
+| Simple change | −8% | +5% |
+| Complex change | −3% | −17% |
+
+Wall time is the noisiest measure (it also moves with machine load). The clear exception is django-oscar's complex task: 114 vs 62 tool calls, of which **95 vs 41 were reads/searches** and only 8 vs 12 were test runs, so the extra cost was reading, not testing.
+
+### Discovery replicated: 15 of 15
+
+Counting real commands in the session transcripts (not agent self-reports), every one of the 15 recommended Codex cells opened the documentation layer within its first four commands (all but one within its second), and the skills opened matched the task. Discovery is not the weak point; the *accuracy of what is discovered* is.
+
+### The documentation itself contained errors
+
+Grading also checked each recommended layer against the code. **Three of the five layers contained a factual error relevant to the tasks:** the Django offer skill describes a condition as a plain Python class (Oscar requires a proxy-model subclass) and registers it through the wrong mechanism; the React knowledge pages say the mock database persists to a file (it uses browser storage); the Spring entity skill says seed-data files need changes only for required columns (any new column breaks them). In two of three cases the agents answered correctly anyway, apparently by checking the code.
+
+**Validity threat:** the recommended docs sometimes state test answers almost verbatim (the django-oscar trap answer, the React environment fix), because both the docs and the questions target each codebase's notable quirks. Treat the understanding saving as an **upper bound**.
+
+### A real failure traced to the docs, then fixed and re-run
+
+Two of the 30 cells failed independent verification on first attempt, both on `java-spring-recommended` (simple and complex change). The doc layer never mentioned two build-enforced conventions: a **code-formatting gate** and an **i18n sync test** (any new label in the default locale file must exist in every locale file). The baseline arm, with no doc layer, explored broadly enough to notice both and passed. The recommended arm trusted the narrower, more confident guidance and skipped that exploration. **An incomplete doc layer can make an agent overconfident.**
+
+Fix: a new `verify-work` skill covering both conventions, logged in the bundle's `okf/log.md`; both cells re-run and passed.
+
+| | Before | After |
+|---|---|---|
+| Simple change | FAIL (0 tests, build blocked), 1,213,000 tokens, 397s | PASS 56/56, 1,388,383 tokens (+14.5%), 332s |
+| Complex change | FAIL (53/55), 2,017,083 tokens, 595s | PASS 55/55, 2,578,768 tokens (+27.9%), 498s |
+
+**Caveat, stated plainly:** the first-attempt runs happened in a sandbox where the agent could not launch Maven at all, and the re-runs had a working Java toolchain. The pair changes two things at once, so the *cost of the fix is unmeasured*. What the evidence does support: the string `javaformat` never appears in either failed recommended transcript but appears 3 and 7 times in the matching baseline transcripts. To show both sides the study keeps the failed run and the fixed run.
+
+### Cursor cross-tool checks
+
+- **Original repo, 4 cells (understanding + simple change):** Cursor found the unmentioned `AGENTS.md` in 4 of 4 cells and opened exactly the two right skills on the simple change, but opened 3 unneeded skills on understanding (Codex opened none). Tokens within 1.3% of each other on simple change.
+- **Five-repo pilot, 12 cells (react-frontend and java-spring, both arms, all tasks):** all 12 passed. Cursor's `total_tokens` excludes cache reads while Codex's includes them, so comparison uses fresh input + cached + output on both sides. Corrected, **10 of 12 cells land within ~0.6–1.3× of Codex**. The two outliers are both java-spring complex, in opposite directions (0.48× baseline, 2.75× recommended), which is n=1 run-to-run variance rather than a tool effect.
+
 ## The recommendation
 
 **Ship `repo-agent-recommended`**: a tiny `AGENTS.md` index, six narrow task-scoped skills under `.agents/skills/`, and OKF with the load-bearing "why" facts folded into the relevant reference page — no separate architecture-decision-record tree.
@@ -142,6 +239,15 @@ Four reasons, all independent of the still-unconfirmed n=8 cost trend:
 2. **Inherits proven discovery precision.** 24/24 correct, unprompted skill selections.
 3. **Structurally the cleanest of the six.** Auditing `repo-agent-optimised`'s six architecture-decision records against OKF found four of six already fully duplicated as plain description — exact repetition across artefacts. The two genuinely load-bearing facts were moved into the OKF page they're actually attached to, instead of recreating a parallel "why" tree.
 4. **Correctness and comprehension quality are tied for perfect** with every other design — this choice costs nothing on the one dimension every design already wins.
+
+### Has the recommendation changed after the five-repo study?
+
+**The layout is unchanged; the claims and conditions are narrower.**
+
+- Expect roughly **20% cheaper in dollars on comprehension** tasks and about **10% on code changes**, not "never a penalty". Effects on code changes depend on the codebase, and one codebase cost 61% more in dollars on a complex change.
+- **Treat every generated doc layer as unverified** until an agent has worked from it. 3 of 5 layers contained factual errors and one omission caused two failures.
+- **Check what the build enforces** (formatters, sync tests, generated-code gates) and put it in a `verify-work` skill. That is the gap that failed cells.
+- **Re-measure on your own codebase** before relying on the numbers here; the five-repo results are n=1 per cell.
 
 ## Repository layout
 
@@ -160,7 +266,17 @@ repobenchmark/
 ├── repo-agent-skill/               design 5 (v3, current state) — six task-scoped skills, tiny AGENTS.md
 ├── repo-agent-recommended/         design 6 — the recommended layout
 │
-└── task-matrix-*/                  raw + consolidated results (see below)
+├── task-matrix-*/                  raw + consolidated results, single-repo study (see below)
+│
+├── multi-repo-study/               five-repo external-validity study + Cursor pilot
+│   ├── doc-layers/<family>/        the recommended doc layer for each repo: AGENTS.md, .agents/skills/, okf/
+│   ├── prompts/                    the exact prompt for every task × repo
+│   ├── harness/                    run_multirepo_cell.sh, run_multirepo_cursor_cell.sh, rerun scripts, cursor_usage.py, progress logs
+│   ├── results/codex/              per-cell summary, token usage, saved ANSWER.md, test logs (30 cells; the pre-fix java-spring runs are kept alongside as `*.attempt1_failed.*` and `*.preJavaFix.*`)
+│   ├── results/cursor/             per-cell summary, usage, ANSWER.md, test logs (12 cells)
+│   ├── grading/                    per-question grading of the saved comprehension answers, incl. doc errors found
+│   ├── final_dataset.json          consolidated table: tokens, wall time, tool calls, verification, per cell
+│   └── report/                     the full write-up: report.html and Doc-Layer-Study-Report.pdf
 ```
 
 Each fixture repo ships its own `.env.example` (upstream's placeholder development values only — copy to `.env` and adjust before running).
@@ -182,6 +298,17 @@ Requirements: a local PostgreSQL server, `uv` (Python), `bun` or `npm` (frontend
 
 `run_cell.sh` resets the target repo and its database, launches the agent non-interactively against the matching prompt in `prompt.md`, independently re-verifies the result (migration + test suite, or answer-file presence), extracts real usage via `token_usage.py`, and writes one consolidated `<cell>.summary.json`. Swap the model/CLI invocation inside `run_cell.sh` to reproduce this with a different agent.
 
+### Reproducing the five-repo study
+
+Clone each upstream repo at the commit pinned [above](#external-validity-study-five-real-codebases), create a `<family>-baseline` copy (upstream with its `.git` stripped) and a `<family>-recommended` copy (the same tree plus the matching `multi-repo-study/doc-layers/<family>/` contents), then:
+
+```bash
+bash multi-repo-study/harness/run_multirepo_cell.sh <family>-<arm> <understanding|simple_change|complex> ...      # Codex
+bash multi-repo-study/harness/run_multirepo_cursor_cell.sh <family>-<arm> <task> auto 1200                        # Cursor
+```
+
+The scripts contain absolute paths from the original machine (`/Users/garry/...` and a session scratch directory); edit the `MULTI_DIR`/`SCRATCH` variables at the top before running. Verification needs Java 21 (Spring), Node + yarn (React), a Postgres/Django environment (Oscar) and the .NET SDK (eShop). Prompts are in `multi-repo-study/prompts/`.
+
 ## Results data reference
 
 | Path | Contents |
@@ -196,11 +323,14 @@ Requirements: a local PostgreSQL server, `uv` (Python), `bun` or `npm` (frontend
 | `task-matrix-v3-vs-recommended.json` | Head-to-head, skill v3 vs. recommended |
 | `task-matrix-n8-tokens.json` | Raw per-round token data behind the n=8 stress test |
 
-Each round directory contains, per cell: `<task>__<repo>__<round>.summary.json` (consolidated result), `.RUN_METRICS.json` (the agent's own self-report, kept for comparison, never trusted on its own), and `.ANSWER.md` where applicable (the comprehension task's actual output).
+**Five-repo study** (`multi-repo-study/`): `final_dataset.json` is the consolidated table (`codex` list of 30 cells, `cursor` list of 12) with repo, arm, task, pass/fail, wall seconds, total tokens, tool calls and file edits. Per-cell raw files are in `results/`: `*.tokens.json` (real input / cached / output / reasoning tokens from the provider's own session log), `*.summary.json` (harness verdict), `*.ANSWER.md` (the saved comprehension answer that was graded), `*.test.log` (independent verification output). Raw agent transcripts are not included because of size.
+
+Each single-repo round directory contains, per cell: `<task>__<repo>__<round>.summary.json` (consolidated result), `.RUN_METRICS.json` (the agent's own self-report, kept for comparison, never trusted on its own), and `.ANSWER.md` where applicable (the comprehension task's actual output).
 
 ## Provenance & licensing
 
 - **Source application:** [`fastapi/full-stack-fastapi-template`](https://github.com/fastapi/full-stack-fastapi-template), MIT licensed, pinned at commit `cb740b656d7a0a6c5e12c7bf8e50343ec94ee9c7`.
+- **Five-repo study sources:** the five upstream repositories listed [above](#external-validity-study-five-real-codebases), each under its own licence; none are vendored here, only the documentation layers written for them.
 - **OKF specification:** [GoogleCloudPlatform/knowledge-catalog](https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md) v0.2.
 - **This project's own work** — the four documentation layers, orchestration scripts, prompts, and results data — is MIT licensed; see [`LICENSE`](LICENSE).
 - No API keys, credentials, or real secrets are present anywhere in this repository. Each fixture ships `.env.example` files carrying only the upstream template's own placeholder development values.

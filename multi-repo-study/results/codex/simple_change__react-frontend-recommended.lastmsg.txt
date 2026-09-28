@@ -1,0 +1,8 @@
+Implemented client-side discussion sorting.
+
+- Added “Newest first” (default) / “Oldest first” select in [discussions-list.tsx](/Users/garry/code/multi-repo-benchmark/react-frontend-recommended/apps/react-vite/src/features/discussions/components/discussions-list.tsx).
+- Added colocated sorting test.
+- Pagination and prefetch behavior unchanged.
+- Added ignored `RUN_METRICS.json`.
+
+Validation: 22 tests passed, TypeScript passed, lint passed, detector found no issues.

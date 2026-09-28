@@ -1,0 +1,8 @@
+Implemented:
+
+- Added distinct pet-type and combined last-name/pet-type queries to [OwnerRepository.java](/Users/garry/code/multi-repo-benchmark/java-spring-recommended/src/main/java/org/springframework/samples/petclinic/owner/OwnerRepository.java:53).
+- Added optional `petType` filtering to [OwnerController.java](/Users/garry/code/multi-repo-benchmark/java-spring-recommended/src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:95).
+- Added repository and controller tests.
+- Added `RUN_METRICS.json` and ignored it.
+
+Tests were attempted, but Maven could not start because no Java runtime is installed in the environment. Static checks passed; no schema, data, or template files changed.

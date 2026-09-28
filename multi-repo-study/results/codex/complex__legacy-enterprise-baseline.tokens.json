@@ -1,0 +1,14 @@
+{
+  "session": "/Users/garry/.codex/sessions/2026/09/28/rollout-2026-09-28T18-29-50-01a0e910-d802-74e3-afe6-a01a39bbe028.jsonl",
+  "cwd": "/Users/garry/code/multi-repo-benchmark/legacy-enterprise-baseline",
+  "api_turns": 42,
+  "tool_calls_total": 41,
+  "file_edits": 8,
+  "shell_execs": 33,
+  "reasoning_steps": 55,
+  "input_tokens": 3374646,
+  "cached_input_tokens": 3198464,
+  "output_tokens": 30373,
+  "reasoning_output_tokens": 12013,
+  "total_tokens": 3405019
+}

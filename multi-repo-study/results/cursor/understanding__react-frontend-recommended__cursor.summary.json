@@ -1,0 +1,25 @@
+{
+  "cell": "understanding__react-frontend-recommended__cursor",
+  "repo": "react-frontend-recommended",
+  "task": "understanding",
+  "model": "auto",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 482,
+  "verification": {
+    "answer_present": true,
+    "unexpected_file_changes": 0
+  },
+  "real_usage": {
+    "tool_calls_total": 71,
+    "file_edits": 3,
+    "shell_execs": 68,
+    "input_tokens": 99955,
+    "cached_input_tokens": 711680,
+    "output_tokens": 36705,
+    "total_tokens": 136660,
+    "duration_ms": 415865,
+    "is_error": false,
+    "session_id": "ac14eede-8318-4970-a6c0-e3b6a95e03e5"
+  }
+}

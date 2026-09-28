@@ -1,0 +1,93 @@
+You're working in this repo: a Spring Boot 4.1 + Spring Data JPA + Thymeleaf
+server-rendered application (spring-petclinic). No REST API for the UI, no frontend
+build step — controllers return view names.
+
+Task: add "deceased" tracking for Pets — a soft flag, not a delete.
+
+Requirements:
+1. Add a `deceased: boolean` field to `Pet`, default `false`, with an actual SQL
+   schema change to `db/h2/schema.sql` (and `db/mysql/schema.sql`,
+   `db/postgres/schema.sql`, plus their `data.sql` if needed for existing seed
+   rows) — Hibernate does not auto-generate DDL in this repo
+   (`spring.jpa.hibernate.ddl-auto=none`), so a Java-only change will not work.
+2. Add `POST /owners/{ownerId}/pets/{petId}/deceased` — sets `deceased = true` for
+   that pet. Only reachable for a pet that belongs to the owner in the path (match
+   the existing ownership-scoping pattern `PetController` already uses via its
+   `@ModelAttribute("pet")` method).
+3. On the owner details page (`owners/ownerDetails.html`), visually distinguish
+   deceased pets from living ones (e.g. a label or muted styling next to the pet's
+   name) — follow the existing Thymeleaf conventions already used in that template
+   rather than introducing a new styling approach.
+4. Add a link/button on the owner details page next to each living pet that submits
+   the new endpoint (a simple form POST is fine, matching how the rest of this
+   app's mutations work — no JS framework, no AJAX).
+5. `PetController.processCreationForm`/`processUpdateForm` should reject attempts to
+   set `deceased=true` directly through the create/edit pet form — this field is
+   only settable via the new dedicated endpoint. (This repo already disallows the
+   `id` field the same way via `@InitBinder`/`setDisallowedFields` — use the same
+   mechanism.)
+
+Definition of done — and how to check each one, not just assert it:
+- Schema change is real: start the app (or run a test that hits a real H2-backed
+  Spring context, e.g. following `ClinicServiceTests`'s pattern) and confirm a pet
+  can actually be marked deceased and the value persists across a fresh read from
+  the repository, not just held in an in-memory object.
+- The new endpoint respects ownership scoping the same way existing pet endpoints
+  do.
+- The create/edit pet form cannot be used to directly set `deceased=true` — add a
+  test proving a submitted `deceased=true` form field is ignored on create/update,
+  and that only the dedicated endpoint can flip it.
+- Existing tests still pass; add backend tests for the new behavior (repository,
+  controller, and the disallowed-field regression test above).
+- The owner details page's HTML actually differs for a deceased vs. living pet —
+  if this repo has any browser-level UI test for the owner details page, extend it;
+  otherwise verify by rendering the template in a `@SpringBootTest` /
+  `MockMvc`-based test and asserting on the response body content, not just that
+  the controller method returns 200.
+
+Work through this yourself — explore the codebase as needed to find the relevant
+files and match its existing conventions.
+
+---
+METRICS PROTOCOL (do this regardless of the task above — it does not count as part of
+the deliverable and should not be committed):
+
+1. Immediately, before doing anything else, run `date -u +%FT%TZ` and record it as
+   `start_time`.
+2. As you work, keep a running timeline: each time you finish a distinct phase
+   (e.g. "explored repo", "read Pet model", "wrote schema migration", "added
+   deceased endpoint", "updated owner details template", "added disallowed-field
+   test", "ran tests"), append one line to that timeline with a timestamp
+   (`date -u +%FT%TZ`) and a short label. If any gap between two consecutive
+   timeline events exceeds 5 minutes, record what you were doing/waiting on during
+   that gap — don't let it pass silently.
+3. Keep a running tally of tool calls by type as you go (file reads, file
+   edits/writes, bash commands, searches/greps) — don't reconstruct this from
+   memory at the end, increment it as you actually use each tool.
+4. Also note: the timestamp of your *first* file edit/write (as distinct from
+   read/explore actions) — this is "time to first edit," a proxy for how long
+   orientation took before you started producing the change.
+5. When the task is complete (or if you give up / hit a blocker you can't resolve),
+   run `date -u +%FT%TZ` for `end_time`, then write a single JSON file to
+   `RUN_METRICS.json` at the repo root with this shape:
+
+{
+  "repo": "java-spring-recommended",
+  "start_time": "...",
+  "end_time": "...",
+  "duration_seconds": <int>,
+  "time_to_first_edit_seconds": <int>,
+  "tool_calls": {"read": <int>, "edit_or_write": <int>, "bash": <int>, "search_or_grep": <int>, "other": <int>, "total": <int>},
+  "files_read": [...],
+  "files_created_or_edited": [...],
+  "timeline": [{"time": "...", "event": "..."}, ...],
+  "definition_of_done": {"schema_change_applied_all_profiles": true/false, "field_persists_across_fresh_read": true/false, "endpoint_respects_ownership": true/false, "create_edit_form_cannot_set_deceased": true/false, "existing_tests_pass": true/false, "new_tests_added": true/false, "template_renders_distinct_state": true/false},
+  "docs_consulted": [],
+  "blockers_hit": ["one line per blocker, e.g. bugs you had to work around, or any >5min gap and why"],
+  "self_assessed_completion": "complete | partial | blocked",
+  "notes": "anything relevant to how easy or hard orientation was in this repo"
+}
+
+6. Add `RUN_METRICS.json` to `.gitignore` (create the entry if it's not already there)
+   before your final commit, so it stays untracked and doesn't appear in the feature
+   diff.

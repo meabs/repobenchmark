@@ -1,0 +1,67 @@
+You're working in this repo: django-oscar, a Django e-commerce framework
+distributed as a set of overridable Django apps under `src/oscar/apps/`, plus
+a `sandbox/` reference project and a `tests/` suite.
+
+Task: add an `is_featured` flag to Products, and a way to query for featured
+products.
+
+Requirements:
+1. Add an `is_featured` boolean field to the `Product` model (in
+   `src/oscar/apps/catalogue/`), default `False`.
+2. Write a proper Django migration for it (a real, generated migration file
+   under `src/oscar/apps/catalogue/migrations/`, not relying on
+   `migrate --run-syncdb` or auto-create).
+3. Add a `featured()` method to `ProductQuerySet` (in
+   `src/oscar/apps/catalogue/managers.py`) that returns only products where
+   `is_public=True` and `is_featured=True`.
+4. No frontend/template/dashboard change needed — this is a model + query
+   layer change only. Out of scope: exposing this in any UI, admin, or
+   dashboard screen.
+5. Add a test verifying `featured()` returns only public, featured products
+   and excludes everything else (non-featured, and featured-but-not-public).
+
+Definition of done:
+- Existing tests still pass; the new test passes.
+- Migration applies cleanly against a real, migrated-from-scratch database —
+  don't just eyeball the generated migration file.
+
+Work through this yourself — explore the codebase as needed and match its
+existing conventions.
+
+---
+METRICS PROTOCOL (do this regardless of the task above — it does not count as
+part of the deliverable and should not be committed):
+
+1. Immediately, before doing anything else, run `date -u +%FT%TZ` and record
+   it as `start_time`.
+2. As you work, keep a running timeline with timestamps (`date -u +%FT%TZ`)
+   for each distinct phase (explored repo, first edit, wrote migration, wrote
+   test, ran tests, done). If any gap between two consecutive events exceeds
+   5 minutes, record what you were doing.
+3. Keep a running tally of tool calls by type as you go — don't reconstruct
+   this from memory at the end.
+4. Note the timestamp of your first file edit/write (distinct from
+   read/explore).
+5. When done, run `date -u +%FT%TZ` for `end_time`, then write a single JSON
+   file to `RUN_METRICS.json` at the repo root with this shape:
+
+{
+  "repo": "python-api-baseline",
+  "task": "simple_change",
+  "start_time": "...",
+  "end_time": "...",
+  "duration_seconds": <int>,
+  "time_to_first_edit_seconds": <int>,
+  "tool_calls": {"read": <int>, "edit_or_write": <int>, "bash": <int>, "search_or_grep": <int>, "other": <int>, "total": <int>},
+  "files_read": [...],
+  "files_created_or_edited": [...],
+  "timeline": [{"time": "...", "event": "..."}, ...],
+  "definition_of_done": {"field_added": true/false, "migration_written_and_applies": true/false, "featured_method_correct": true/false, "excludes_nonfeatured_and_nonpublic": true/false, "new_test_added_and_passes": true/false, "no_ui_touched": true/false},
+  "docs_consulted": [],
+  "blockers_hit": ["one line per blocker, or any >5min gap and why"],
+  "self_assessed_completion": "complete | partial | blocked",
+  "notes": "anything relevant to how easy or hard orientation was for a small, scoped change in this repo"
+}
+
+6. Add `RUN_METRICS.json` to `.gitignore` (create the entry if it's not
+   already there).

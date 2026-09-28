@@ -1,0 +1,8 @@
+Implemented and verified.
+
+- Added combined last-name + pet-type `Page<Owner>` query with `DISTINCT` and last-name ordering.
+- Added optional, trimmed `petType` filtering to `GET /owners`.
+- Added controller and JPA integration tests.
+- No schema, data, or template changes.
+- Full Maven test suite passes with OpenJDK 21.
+- Added ignored [`RUN_METRICS.json`](/Users/garry/code/multi-repo-benchmark/java-spring-baseline/RUN_METRICS.json) and `.gitignore` entry.

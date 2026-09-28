@@ -1,0 +1,50 @@
+{
+  "repo_family": "python-api (django-oscar)",
+  "method": "Blind: answers read as A(baseline file)/B(recommended file) without arm weighting; ground truth derived from python-api-src source (loading.py, catalogue/models.py, offer/abstract_models.py, offer/custom.py, sandbox/settings.py, tests/settings.py, tests/conftest.py).",
+  "per_question": {
+    "Q1_get_class_ownership": {
+      "baseline": {"score": 2, "why": "Full chain get_class->get_classes->get_class_loader->default_class_loader->_import_module->_find_registered_app_name->_pluck_classes; registry check apps.get_app_config(label)+isinstance(OscarConfig) correct; line refs verified."},
+      "recommended": {"score": 2, "why": "Same chain and same exact registry check, correct fallback/ClassNotFoundError details; line refs verified."}
+    },
+    "Q2_is_model_registered_duplicate_Product": {
+      "baseline": {"score": 2, "why": "Correct apps.get_registered_model/LookupError semantics and guard purpose; RuntimeError for same (label,model) conflict and coexistence under different labels are both correct; slightly omits the earlier duplicate-app-label rejection."},
+      "recommended": {"score": 2, "why": "Correct check, correct guard-skip behaviour (one Product), RuntimeError if guard bypassed, and correctly notes duplicate app labels are rejected earlier; marginally more complete than A."}
+    },
+    "Q3_TRAP_sandbox_forking": {
+      "baseline": {"score": 2, "why": "Trap avoided: says No (sandbox/apps/ is not an INSTALLED_APPS fork), names tests/settings.py with exactly 5 forks (partner, customer, catalogue, dashboard, checkout); sandbox range 258-309 and test lines verified exactly."},
+      "recommended": {"score": 2, "why": "Trap avoided: No; tests/settings.py, 5 forks, all correct. Sandbox cite 258-297 is a sub-range (list ends line 309) - trivial."}
+    },
+    "Q4_type_vs_proxy_class_plain_subclass": {
+      "baseline": {"score": 2, "why": "type=built-in selector via proxy_map, proxy_class=dotted-path custom class; proxy() precedence and RuntimeError for unrecognised type correct; plain subclass will not be used - correct; correct working pattern (proxy Condition subclass + proxy_class), test refs 22-30 and 318-330 verified."},
+      "recommended": {"score": 2, "why": "Same correct mechanics, priority of proxy_class, is_condition_satisfied->proxy() at :355-356, custom.create_condition; correctly says custom class is a proxy subclass of concrete Condition (CustomConditionModel at models.py:58) - not the doc's 'plain Python class' wording."}
+    },
+    "Q5_test_db_defaults": {
+      "baseline": {"score": 2, "why": "postgresql / oscar / None / None / '' / 5432 and DATABASE_NAME all match tests/settings.py:11-20; --sqlite note correct."},
+      "recommended": {"score": 2, "why": "Same values and DATABASE_NAME correct; --sqlite note correct."}
+    }
+  },
+  "totals": {"baseline": 10, "recommended": 10, "max": 10},
+  "doc_errors_found": [
+    {
+      "file": ".agents/skills/add-offer-condition-or-benefit/SKILL.md (step 1)",
+      "claim": "Write the new condition as 'a plain Python class (not a new Django model)'.",
+      "truth": "Oscar's supported/tested pattern is a Django proxy-model subclass of the concrete Condition (Meta.proxy=True), e.g. tests/_site/model_tests_app/models.py:22 and :58; proxy() instantiates klass(**row_fields).",
+      "copied_into_answer": false
+    },
+    {
+      "file": ".agents/skills/add-offer-condition-or-benefit/SKILL.md (step 2)",
+      "claim": "Register the class so it is loadable via get_class/get_classes.",
+      "truth": "proxy_class is resolved by load_proxy(dotted path), not through get_class registration; custom.create_condition just stores the class path.",
+      "copied_into_answer": false
+    },
+    {
+      "file": "okf/apps/offer.md",
+      "claim": "Behaviour comes 'not from a Django-level subclass'.",
+      "truth": "Imprecise: custom conditions are typically Django proxy subclasses of Condition.",
+      "copied_into_answer": false
+    }
+  ],
+  "doc_errors_affecting_answers": "none - recommended answer Q4 states the correct proxy-subclass pattern rather than the skill's wrong 'plain Python class' step",
+  "note_on_Q3": "The recommended docs (okf/index.md, log.md, run-tests skill) state the Q3 answer near-verbatim (sandbox forks nothing; tests/settings.py forks 5) and it is CORRECT, so docs helped rather than misled on the trap question.",
+  "overall_verdict": "Both arms 10/10; no quality difference on this repo. Token/time savings of the recommended arm are not bought with accuracy loss here. Latent doc errors exist in the offer skill but did not propagate into the understanding answer."
+}

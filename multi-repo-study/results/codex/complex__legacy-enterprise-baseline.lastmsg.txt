@@ -1,0 +1,10 @@
+Implemented Pet deceased status end-to-end.
+
+- Added `isDeceased` persistence across JDBC, JPA, and Spring Data JPA.
+- Updated database schemas/seeds and JDBC mappings.
+- Added service methods and owner-scoped mark/undo endpoints.
+- Updated owner JSP with status labels and actions.
+- Added shared service and MockMvc tests.
+- `mvn test`: 80 passed.
+- `mvn -P HSQLDB test`: 80 passed.
+- Added ignored [`RUN_METRICS.json`](/Users/garry/code/multi-repo-benchmark/legacy-enterprise-baseline/RUN_METRICS.json).

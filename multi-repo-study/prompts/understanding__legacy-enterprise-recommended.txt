@@ -1,0 +1,70 @@
+You're working in this repo: a Spring Framework (not Spring Boot) PetClinic
+application — plain XML `ApplicationContext` configuration, JSP views, a 3-layer
+architecture (web → service → repository), built with Maven.
+
+Task: answer the following five questions about this codebase by writing your
+answers to a new file, ANSWER.md, at the repo root. Do not edit any other file —
+this task is comprehension only, not a code change. Be precise: name exact files,
+functions, and line-level behavior where relevant, not general descriptions.
+
+1. The repository interfaces under `org.springframework.samples.petclinic.repository`
+   (e.g. `OwnerRepository`) each have three implementations in three different
+   sibling packages. Name all three packages, and name the exact file and the exact
+   line of code that determines which one is actually active when the application
+   is run with no extra JVM arguments. Is it the one you'd guess from the package
+   names alone?
+2. Three test classes — one per repository implementation — extend a shared base
+   test class. Name the base class and all three subclasses, and explain the
+   mechanism (annotation + its value) each subclass uses to select which
+   implementation it tests.
+3. Pick any one of the three repository implementations for `OwnerRepository` and
+   describe, precisely, how a new persisted field added to the `Owner` entity would
+   or would not require code changes in that specific implementation. Do the same
+   for a second of the three implementations, and state which one requires more
+   manual work and why.
+4. `PetclinicInitializer` replaces a traditional `web.xml`. Name the two
+   `WebApplicationContext`s it creates, which XML config file(s) each one loads,
+   and what `CharacterEncodingFilter` is registered for.
+5. Trace what happens when a user submits the "new owner" form with a validation
+   error (e.g. a blank required field): name every class and method involved, in
+   order, from the `@PostMapping` handler to what's shown back to the user.
+
+Work through this yourself — explore the codebase as needed.
+
+---
+METRICS PROTOCOL (do this regardless of the task above — it does not count as part of
+the deliverable and should not be committed):
+
+1. Immediately, before doing anything else, run `date -u +%FT%TZ` and record it as
+   `start_time`.
+2. As you work, keep a running timeline: each time you finish answering one
+   question, append one line with a timestamp (`date -u +%FT%TZ`) and which
+   question number you just answered. If any gap between two consecutive timeline
+   events exceeds 5 minutes, record what you were doing during that gap.
+3. Keep a running tally of tool calls by type as you go (file reads, bash commands,
+   searches/greps) — don't reconstruct this from memory at the end.
+4. Note the timestamp of your first write to ANSWER.md — this is "time to first
+   edit" for this task (should be late, since you're meant to research before
+   writing here).
+5. When done, run `date -u +%FT%TZ` for `end_time`, then write a single JSON file to
+   `RUN_METRICS.json` at the repo root with this shape:
+
+{
+  "repo": "legacy-enterprise-recommended",
+  "task": "understanding",
+  "start_time": "...",
+  "end_time": "...",
+  "duration_seconds": <int>,
+  "time_to_first_edit_seconds": <int>,
+  "tool_calls": {"read": <int>, "edit_or_write": <int>, "bash": <int>, "search_or_grep": <int>, "other": <int>, "total": <int>},
+  "files_read": [...],
+  "files_created_or_edited": ["ANSWER.md"],
+  "timeline": [{"time": "...", "event": "..."}, ...],
+  "questions_answered": <int, out of 5>,
+  "docs_consulted": [],
+  "blockers_hit": ["one line per blocker, or any >5min gap and why"],
+  "self_assessed_completion": "complete | partial | blocked",
+  "notes": "how confident are you in each answer, and why"
+}
+
+6. Add `RUN_METRICS.json` to `.gitignore` (create the entry if it's not already there).

@@ -1,0 +1,29 @@
+{
+  "cell": "complex__legacy-enterprise-baseline",
+  "repo": "legacy-enterprise-baseline",
+  "task": "complex",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 556,
+  "run_metrics_present": true,
+  "verification": {
+    "test_exit_code": 0,
+    "tests_passed": 80,
+    "tests_failed": 0,
+    "tests_errored": 0
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/28/rollout-2026-09-28T16-15-12-01a0e895-94f8-7301-a41e-12952e42c7cb.jsonl",
+    "cwd": "/Users/garry/code/multi-repo-benchmark/legacy-enterprise-baseline",
+    "api_turns": 37,
+    "tool_calls_total": 36,
+    "file_edits": 9,
+    "shell_execs": 27,
+    "reasoning_steps": 55,
+    "input_tokens": 2474286,
+    "cached_input_tokens": 2323200,
+    "output_tokens": 26250,
+    "reasoning_output_tokens": 12805,
+    "total_tokens": 2500536
+  }
+}

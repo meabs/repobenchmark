@@ -1,0 +1,87 @@
+You're working in this repo: a Spring Framework (not Spring Boot) PetClinic
+application — plain XML `ApplicationContext` configuration, JSP views, a 3-layer
+architecture (web → service → repository), built with Maven.
+
+Task: add the ability to mark a Pet as deceased.
+
+Requirements:
+1. Add an `isDeceased` boolean field to `Pet`, default `false`.
+2. The field must be correctly read and written under all three repository
+   profiles this codebase supports for `PetRepository` (find them yourself — the
+   codebase has more than one implementation of this interface, and they are not
+   equally affected by this kind of change). Add the column to the H2 schema used
+   by the test suite.
+3. Add a service-layer method to mark a pet deceased (and, separately, to undo
+   that) via `ClinicService`/`ClinicServiceImpl`, delegating to the existing
+   `PetRepository` interface — not to a specific implementation class.
+4. Add a new controller endpoint (in the existing pet-related controller, following
+   its existing conventions) that lets a user mark a pet as deceased from the pet's
+   detail page, and a way to undo it. Use the same ownership rules already enforced
+   elsewhere for editing a pet (only reachable from the owning owner's pages — don't
+   invent a separate authorization mechanism).
+5. On the owner detail page, visually distinguish deceased pets from active ones
+   (e.g. a label or styling difference in the JSP), and the pet listing there
+   should still show deceased pets (don't hide them) but clearly marked.
+6. Add tests: a service-level test (in the shared base test class, so it runs
+   against all three repository profiles) that marks a pet deceased and reloads it
+   to confirm persistence, and a controller-level (`MockMvc`) test that hits the new
+   endpoint(s) and asserts the expected redirect/response.
+
+Definition of done — and how to check each one, not just assert it:
+- All three repository-implementation test classes pass with your new
+  shared-base-class test included (not just one profile).
+- The new controller endpoint(s) actually work: run the full test suite (`mvn
+  test`), including your new `MockMvc` test, and confirm it's green — don't infer
+  correctness from the code looking right.
+- The JSP change is real: the JSP template must reference the new field's state
+  (e.g. via a conditional block), not just have the backend support it invisibly.
+- No hand-written SQL added outside the JDBC implementation's existing SQL-string
+  style — match its conventions, don't introduce a new persistence approach.
+
+Work through this yourself — explore the codebase as needed to find the relevant
+files and match its existing conventions.
+
+---
+METRICS PROTOCOL (do this regardless of the task above — it does not count as part of
+the deliverable and should not be committed):
+
+1. Immediately, before doing anything else, run `date -u +%FT%TZ` and record it as
+   `start_time`.
+2. As you work, keep a running timeline: each time you finish a distinct phase
+   (e.g. "explored repo", "read Pet model", "added field to model+schema", "updated
+   jdbc repository impl", "added service methods", "added controller endpoints",
+   "updated JSP", "added shared service test", "added MockMvc test", "ran full
+   suite"), append one line to that timeline with a timestamp (`date -u +%FT%TZ`)
+   and a short label. If any gap between two consecutive timeline events exceeds 5
+   minutes, record what you were doing/waiting on during that gap — don't let it
+   pass silently.
+3. Keep a running tally of tool calls by type as you go (file reads, file
+   edits/writes, bash commands, searches/greps) — don't reconstruct this from
+   memory at the end, increment it as you actually use each tool.
+4. Also note: the timestamp of your *first* file edit/write (as distinct from
+   read/explore actions) — this is "time to first edit," a proxy for how long
+   orientation took before you started producing the change.
+5. When the task is complete (or if you give up / hit a blocker you can't resolve),
+   run `date -u +%FT%TZ` for `end_time`, then write a single JSON file to
+   `RUN_METRICS.json` at the repo root with this shape:
+
+{
+  "repo": "legacy-enterprise-recommended",
+  "start_time": "...",
+  "end_time": "...",
+  "duration_seconds": <int>,
+  "time_to_first_edit_seconds": <int>,
+  "tool_calls": {"read": <int>, "edit_or_write": <int>, "bash": <int>, "search_or_grep": <int>, "other": <int>, "total": <int>},
+  "files_read": [...],
+  "files_created_or_edited": [...],
+  "timeline": [{"time": "...", "event": "..."}, ...],
+  "definition_of_done": {"field_added_all_profiles": true/false, "h2_schema_updated": true/false, "service_methods_added": true/false, "controller_endpoints_added": true/false, "ownership_rules_respected": true/false, "jsp_visually_distinguishes_deceased": true/false, "shared_service_test_added_all_profiles_pass": true/false, "mockmvc_test_added_and_passes": true/false, "full_suite_green": true/false},
+  "docs_consulted": [],
+  "blockers_hit": ["one line per blocker, e.g. bugs you had to work around, or any >5min gap and why"],
+  "self_assessed_completion": "complete | partial | blocked",
+  "notes": "anything relevant to how easy or hard orientation was in this repo, especially around the 3-repository-implementation structure and the XML-based config"
+}
+
+6. Add `RUN_METRICS.json` to `.gitignore` (create the entry if it's not already there)
+   before your final commit, so it stays untracked and doesn't appear in the feature
+   diff.

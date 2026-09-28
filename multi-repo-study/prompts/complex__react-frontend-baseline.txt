@@ -1,0 +1,87 @@
+You're working in this repo: a React + TypeScript + Vite app (the runnable app is at
+`apps/react-vite`) built on the "bulletproof-react" architecture — feature folders,
+TanStack Query, MSW for a mocked backend, React Router, React Hook Form + Zod.
+
+Task: add "pin" support for discussions.
+
+Requirements:
+1. Add an `isPinned: boolean` field to the `discussion` model in
+   `src/testing/mocks/db.ts`, default `false` (there's no real database or
+   migration in this repo — this mocked-db model change is the schema change).
+2. Add a mocked backend endpoint (an MSW handler, following the existing
+   `discussions.ts` handler conventions — auth/admin checks, `persistDb`, error
+   handling) to toggle `isPinned` for a given discussion. Same authorization rule as
+   the other write endpoints: admin only.
+3. Add a client API function + mutation hook for this, following the existing
+   pattern in `src/features/discussions/api/` (see `update-discussion.ts` for the
+   closest existing example), including invalidating the discussions list query on
+   success.
+4. In `DiscussionsList`, add a pin/unpin action (a button/icon in its own row, next
+   to the existing delete action), visible only to admins, matching the existing
+   `<Authorization allowedRoles={[ROLES.ADMIN]}>` gating pattern used for
+   "Create Discussion".
+5. Pinned discussions should render at the top of the list, above unpinned ones,
+   within the currently-fetched page (client-side reorder, not a new query param —
+   same constraint as a plain sort).
+6. Visually distinguish pinned discussions in the table (e.g. a pin icon or badge
+   next to the title).
+
+Definition of done — and how to check each one, not just assert it:
+- The mocked-db field, handler, and mutation are all wired correctly: actually
+  toggle pin on a discussion via the UI in a test and assert the discussion moves
+  to the top of the list and shows the pinned indicator — don't infer this from the
+  code looking right.
+- Non-admin users do not see the pin/unpin control.
+- Existing tests still pass; add a test for the new pin/unpin behavior, following
+  the existing convention of testing through the real MSW handlers via `renderApp`
+  (see `write-component-test`-style tests elsewhere in the repo), not by mocking the
+  API client.
+- Run `npx vitest run` from `apps/react-vite` (with a `.env` file present — copy
+  from `.env.example` if one doesn't exist yet) and confirm the full suite passes,
+  not just your new test.
+
+Work through this yourself — explore the codebase as needed to find the relevant
+files and match its existing conventions.
+
+---
+METRICS PROTOCOL (do this regardless of the task above — it does not count as part of
+the deliverable and should not be committed):
+
+1. Immediately, before doing anything else, run `date -u +%FT%TZ` and record it as
+   `start_time`.
+2. As you work, keep a running timeline: each time you finish a distinct phase
+   (e.g. "explored repo", "added isPinned to mock db", "added MSW handler", "added
+   mutation hook", "added UI control", "reordered list", "ran tests"), append one
+   line to that timeline with a timestamp (`date -u +%FT%TZ`) and a short label. If
+   any gap between two consecutive timeline events exceeds 5 minutes, record what
+   you were doing/waiting on during that gap — don't let it pass silently.
+3. Keep a running tally of tool calls by type as you go (file reads, file edits/writes,
+   bash commands, searches/greps) — don't reconstruct this from memory at the end,
+   increment it as you actually use each tool.
+4. Also note: the timestamp of your *first* file edit/write (as distinct from
+   read/explore actions) — this is "time to first edit," a proxy for how long
+   orientation took before you started producing the change.
+5. When the task is complete (or if you give up / hit a blocker you can't resolve),
+   run `date -u +%FT%TZ` for `end_time`, then write a single JSON file to
+   `RUN_METRICS.json` at the repo root with this shape:
+
+{
+  "repo": "react-frontend-baseline",
+  "start_time": "...",
+  "end_time": "...",
+  "duration_seconds": <int>,
+  "time_to_first_edit_seconds": <int>,
+  "tool_calls": {"read": <int>, "edit_or_write": <int>, "bash": <int>, "search_or_grep": <int>, "other": <int>, "total": <int>},
+  "files_read": [...],
+  "files_created_or_edited": [...],
+  "timeline": [{"time": "...", "event": "..."}, ...],
+  "definition_of_done": {"mock_db_field_added": true/false, "handler_added_with_admin_check": true/false, "mutation_hook_added": true/false, "ui_control_added_admin_only": true/false, "pinned_sort_to_top": true/false, "visual_indicator_present": true/false, "new_test_added_and_passes": true/false, "full_suite_passes": true/false},
+  "docs_consulted": [],
+  "blockers_hit": ["one line per blocker, e.g. bugs you had to work around, or any >5min gap and why"],
+  "self_assessed_completion": "complete | partial | blocked",
+  "notes": "anything relevant to how easy or hard orientation was in this repo"
+}
+
+6. Add `RUN_METRICS.json` to `.gitignore` (create the entry if it's not already there)
+   before your final commit, so it stays untracked and doesn't appear in the feature
+   diff.

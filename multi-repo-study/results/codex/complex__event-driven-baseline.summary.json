@@ -1,0 +1,27 @@
+{
+  "cell": "complex__event-driven-baseline",
+  "repo": "event-driven-baseline",
+  "task": "complex",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 433,
+  "run_metrics_present": true,
+  "verification": {
+    "test_exit_code": 0,
+    "test_summary_line": "Test run summary: Passed!   total: 49"
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/28/rollout-2026-09-28T15-42-32-01a0e877-ac83-76c2-9727-404be936431c.jsonl",
+    "cwd": "/Users/garry/code/multi-repo-benchmark/event-driven-baseline",
+    "api_turns": 48,
+    "tool_calls_total": 47,
+    "file_edits": 13,
+    "shell_execs": 34,
+    "reasoning_steps": 57,
+    "input_tokens": 2162930,
+    "cached_input_tokens": 2031616,
+    "output_tokens": 18188,
+    "reasoning_output_tokens": 9033,
+    "total_tokens": 2181118
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "repo_family": "react-frontend (bulletproof-react apps/react-vite)",
+  "method": "Blind: read four answers as unlabeled A-D (A=cursor-recommended, B=codex-baseline, C=cursor-baseline, D=codex-recommended), then verified each claim against react-frontend-src source (env.ts, api-client.ts, paths.ts, db.ts, utils.ts, authorization.tsx, create-discussion.ts, get-discussions.ts, handlers/discussions.ts, discussions.tsx, discussions-list.tsx, table.tsx, router.tsx, setup-tests.ts, package.json zod ^3.23). Rubric 2=correct+precise, 1=partly/vague/minor error, 0=wrong.",
+  "trap_question": "Q4 (the empty `new URLSearchParams()` means redirectTo is ALWAYS window.location.pathname) is the subtle trap; Q2 (fresh-checkout env failure) is the documented 'known trap'. All four answers got Q2 exactly right (Zod 3 'API_URL: Required', cp .env.example .env). Q4: cursor-baseline and cursor-recommended state the param is always null; codex-baseline hedges ('normally absent'); codex-recommended states it is empty but cites wrong line numbers.",
+  "scores": {
+    "codex-baseline":     {"Q1": 2, "Q2": 2, "Q3": 2, "Q4": 1, "Q5": 2, "total": 9},
+    "codex-recommended":  {"Q1": 2, "Q2": 2, "Q3": 2, "Q4": 1, "Q5": 2, "total": 9},
+    "cursor-baseline":    {"Q1": 2, "Q2": 2, "Q3": 2, "Q4": 2, "Q5": 2, "total": 10},
+    "cursor-recommended": {"Q1": 2, "Q2": 2, "Q3": 2, "Q4": 2, "Q5": 2, "total": 10}
+  },
+  "justifications": {
+    "codex-baseline": {
+      "Q1": "Full correct chain incl. Authorization/forbiddenFallback=null and ['discussions'] prefix invalidation; file:function level rather than line level.",
+      "Q2": "Correct error text, cause, cp .env.example .env; valid alternative env-var one-off also works.",
+      "Q3": "In-memory @mswjs/data, models in db.ts, localStorage 'msw-db' via persistDb/storeDb/initializeDb; correct.",
+      "Q4": "401 -> /auth/login?redirectTo=; but says redirectTo is 'normally absent' from an empty URLSearchParams, when it is always absent (always pathname). Hedged on the subtle point.",
+      "Q5": "createEnv in env.ts, startsWith VITE_APP_ + replace; correct."
+    },
+    "codex-recommended": {
+      "Q1": "Correct full chain including requireAdmin, invalidation, Authorization null fallback; line refs checked ok for create-discussion.ts, get-discussions.ts, discussions.tsx.",
+      "Q2": "Correct error, cause, and one-line fix.",
+      "Q3": "Correct; localStorage 'msw-db' in browser, notes Node mocked-db.json path separately. Did NOT adopt the wrong doc claim that persistence is mocked-db.json.",
+      "Q4": "Substance correct (401, empty URLSearchParams -> pathname, redirectTo) but api-client.ts line citations are off by ~6-8 (cites 17-20/27/28-30/31; actual 21-24/33/34-36/37).",
+      "Q5": "Correct with accurate line numbers (:15-23, :19, :20)."
+    },
+    "cursor-baseline": {
+      "Q1": "Most exhaustive and accurate; correct line refs, 401/500 server behaviour, USER vs ADMIN registration path verified in handlers/auth.ts:53-78.",
+      "Q2": "Correct, full import chain setup-tests -> server -> handlers/index -> env (trivial off-by-one: cites handlers/index.ts:2, actual line 3).",
+      "Q3": "Correct incl. Node vs browser storage split.",
+      "Q4": "Correct and explicit that get('redirectTo') is always null so pathname always used.",
+      "Q5": "Correct."
+    },
+    "cursor-recommended": {
+      "Q1": "Exhaustive, line refs verified (router 47-52, authorization 63-81, get-discussions 20-26, table 166).",
+      "Q2": "Correct; chain and line refs verified (env.ts:28/41, setup-tests line 4, handlers/index.ts line 3).",
+      "Q3": "Correct; localStorage 'msw-db', notes mocked-db.json is Node-only, overriding the wrong OKF doc statement.",
+      "Q4": "Correct and explicit that redirectTo is always the pathname; exact encoded example.",
+      "Q5": "Correct."
+    }
+  },
+  "doc_errors_found": [
+    {
+      "file": "react-frontend-recommended/okf/backend-mock/index.md",
+      "claim": "persistDb serializes the in-memory store to mocked-db.json so local-dev state survives a page reload",
+      "truth": "In the browser (local dev) persistence is window.localStorage key 'msw-db'; mocked-db.json is only used when window is undefined (Node) - db.ts:43-78. Directly relevant to Q3.",
+      "propagated_to_answers": false,
+      "note": "Both recommended-arm answers (codex-recommended, cursor-recommended) gave the correct localStorage answer, i.e. verified against source instead of trusting the doc."
+    },
+    {
+      "file": "react-frontend-recommended/okf/routing/index.md",
+      "claim": "route clientLoader typically uses queryClient.ensureQueryData(...)",
+      "truth": "discussions clientLoader uses getQueryData(...) ?? fetchQuery(...). Minor, not answer-relevant.",
+      "propagated_to_answers": false
+    }
+  ],
+  "doc_accuracy_notes": "AGENTS.md, local-dev-setup skill, okf/index.md, okf/log.md, okf/routing Authorization description are accurate. The recommended layer explicitly documents the Q2 env trap (skill + OKF), so recommended agents were pre-warned, but baseline agents also got Q2 fully right.",
+  "verdict": "No correctness difference attributable to the doc layer on this repo: all 20 question-cells are correct in substance; total 9/9/10/10 (max 10) with the only deductions being a hedge on Q4 (codex-baseline) and wrong line-number citations on Q4 (codex-recommended). One real doc error exists (mocked-db.json for browser persistence) but no answer inherited it. So the token/time savings on this repo are not bought with lower answer quality."
+}

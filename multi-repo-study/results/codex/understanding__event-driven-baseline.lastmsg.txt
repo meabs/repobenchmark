@@ -1,0 +1,5 @@
+Completed the five answers in [ANSWER.md](/Users/garry/code/multi-repo-benchmark/event-driven-baseline/ANSWER.md).
+
+- Tests: 43 passed, 0 failed.
+- Created ignored `RUN_METRICS.json`.
+- Added `RUN_METRICS.json` to `.gitignore`.

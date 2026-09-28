@@ -1,0 +1,24 @@
+[1/12] START understanding / java-spring-baseline (timeout 1200s) 2026-09-28T16:12:00Z
+[1/12] DONE  understanding / java-spring-baseline (harness_exit=0) exit=0 timed_out=True wall=1533s verify={"answer_present": true, "unexpected_file_changes": 0} 2026-09-28T16:37:33Z
+[2/12] START simple_change / java-spring-baseline (timeout 1200s) 2026-09-28T16:37:33Z
+[2/12] DONE  simple_change / java-spring-baseline (harness_exit=0) exit=0 timed_out=False wall=442s verify={"test_exit_code": 0, "tests_passed": 56, "tests_failed": 0, "tests_errored": 0} 2026-09-28T16:45:08Z
+[3/12] START complex / java-spring-baseline (timeout 1800s) 2026-09-28T16:45:08Z
+[3/12] DONE  complex / java-spring-baseline (harness_exit=0) exit=0 timed_out=False wall=1135s verify={"test_exit_code": 0, "tests_passed": 56, "tests_failed": 0, "tests_errored": 0} 2026-09-28T17:04:14Z
+[4/12] START understanding / java-spring-recommended (timeout 1200s) 2026-09-28T17:04:14Z
+[4/12] DONE  understanding / java-spring-recommended (harness_exit=0) exit=0 timed_out=False wall=362s verify={"answer_present": true, "unexpected_file_changes": 0} 2026-09-28T17:10:16Z
+[5/12] SKIP  simple_change / java-spring-recommended (already re-verified post-fix) 2026-09-28T17:10:16Z
+[6/12] START complex / java-spring-recommended (timeout 1800s) 2026-09-28T17:10:16Z
+[6/12] DONE  complex / java-spring-recommended (harness_exit=0) exit=0 timed_out=False wall=498s verify={"test_exit_code": 0, "tests_passed": 55, "tests_failed": 0, "tests_errored": 0} 2026-09-28T17:18:44Z
+[7/12] START understanding / legacy-enterprise-baseline (timeout 1200s) 2026-09-28T17:18:44Z
+[7/12] DONE  understanding / legacy-enterprise-baseline (harness_exit=0) exit=0 timed_out=False wall=289s verify={"answer_present": true, "unexpected_file_changes": 0} 2026-09-28T17:23:34Z
+[8/12] START simple_change / legacy-enterprise-baseline (timeout 1200s) 2026-09-28T17:23:34Z
+[8/12] DONE  simple_change / legacy-enterprise-baseline (harness_exit=0) exit=0 timed_out=False wall=370s verify={"test_exit_code": 0, "tests_passed": 78, "tests_failed": 0, "tests_errored": 0} 2026-09-28T17:29:50Z
+[9/12] START complex / legacy-enterprise-baseline (timeout 1800s) 2026-09-28T17:29:50Z
+[9/12] DONE  complex / legacy-enterprise-baseline (harness_exit=0) exit=0 timed_out=False wall=688s verify={"test_exit_code": 0, "tests_passed": 80, "tests_failed": 0, "tests_errored": 0} 2026-09-28T17:41:23Z
+[10/12] START understanding / legacy-enterprise-recommended (timeout 1200s) 2026-09-28T17:41:23Z
+[10/12] DONE  understanding / legacy-enterprise-recommended (harness_exit=0) exit=0 timed_out=False wall=257s verify={"answer_present": true, "unexpected_file_changes": 0} 2026-09-28T17:45:40Z
+[11/12] START simple_change / legacy-enterprise-recommended (timeout 1200s) 2026-09-28T17:45:40Z
+[11/12] DONE  simple_change / legacy-enterprise-recommended (harness_exit=0) exit=0 timed_out=False wall=300s verify={"test_exit_code": 0, "tests_passed": 78, "tests_failed": 0, "tests_errored": 0} 2026-09-28T17:50:45Z
+[12/12] START complex / legacy-enterprise-recommended (timeout 1800s) 2026-09-28T17:50:45Z
+[12/12] DONE  complex / legacy-enterprise-recommended (harness_exit=0) exit=0 timed_out=False wall=670s verify={"test_exit_code": 0, "tests_passed": 80, "tests_failed": 0, "tests_errored": 0} 2026-09-28T18:02:01Z
+=== RERUN12 COMPLETE 2026-09-28T18:02:01Z ===

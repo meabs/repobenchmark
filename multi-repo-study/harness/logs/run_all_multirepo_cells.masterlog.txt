@@ -1,0 +1,60 @@
+[1/30] SKIP  understanding / python-api-baseline (already succeeded) 2026-09-28T10:54:02Z
+[2/30] START simple_change / python-api-baseline (timeout 1200s) 2026-09-28T10:54:02Z
+[2/30] DONE  simple_change / python-api-baseline (harness_exit=0) exit=0 timed_out=False wall=1002s verify={"test_exit_code": 0, "test_summary_line": "1792 passed, 1 skipped, 3745 warnings, 104 subtests passed in 431.55s (0:07:11)"} 2026-09-28T11:19:20Z
+[3/30] START complex / python-api-baseline (timeout 1800s) 2026-09-28T11:19:20Z
+[3/30] DONE  complex / python-api-baseline (harness_exit=0) exit=0 timed_out=False wall=1545s verify={"test_exit_code": 0, "test_summary_line": "1795 passed, 1 skipped, 3792 warnings, 104 subtests passed in 430.49s (0:07:10)"} 2026-09-28T11:52:39Z
+[4/30] START understanding / python-api-recommended (timeout 1200s) 2026-09-28T11:52:39Z
+[4/30] DONE  understanding / python-api-recommended (harness_exit=0) exit=0 timed_out=False wall=325s verify={"answer_present": true, "unexpected_file_changes": 0} 2026-09-28T11:58:08Z
+[5/30] START simple_change / python-api-recommended (timeout 1200s) 2026-09-28T11:58:08Z
+[5/30] DONE  simple_change / python-api-recommended (harness_exit=0) exit=0 timed_out=False wall=917s verify={"test_exit_code": 0, "test_summary_line": "1792 passed, 1 skipped, 3745 warnings, 104 subtests passed in 429.40s (0:07:09)"} 2026-09-28T12:20:45Z
+[6/30] START complex / python-api-recommended (timeout 1800s) 2026-09-28T12:20:45Z
+[6/30] DONE  complex / python-api-recommended (harness_exit=0) exit=0 timed_out=False wall=1650s verify={"test_exit_code": 0, "test_summary_line": "1795 passed, 1 skipped, 3745 warnings, 104 subtests passed in 430.16s (0:07:10)"} 2026-09-28T12:55:39Z
+[7/30] START understanding / java-spring-baseline (timeout 1200s) 2026-09-28T12:55:39Z
+[7/30] DONE  understanding / java-spring-baseline (harness_exit=0) exit=0 timed_out=False wall=321s verify={"answer_present": true, "unexpected_file_changes": 0} 2026-09-28T13:01:01Z
+[8/30] START simple_change / java-spring-baseline (timeout 1200s) 2026-09-28T13:01:01Z
+[8/30] DONE  simple_change / java-spring-baseline (harness_exit=0) exit=0 timed_out=False wall=400s verify={"test_exit_code": 0, "tests_passed": 56, "tests_failed": 0, "tests_errored": 0} 2026-09-28T13:07:53Z
+[9/30] START complex / java-spring-baseline (timeout 1800s) 2026-09-28T13:07:53Z
+[9/30] DONE  complex / java-spring-baseline (harness_exit=0) exit=0 timed_out=False wall=801s verify={"test_exit_code": 0, "tests_passed": 56, "tests_failed": 0, "tests_errored": 0} 2026-09-28T13:21:27Z
+[10/30] START understanding / java-spring-recommended (timeout 1200s) 2026-09-28T13:21:27Z
+[10/30] DONE  understanding / java-spring-recommended (harness_exit=0) exit=0 timed_out=False wall=261s verify={"answer_present": true, "unexpected_file_changes": 0} 2026-09-28T13:25:49Z
+[11/30] START simple_change / java-spring-recommended (timeout 1200s) 2026-09-28T13:25:49Z
+[11/30] DONE  simple_change / java-spring-recommended (harness_exit=0) exit=0 timed_out=False wall=397s verify={"test_exit_code": 1, "tests_passed": 0, "tests_failed": 0, "tests_errored": 0} 2026-09-28T13:32:28Z
+[12/30] START complex / java-spring-recommended (timeout 1800s) 2026-09-28T13:32:28Z
+[12/30] DONE  complex / java-spring-recommended (harness_exit=0) exit=0 timed_out=False wall=595s verify={"test_exit_code": 1, "tests_passed": 53, "tests_failed": 2, "tests_errored": 0} 2026-09-28T13:42:36Z
+[13/30] START understanding / react-frontend-baseline (timeout 1200s) 2026-09-28T13:42:36Z
+[13/30] DONE  understanding / react-frontend-baseline (harness_exit=0) exit=0 timed_out=False wall=408s verify={"answer_present": true, "unexpected_file_changes": 0} 2026-09-28T13:49:31Z
+[14/30] START simple_change / react-frontend-baseline (timeout 1200s) 2026-09-28T13:49:31Z
+[14/30] DONE  simple_change / react-frontend-baseline (harness_exit=0) exit=0 timed_out=False wall=531s verify={"test_exit_code": 0, "test_summary_line": "Test Files  13 passed (13)"} 2026-09-28T13:58:37Z
+[15/30] START complex / react-frontend-baseline (timeout 1800s) 2026-09-28T13:58:37Z
+[15/30] DONE  complex / react-frontend-baseline (harness_exit=0) exit=0 timed_out=False wall=668s verify={"test_exit_code": 0, "test_summary_line": "Test Files  12 passed (12)"} 2026-09-28T14:10:14Z
+[16/30] START understanding / react-frontend-recommended (timeout 1200s) 2026-09-28T14:10:14Z
+[16/30] DONE  understanding / react-frontend-recommended (harness_exit=0) exit=0 timed_out=False wall=298s verify={"answer_present": true, "unexpected_file_changes": 0} 2026-09-28T14:15:20Z
+[17/30] START simple_change / react-frontend-recommended (timeout 1200s) 2026-09-28T14:15:20Z
+[17/30] DONE  simple_change / react-frontend-recommended (harness_exit=0) exit=0 timed_out=False wall=532s verify={"test_exit_code": 0, "test_summary_line": "Test Files  13 passed (13)"} 2026-09-28T14:24:34Z
+[18/30] START complex / react-frontend-recommended (timeout 1800s) 2026-09-28T14:24:34Z
+[18/30] DONE  complex / react-frontend-recommended (harness_exit=0) exit=0 timed_out=False wall=559s verify={"test_exit_code": 0, "test_summary_line": "Test Files  12 passed (12)"} 2026-09-28T14:34:23Z
+[19/30] START understanding / event-driven-baseline (timeout 1200s) 2026-09-28T14:34:23Z
+[19/30] DONE  understanding / event-driven-baseline (harness_exit=0) exit=0 timed_out=False wall=294s verify={"answer_present": true, "unexpected_file_changes": 0} 2026-09-28T14:39:18Z
+[20/30] START simple_change / event-driven-baseline (timeout 1200s) 2026-09-28T14:39:18Z
+[20/30] DONE  simple_change / event-driven-baseline (harness_exit=0) exit=0 timed_out=False wall=189s verify={"test_exit_code": 0, "test_summary_line": "Test run summary: Passed!   total: 44"} 2026-09-28T14:42:31Z
+[21/30] START complex / event-driven-baseline (timeout 1800s) 2026-09-28T14:42:31Z
+[21/30] DONE  complex / event-driven-baseline (harness_exit=0) exit=0 timed_out=False wall=433s verify={"test_exit_code": 0, "test_summary_line": "Test run summary: Passed!   total: 49"} 2026-09-28T14:49:46Z
+[22/30] START understanding / event-driven-recommended (timeout 1200s) 2026-09-28T14:49:46Z
+[22/30] DONE  understanding / event-driven-recommended (harness_exit=0) exit=0 timed_out=False wall=356s verify={"answer_present": true, "unexpected_file_changes": 0} 2026-09-28T14:55:42Z
+[23/30] START simple_change / event-driven-recommended (timeout 1200s) 2026-09-28T14:55:42Z
+[23/30] DONE  simple_change / event-driven-recommended (harness_exit=0) exit=0 timed_out=False wall=187s verify={"test_exit_code": 0, "test_summary_line": "Test run summary: Passed!   total: 44"} 2026-09-28T14:58:52Z
+[24/30] START complex / event-driven-recommended (timeout 1800s) 2026-09-28T14:58:52Z
+[24/30] DONE  complex / event-driven-recommended (harness_exit=0) exit=0 timed_out=False wall=432s verify={"test_exit_code": 0, "test_summary_line": "Test run summary: Passed!   total: 50"} 2026-09-28T15:06:07Z
+[25/30] START understanding / legacy-enterprise-baseline (timeout 1200s) 2026-09-28T15:06:07Z
+[25/30] DONE  understanding / legacy-enterprise-baseline (harness_exit=0) exit=0 timed_out=False wall=279s verify={"answer_present": true, "unexpected_file_changes": 0} 2026-09-28T15:10:46Z
+[26/30] START simple_change / legacy-enterprise-baseline (timeout 1200s) 2026-09-28T15:10:46Z
+[26/30] DONE  simple_change / legacy-enterprise-baseline (harness_exit=0) exit=0 timed_out=False wall=257s verify={"test_exit_code": 1, "tests_passed": 42, "tests_failed": 0, "tests_errored": 36} 2026-09-28T15:15:11Z
+[27/30] START complex / legacy-enterprise-baseline (timeout 1800s) 2026-09-28T15:15:11Z
+[27/30] DONE  complex / legacy-enterprise-baseline (harness_exit=0) exit=0 timed_out=False wall=556s verify={"test_exit_code": 0, "tests_passed": 80, "tests_failed": 0, "tests_errored": 0} 2026-09-28T15:24:35Z
+[28/30] START understanding / legacy-enterprise-recommended (timeout 1200s) 2026-09-28T15:24:35Z
+[28/30] DONE  understanding / legacy-enterprise-recommended (harness_exit=0) exit=0 timed_out=False wall=312s verify={"answer_present": true, "unexpected_file_changes": 0} 2026-09-28T15:29:48Z
+[29/30] START simple_change / legacy-enterprise-recommended (timeout 1200s) 2026-09-28T15:29:48Z
+[29/30] DONE  simple_change / legacy-enterprise-recommended (harness_exit=0) exit=0 timed_out=False wall=252s verify={"test_exit_code": 0, "tests_passed": 78, "tests_failed": 0, "tests_errored": 0} 2026-09-28T15:34:05Z
+[30/30] START complex / legacy-enterprise-recommended (timeout 1800s) 2026-09-28T15:34:05Z
+[30/30] DONE  complex / legacy-enterprise-recommended (harness_exit=0) exit=0 timed_out=False wall=502s verify={"test_exit_code": 0, "tests_passed": 80, "tests_failed": 0, "tests_errored": 0} 2026-09-28T15:42:33Z
+=== ALL 30 CELLS COMPLETE 2026-09-28T15:42:33Z ===

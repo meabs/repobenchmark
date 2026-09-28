@@ -1,0 +1,27 @@
+{
+  "cell": "understanding__legacy-enterprise-recommended",
+  "repo": "legacy-enterprise-recommended",
+  "task": "understanding",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 312,
+  "run_metrics_present": true,
+  "verification": {
+    "answer_present": true,
+    "unexpected_file_changes": 0
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/28/rollout-2026-09-28T16-24-35-01a0e89e-2ce4-7d43-bcc3-e522bbe330cb.jsonl",
+    "cwd": "/Users/garry/code/multi-repo-benchmark/legacy-enterprise-recommended",
+    "api_turns": 41,
+    "tool_calls_total": 40,
+    "file_edits": 3,
+    "shell_execs": 37,
+    "reasoning_steps": 38,
+    "input_tokens": 1343466,
+    "cached_input_tokens": 1275648,
+    "output_tokens": 14334,
+    "reasoning_output_tokens": 7804,
+    "total_tokens": 1357800
+  }
+}

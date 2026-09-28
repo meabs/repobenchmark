@@ -1,0 +1,29 @@
+{
+  "cell": "complex__java-spring-recommended",
+  "repo": "java-spring-recommended",
+  "task": "complex",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 595,
+  "run_metrics_present": true,
+  "verification": {
+    "test_exit_code": 1,
+    "tests_passed": 53,
+    "tests_failed": 2,
+    "tests_errored": 0
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/28/rollout-2026-09-28T14-32-28-01a0e837-8715-7422-ad93-fe3b43773680.jsonl",
+    "cwd": "/Users/garry/code/multi-repo-benchmark/java-spring-recommended",
+    "api_turns": 35,
+    "tool_calls_total": 34,
+    "file_edits": 9,
+    "shell_execs": 25,
+    "reasoning_steps": 54,
+    "input_tokens": 1989571,
+    "cached_input_tokens": 1895680,
+    "output_tokens": 27512,
+    "reasoning_output_tokens": 14907,
+    "total_tokens": 2017083
+  }
+}

@@ -1,0 +1,7 @@
+Implemented single-item removal for Ordering.
+
+- Added domain event, aggregate method with all guards, command/handler, validator, and logging handler.
+- Added 4 domain tests and 2 application handler tests.
+- Exact test command passes: **49 succeeded, 0 failed, 0 skipped**.
+- Added ignored `RUN_METRICS.json` and `.gitignore` entry.
+- No unrelated source changes.

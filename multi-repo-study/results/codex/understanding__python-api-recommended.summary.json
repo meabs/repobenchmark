@@ -1,0 +1,27 @@
+{
+  "cell": "understanding__python-api-recommended",
+  "repo": "python-api-recommended",
+  "task": "understanding",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 325,
+  "run_metrics_present": true,
+  "verification": {
+    "answer_present": true,
+    "unexpected_file_changes": 0
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/28/rollout-2026-09-28T12-52-43-01a0e7dc-368b-7442-8822-ed1b83189229.jsonl",
+    "cwd": "/Users/garry/code/multi-repo-benchmark/python-api-recommended",
+    "api_turns": 24,
+    "tool_calls_total": 23,
+    "file_edits": 4,
+    "shell_execs": 19,
+    "reasoning_steps": 35,
+    "input_tokens": 1300075,
+    "cached_input_tokens": 1158144,
+    "output_tokens": 14933,
+    "reasoning_output_tokens": 8986,
+    "total_tokens": 1315008
+  }
+}

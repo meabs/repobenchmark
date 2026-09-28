@@ -1,0 +1,13 @@
+Implemented:
+
+- Added `Product.is_featured`, defaulting to `False`.
+- Added `ProductQuerySet.featured()` filtering public, featured products.
+- Added migrations `0033_product_is_featured.py` for core and test-fork apps.
+- Added queryset test covering exclusions.
+- Added `RUN_METRICS.json` and ignored it in `.gitignore`.
+
+Verification:
+
+- Full suite: `1792 passed, 1 skipped`.
+- Canonical migration applied successfully from scratch on temporary PostgreSQL.
+- No UI/dashboard files changed.

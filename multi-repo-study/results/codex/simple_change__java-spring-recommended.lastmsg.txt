@@ -1,0 +1,10 @@
+Implemented and verified.
+
+- Added paginated, distinct pet-type/last-name lookup ordered by last name.
+- Added optional `petType` filtering while preserving unfiltered behavior.
+- Added repository and controller tests.
+- No schema, data, or template changes.
+- Full suite passed: `./mvnw -q -B test` (2 Docker-gated tests skipped).
+- Added ignored [RUN_METRICS.json](/Users/garry/code/multi-repo-benchmark/java-spring-recommended/RUN_METRICS.json) and `.gitignore` entry.
+
+Key files: [OwnerRepository.java](/Users/garry/code/multi-repo-benchmark/java-spring-recommended/src/main/java/org/springframework/samples/petclinic/owner/OwnerRepository.java:47), [OwnerController.java](/Users/garry/code/multi-repo-benchmark/java-spring-recommended/src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:94).

@@ -1,0 +1,64 @@
+You're working in this repo: a Spring Boot 4.1 + Spring Data JPA + Thymeleaf
+server-rendered application (spring-petclinic). No REST API for the UI, no frontend
+build step — controllers return view names.
+
+Task: add a repository lookup method for finding pets by type, and a small owner
+list filter that uses it.
+
+Requirements:
+1. Add a method to `PetTypeRepository` (or a new query on the existing
+   `OwnerRepository`, your call, but keep it minimal) that returns the `Page<Owner>`
+   of owners who have at least one pet of a given `PetType` name, ordered by last
+   name.
+2. Add a `petType` optional query parameter to `OwnerController.processFindForm`
+   (`GET /owners`): when present and non-blank, filter results to owners matching
+   requirement 1 in addition to (not instead of) the existing last-name search. When
+   absent, behavior must be completely unchanged from today.
+3. No schema change needed — `PetType` and the `pets.type_id`/`pets.owner_id`
+   foreign keys already exist. No Thymeleaf template changes required — the query
+   param can be untested from the UI for this task, this is backend-only.
+4. Add a backend test verifying: (a) filtering by an existing pet type name returns
+   only matching owners, (b) omitting the parameter returns the same result as
+   before your change.
+
+Definition of done:
+- Existing tests still pass; the new test(s) pass.
+- No schema.sql/data.sql changes. No Thymeleaf template changes.
+
+Work through this yourself — explore the codebase as needed and match its existing
+conventions.
+
+---
+METRICS PROTOCOL (do this regardless of the task above — it does not count as part of
+the deliverable and should not be committed):
+
+1. Immediately, before doing anything else, run `date -u +%FT%TZ` and record it as
+   `start_time`.
+2. As you work, keep a running timeline with timestamps (`date -u +%FT%TZ`) for each
+   distinct phase (explored repo, first edit, wrote test, ran tests, done). If any
+   gap between two consecutive events exceeds 5 minutes, record what you were doing.
+3. Keep a running tally of tool calls by type as you go — don't reconstruct this
+   from memory at the end.
+4. Note the timestamp of your first file edit/write (distinct from read/explore).
+5. When done, run `date -u +%FT%TZ` for `end_time`, then write a single JSON file to
+   `RUN_METRICS.json` at the repo root with this shape:
+
+{
+  "repo": "java-spring-baseline",
+  "task": "simple_change",
+  "start_time": "...",
+  "end_time": "...",
+  "duration_seconds": <int>,
+  "time_to_first_edit_seconds": <int>,
+  "tool_calls": {"read": <int>, "edit_or_write": <int>, "bash": <int>, "search_or_grep": <int>, "other": <int>, "total": <int>},
+  "files_read": [...],
+  "files_created_or_edited": [...],
+  "timeline": [{"time": "...", "event": "..."}, ...],
+  "definition_of_done": {"repository_method_added": true/false, "filter_param_added": true/false, "unfiltered_behavior_unchanged": true/false, "new_tests_added_and_pass": true/false, "no_schema_change": true/false, "no_template_change": true/false},
+  "docs_consulted": [],
+  "blockers_hit": ["one line per blocker, or any >5min gap and why"],
+  "self_assessed_completion": "complete | partial | blocked",
+  "notes": "anything relevant to how easy or hard orientation was for a small, scoped change in this repo"
+}
+
+6. Add `RUN_METRICS.json` to `.gitignore` (create the entry if it's not already there).

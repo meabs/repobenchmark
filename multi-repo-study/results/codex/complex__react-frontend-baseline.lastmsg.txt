@@ -1,0 +1,13 @@
+Implemented discussion pinning.
+
+- Added `isPinned` with `false` default wiring.
+- Added admin-only MSW toggle endpoint and TanStack Query mutation.
+- Added admin-only Pin/Unpin control, pinned indicator, and page-local pinned-first sorting.
+- Added real MSW-backed tests for pinning, reordering, unpinning, and non-admin visibility.
+- Added `.env` and ignored `RUN_METRICS.json`.
+
+Validation:
+
+- `npx vitest run`: 12 files, 23 tests passed.
+- `npm run check-types`: passed.
+- `npm run lint`: passed.

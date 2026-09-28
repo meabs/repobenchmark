@@ -1,0 +1,27 @@
+{
+  "cell": "understanding__legacy-enterprise-baseline",
+  "repo": "legacy-enterprise-baseline",
+  "task": "understanding",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 279,
+  "run_metrics_present": true,
+  "verification": {
+    "answer_present": true,
+    "unexpected_file_changes": 0
+  },
+  "real_usage": {
+    "session": "/Users/garry/.codex/sessions/2026/09/28/rollout-2026-09-28T16-06-08-01a0e88d-47ca-7c33-8f5e-fd20a890f0eb.jsonl",
+    "cwd": "/Users/garry/code/multi-repo-benchmark/legacy-enterprise-baseline",
+    "api_turns": 23,
+    "tool_calls_total": 22,
+    "file_edits": 3,
+    "shell_execs": 19,
+    "reasoning_steps": 30,
+    "input_tokens": 1109551,
+    "cached_input_tokens": 1028352,
+    "output_tokens": 12809,
+    "reasoning_output_tokens": 7127,
+    "total_tokens": 1122360
+  }
+}

@@ -1,0 +1,9 @@
+Running tests from /Users/garry/code/multi-repo-benchmark/event-driven-baseline/tests/Ordering.UnitTests/bin/Debug/net10.0/Ordering.UnitTests.dll (net10.0|arm64)
+/Users/garry/code/multi-repo-benchmark/event-driven-baseline/tests/Ordering.UnitTests/bin/Debug/net10.0/Ordering.UnitTests.dll (net10.0|arm64) passed (626ms)
+
+Test run summary: Passed!
+  total: 44
+  failed: 0
+  succeeded: 44
+  skipped: 0
+  duration: 726ms

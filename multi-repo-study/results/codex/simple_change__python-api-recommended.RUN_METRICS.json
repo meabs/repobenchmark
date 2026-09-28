@@ -1,0 +1,74 @@
+{
+  "repo": "python-api-recommended",
+  "task": "simple_change",
+  "start_time": "2026-09-28T11:58:19Z",
+  "end_time": "2026-09-28T12:11:34Z",
+  "duration_seconds": 795,
+  "time_to_first_edit_seconds": 50,
+  "tool_calls": {
+    "read": 17,
+    "edit_or_write": 5,
+    "bash": 33,
+    "search_or_grep": 10,
+    "other": 42,
+    "total": 107
+  },
+  "files_read": [
+    "/Users/garry/.agents/skills/using-superpowers/SKILL.md",
+    "/Users/garry/code/multi-repo-benchmark/python-api-recommended/.agents/skills/add-model-field/SKILL.md",
+    "/Users/garry/code/multi-repo-benchmark/python-api-recommended/.agents/skills/run-tests/SKILL.md",
+    "/Users/garry/code/multi-repo-benchmark/python-api-recommended/src/oscar/apps/catalogue/abstract_models.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-recommended/src/oscar/apps/catalogue/managers.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-recommended/src/oscar/apps/catalogue/models.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-recommended/tests/unit/catalogue/test_managers.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-recommended/tests/unit/catalogue/test_models.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-recommended/src/oscar/apps/catalogue/migrations/0015_product_is_public.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-recommended/src/oscar/apps/catalogue/migrations/0032_category_exclude_from_menu_category_long_description.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-recommended/tests/settings.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-recommended/sandbox/settings.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-recommended/src/oscar/apps/catalogue/apps.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-recommended/src/oscar/config.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-recommended/src/oscar/test/factories/catalogue.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-recommended/tests/conftest.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-recommended/tests/_site/apps/catalogue/apps.py"
+  ],
+  "files_created_or_edited": [
+    "/Users/garry/code/multi-repo-benchmark/python-api-recommended/.gitignore",
+    "/Users/garry/code/multi-repo-benchmark/python-api-recommended/src/oscar/apps/catalogue/abstract_models.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-recommended/src/oscar/apps/catalogue/managers.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-recommended/src/oscar/apps/catalogue/migrations/0033_product_is_featured.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-recommended/tests/_site/apps/catalogue/migrations/0033_product_is_featured.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-recommended/tests/unit/catalogue/test_managers.py",
+    "/Users/garry/code/multi-repo-benchmark/python-api-recommended/RUN_METRICS.json"
+  ],
+  "timeline": [
+    {"time": "2026-09-28T11:58:19Z", "event": "started"},
+    {"time": "2026-09-28T11:58:40Z", "event": "explored repo and located Product, ProductQuerySet, tests, and migration chain"},
+    {"time": "2026-09-28T11:59:09Z", "event": "first file edit: added is_featured and featured()"},
+    {"time": "2026-09-28T12:01:17Z", "event": "wrote canonical generated catalogue migration 0033"},
+    {"time": "2026-09-28T12:01:28Z", "event": "wrote featured queryset test"},
+    {"time": "2026-09-28T12:10:49Z", "event": "ran tests: full suite completed successfully; began canonical migration smoke test"},
+    {"time": "2026-09-28T12:11:34Z", "event": "done: migration smoke test and final checks complete"}
+  ],
+  "definition_of_done": {
+    "field_added": true,
+    "migration_written_and_applies": true,
+    "featured_method_correct": true,
+    "excludes_nonfeatured_and_nonpublic": true,
+    "new_test_added_and_passes": true,
+    "no_ui_touched": true
+  },
+  "docs_consulted": [
+    ".agents/skills/add-model-field/SKILL.md",
+    ".agents/skills/run-tests/SKILL.md"
+  ],
+  "blockers_hit": [
+    "The shell had no python executable; used python3 and then the repo-local venv.",
+    "The system interpreter lacked Django; created venv and installed the test extras.",
+    "The first focused test used a schema without is_featured; rebuilt the PostgreSQL test database and mirrored the migration in the forked test app.",
+    "Django autodetection for the fork proposed unrelated historical field/meta changes; discarded that noisy file and retained the intended AddField migration.",
+    "Gap over 5 minutes between writing the test and completing verification was dependency setup and the full test suite run."
+  ],
+  "self_assessed_completion": "complete",
+  "notes": "The core migration was generated under src/oscar/apps/catalogue/migrations and independently applied from scratch on PostgreSQL; the test fork needs the matching migration because tests.settings overrides the catalogue app."
+}
